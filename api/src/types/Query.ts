@@ -1,9 +1,17 @@
 import { objectType, stringArg } from "@nexus/schema";
+import { getUserId } from "../utils";
 
 export const Query = objectType({
   name: "Query",
   definition(t) {
-    t.crud.post();
+    t.field("me", {
+      type: "User",
+      nullable: true,
+      resolve: (parent, args, ctx) => {
+        const userId = getUserId(ctx);
+        return ctx.prisma.user.findOne({ where: { id: Number(userId) } });
+      },
+    });
 
     t.list.field("allUsers", {
       type: "User",

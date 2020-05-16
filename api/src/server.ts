@@ -3,10 +3,9 @@ import context from "./context";
 import { schema } from "./schema";
 import express from "express";
 import cors from "cors";
+import { PORT } from "./config";
 
 const app = express();
-
-const PORT = process.env.PORT || 4000;
 
 const server = new ApolloServer({
   schema,

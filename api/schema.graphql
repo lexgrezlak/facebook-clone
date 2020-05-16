@@ -51,7 +51,7 @@ type Query {
   allUsers: [User!]!
   feed: [Post!]!
   filterPosts(searchString: String): [Post!]!
-  post(where: PostWhereUniqueInput!): Post
+  me: User
 }
 
 type User {
