@@ -6,7 +6,27 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vnqx/facebook-clone.git"
+  },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/vnqx/facebook-clone/issues"
+  },
+  "homepage": "https://github.com/vnqx/facebook-clone#readme",
+  "devDependencies": {
+    "@prisma/cli": "^2.0.0-beta.5",
+    "@types/node": "^14.0.1",
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb": "^18.1.0",
+    "eslint-plugin-import": "^2.20.2",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-react": "^7.20.0",
+    "eslint-plugin-react-hooks": "^2.5.0",
+    "ts-node": "^8.10.1",
+    "typescript": "^3.9.2"
+  }
 }
