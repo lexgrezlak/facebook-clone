@@ -102,7 +102,7 @@ export const schema = makeSchema({
   types: [Query, Mutation, User, Post],
   plugins: [nexusPrismaPlugin()],
   outputs: {
-    schema: __dirname + "./schema.graphql",
+    schema: __dirname + "/../schema.graphql",
     typegen: __dirname + "/generated/nexus.ts",
   },
   typegenAutoConfig: {

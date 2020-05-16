@@ -1,7 +1,9 @@
-/client/node_modules
-/client/package-lock.json
-node_modules
-package-lock.json
 .idea
-prisma/.env
-generated
+api/package-lock.json
+api/src/generated
+api/node_modules
+api/prisma/.env
+api/build
+app/node_modules
+app/package-lock.json
+app/build
