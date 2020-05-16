@@ -1,5 +1,6 @@
 import { intArg, makeSchema, objectType, stringArg } from "@nexus/schema";
 import { nexusPrismaPlugin } from "nexus-prisma";
+import context from "./context";
 
 const User = objectType({
   name: "User",
@@ -26,6 +27,13 @@ const Query = objectType({
   name: "Query",
   definition(t) {
     t.crud.post();
+
+    t.list.field("allUsers", {
+      type: "User",
+      resolve: (_parent, _args, context) => {
+        return context.prisma.user.findMany();
+      },
+    });
 
     t.list.field("feed", {
       type: "Post",
