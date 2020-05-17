@@ -1,13 +1,9 @@
-import { intArg, makeSchema, objectType, stringArg } from "@nexus/schema";
+import { makeSchema } from "@nexus/schema";
 import { nexusPrismaPlugin } from "nexus-prisma";
-import { User } from "./types/User";
-import { Post } from "./types/Post";
-import { Query } from "./types/Query";
-import { Mutation } from "./types/Mutation";
-import { AuthPayload } from "./types/AuthPayload";
+import types from "./types";
 
 export const schema = makeSchema({
-  types: [Query, Mutation, User, Post, AuthPayload],
+  types,
   plugins: [nexusPrismaPlugin()],
   outputs: {
     schema: __dirname + "/../schema.graphql",
