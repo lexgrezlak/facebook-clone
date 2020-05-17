@@ -4,8 +4,10 @@ import { SIGN_IN, SIGN_UP } from "../../../app/src/queries";
 import bcryptjs, { compare, hash } from "bcryptjs";
 import { sign } from "jsonwebtoken";
 
+const HASH_RESPONSE = "hashedPassword";
+
 jest.mock("bcryptjs", () => ({
-  hash: jest.fn(() => Promise.resolve("hashed")),
+  hash: jest.fn(() => Promise.resolve(HASH_RESPONSE)),
   compare: jest.fn(() => Promise.resolve(true)),
 }));
 
@@ -26,19 +28,21 @@ const { mutate } = createTestClient(server);
 
 describe("sign up", function () {
   it("should call prisma.user, hash, compare", async () => {
+    const user = { name: "testN", email: "testE", password: "testP" };
+
     const res = await mutate({
       mutation: SIGN_UP,
-      variables: {
-        name: "testName",
-        email: "testEmail",
-        password: "testPassword",
-      },
+      variables: user,
     });
 
-    console.log(res);
-
-    expect(prisma.user.create).toBeCalled();
-    expect(hash).toBeCalled();
+    expect(hash).toBeCalledWith(user.password, 10);
+    expect(prisma.user.create).toBeCalledWith({
+      data: {
+        name: user.name,
+        email: user.email,
+        passwordHash: HASH_RESPONSE,
+      },
+    });
     expect(sign).toBeCalled();
 
     expect(res?.data?.signIn?.token.toBeTruthy());
