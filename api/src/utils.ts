@@ -13,4 +13,5 @@ export function getUserId(ctx: Context) {
     const verifiedToken = verify(token, JWT_SECRET) as Token;
     return verifiedToken?.userId;
   }
+  return null;
 }

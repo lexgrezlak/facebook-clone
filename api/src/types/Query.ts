@@ -7,24 +7,24 @@ export const Query = objectType({
     t.field("me", {
       type: "User",
       nullable: true,
-      resolve: (parent, args, ctx) => {
-        const userId = getUserId(ctx);
+      resolve: (_parent, _args, context) => {
+        const userId = getUserId(context);
         if (!userId) return null;
-        return ctx.prisma.user.findOne({ where: { id: Number(userId) } });
+        return context.prisma.user.findOne({ where: { id: Number(userId) } });
       },
     });
 
     t.list.field("allUsers", {
       type: "User",
-      resolve: (_parent, _args, ctx) => {
-        return ctx.prisma.user.findMany();
+      resolve: (_parent, _args, context) => {
+        return context.prisma.user.findMany();
       },
     });
 
     t.list.field("feed", {
       type: "Post",
-      resolve: (_parent, _args, ctx) => {
-        return ctx.prisma.post.findMany();
+      resolve: (_parent, _args, context) => {
+        return context.prisma.post.findMany();
       },
     });
 
@@ -33,8 +33,8 @@ export const Query = objectType({
       args: {
         searchString: stringArg({ nullable: true }),
       },
-      resolve: (_parent, { searchString }, ctx) => {
-        return ctx.prisma.post.findMany({
+      resolve: (_parent, { searchString }, context) => {
+        return context.prisma.post.findMany({
           where: {
             OR: [{ content: { contains: searchString } }],
           },

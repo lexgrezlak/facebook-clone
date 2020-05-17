@@ -2,6 +2,7 @@ import { intArg, objectType, stringArg } from "@nexus/schema";
 import { compare, hash } from "bcryptjs";
 import { sign } from "jsonwebtoken";
 import { JWT_SECRET } from "../config";
+import { getUserId } from "../utils";
 
 export const Mutation = objectType({
   name: "Mutation",
@@ -50,6 +51,23 @@ export const Mutation = objectType({
           token,
           user,
         };
+      },
+    });
+
+    t.field("createPost", {
+      type: "Post",
+      nullable: true,
+      args: {
+        content: stringArg({ nullable: false }),
+      },
+      resolve: (_parent, { content }, context) => {
+        const userId = getUserId(context);
+        return context.prisma.post.create({
+          data: {
+            content,
+            author: { connect: { id: Number(userId) } },
+          },
+        });
       },
     });
 
