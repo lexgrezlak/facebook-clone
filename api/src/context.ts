@@ -4,9 +4,9 @@ const prisma = new PrismaClient();
 
 export interface Context {
   prisma: PrismaClient;
-  request: any;
+  req: any;
 }
 
-export default function createContext(request: any): Context {
-  return { ...request, prisma };
+export default function createContext({ req }: any): Context {
+  return { req, prisma };
 }

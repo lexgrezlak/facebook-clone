@@ -9,6 +9,7 @@ export const Query = objectType({
       nullable: true,
       resolve: (parent, args, ctx) => {
         const userId = getUserId(ctx);
+        if (!userId) return null;
         return ctx.prisma.user.findOne({ where: { id: Number(userId) } });
       },
     });

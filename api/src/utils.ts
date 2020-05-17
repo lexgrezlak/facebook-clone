@@ -7,9 +7,10 @@ interface Token {
 }
 
 export function getUserId(ctx: Context) {
-  const Authorization = ctx.request.get("Authorization");
-  if (Authorization) {
-    const token = Authorization.replace("Bearer", "");
+  const authorization = ctx.req.headers.authorization;
+  console.log(ctx.req.headers);
+  if (authorization) {
+    const token = authorization.replace("Bearer ", "");
     const verifiedToken = verify(token, JWT_SECRET) as Token;
     return verifiedToken?.userId;
   }
