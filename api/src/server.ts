@@ -4,11 +4,13 @@ import { schema } from "./schema";
 import express from "express";
 import cors from "cors";
 import { PORT } from "./config";
+import { permissions } from "./permissions";
+import { applyMiddleware } from "graphql-middleware";
 
 const app = express();
 
 const server = new ApolloServer({
-  schema,
+  schema: applyMiddleware(schema, permissions),
   context,
   playground: true,
   introspection: true,
