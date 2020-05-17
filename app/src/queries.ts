@@ -31,3 +31,27 @@ export const GET_ME = gql`
     }
   }
 `;
+
+export const GET_FEED = gql`
+  query Feed {
+    feed {
+      id
+      content
+      author {
+        email
+      }
+    }
+  }
+`;
+
+export const CREATE_POST = gql`
+  mutation CreatePost($content: String!) {
+    createPost(content: $content) {
+      id
+      content
+      author {
+        email
+      }
+    }
+  }
+`;
