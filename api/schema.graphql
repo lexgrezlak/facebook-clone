@@ -8,6 +8,7 @@ type AuthPayload {
 }
 
 type Mutation {
+  deletePost(id: Int!): Post
   signIn(email: String!, password: String!): AuthPayload!
   signUp(email: String!, name: String!, password: String!): AuthPayload!
 }

@@ -52,5 +52,16 @@ export const Mutation = objectType({
         };
       },
     });
+
+    t.field("deletePost", {
+      type: "Post",
+      nullable: true,
+      args: {
+        id: intArg({ nullable: false }),
+      },
+      resolve: (_parent, { id }, context) => {
+        return context.prisma.post.delete({ where: { id } });
+      },
+    });
   },
 });
