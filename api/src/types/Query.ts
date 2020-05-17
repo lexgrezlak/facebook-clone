@@ -15,15 +15,15 @@ export const Query = objectType({
 
     t.list.field("allUsers", {
       type: "User",
-      resolve: (_parent, _args, context) => {
-        return context.prisma.user.findMany();
+      resolve: (_parent, _args, ctx) => {
+        return ctx.prisma.user.findMany();
       },
     });
 
     t.list.field("feed", {
       type: "Post",
-      resolve: (_parent, _args, context) => {
-        return context.prisma.post.findMany();
+      resolve: (_parent, _args, ctx) => {
+        return ctx.prisma.post.findMany();
       },
     });
 
@@ -32,8 +32,8 @@ export const Query = objectType({
       args: {
         searchString: stringArg({ nullable: true }),
       },
-      resolve: (_parent, { searchString }, context) => {
-        return context.prisma.post.findMany({
+      resolve: (_parent, { searchString }, ctx) => {
+        return ctx.prisma.post.findMany({
           where: {
             OR: [{ content: { contains: searchString } }],
           },

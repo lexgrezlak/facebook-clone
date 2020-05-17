@@ -12,9 +12,7 @@ model Post {
   content   String?
   createdAt DateTime @default(now())
   id        Int      @default(autoincrement()) @id
-  published Boolean  @default(false)
-  title     String
-  author    User     @relation(fields: [authorId], references: [id])
+  author      User     @relation(fields: [authorId], references: [id])
 }
 
 model Profile {
@@ -25,9 +23,10 @@ model Profile {
 }
 
 model User {
-  email   String   @unique
-  id      Int      @default(autoincrement()) @id
-  name    String?
-  posts   Post[]
-  profile Profile?
+  email        String   @unique
+  id           Int      @default(autoincrement()) @id
+  name         String
+  passwordHash String
+  posts         Post[]
+  profile      Profile?
 }

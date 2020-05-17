@@ -4,9 +4,10 @@ import { User } from "./types/User";
 import { Post } from "./types/Post";
 import { Query } from "./types/Query";
 import { Mutation } from "./types/Mutation";
+import { AuthPayload } from "./types/AuthPayload";
 
 export const schema = makeSchema({
-  types: [Query, Mutation, User, Post],
+  types: [Query, Mutation, User, Post, AuthPayload],
   plugins: [nexusPrismaPlugin()],
   outputs: {
     schema: __dirname + "/../schema.graphql",

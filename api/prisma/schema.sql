@@ -1,13 +1,18 @@
+DROP TABLE public."User" CASCADE;
+DROP TABLE public."Post" CASCADE;
+DROP TABLE public."Profile" CASCADE;
+
 CREATE TABLE "public"."User" (
   id SERIAL PRIMARY KEY NOT NULL,
   name VARCHAR(255) NOT NULL,
-  email VARCHAR(255) UNIQUE NOT NULL
+  email VARCHAR(255) UNIQUE NOT NULL,
+  "passwordHash" VARCHAR(255) NOT NULL
 );
 
 CREATE TABLE "public"."Post" (
   id SERIAL PRIMARY KEY NOT NULL,
-  "createdAt" TIMESTAMP NOT NULL DEFAULT now(),
   content TEXT,
+  "createdAt" TIMESTAMP NOT NULL DEFAULT now(),
   "authorId" INTEGER NOT NULL,
   FOREIGN KEY ("authorId") REFERENCES "public"."User"(id)
 );
