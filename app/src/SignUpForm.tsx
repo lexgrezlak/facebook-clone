@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import { useMutation } from "@apollo/client";
+import { useApolloClient, useMutation } from "@apollo/client";
 import { SIGN_UP } from "./queries";
 
 function SignUpForm() {
+  const client = useApolloClient();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -16,6 +17,7 @@ function SignUpForm() {
     const response = await signUp({ variables: { name, email, password } });
     const { token } = response.data.signUp;
     localStorage.setItem("token", token);
+    await client.resetStore();
   }
 
   return (
