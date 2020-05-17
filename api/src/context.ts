@@ -7,6 +7,6 @@ export interface Context {
   req: any;
 }
 
-export default function createContext({ req }: any): Context {
+export const context = ({ req }: any): Context => {
   return { req, prisma };
-}
+};
