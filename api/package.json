@@ -4,7 +4,7 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "test": "NODE_ENV=test jest --verbose",
+    "test": "NODE_ENV=test jest --verbose --runInBand",
     "dev": "NODE_ENV=development ts-node-dev src/server.ts",
     "lint": "../node_modules/.bin/eslint .",
     "build:ui": "rm -rf build && cd ../app && npm run build && cp -r build ../api && cd ../api",
@@ -26,9 +26,12 @@
   "devDependencies": {
     "@prisma/cli": "^2.0.0-beta.5",
     "@types/bcryptjs": "^2.4.2",
+    "@types/jest": "^25.2.2",
     "@types/jsonwebtoken": "^8.5.0",
     "@types/node": "^14.0.1",
     "@types/node-fetch": "^2.5.7",
+    "@types/supertest": "^2.0.9",
+    "apollo-server-testing": "^2.13.1",
     "dotenv": "^8.2.0",
     "eslint": "^6.8.0",
     "eslint-config-airbnb": "^18.1.0",
@@ -37,12 +40,11 @@
     "eslint-plugin-react": "^7.20.0",
     "eslint-plugin-react-hooks": "^2.5.0",
     "jest": "^26.0.1",
+    "supertest": "^4.0.2",
+    "ts-jest": "^26.0.0",
     "ts-node": "^8.10.1",
     "ts-node-dev": "^1.0.0-pre.44",
     "typescript": "^3.9.2"
-  },
-  "jest": {
-    "testEnvironment": "node"
   },
   "dependencies": {
     "@nexus/schema": "^0.13.1",
