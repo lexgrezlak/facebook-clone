@@ -1,8 +1,7 @@
 import { createTestServer } from "../testUtils";
 import { createTestClient } from "apollo-server-testing";
-import { gql } from "apollo-server-express";
 import { SIGN_IN, SIGN_UP } from "../../../app/src/queries";
-import { compare, hash } from "bcryptjs";
+import bcryptjs, { compare, hash } from "bcryptjs";
 import { sign } from "jsonwebtoken";
 
 jest.mock("bcryptjs", () => ({
@@ -60,5 +59,37 @@ describe("sign in", function () {
     expect(prisma.user.findOne).toBeCalled();
     expect(compare).toBeCalled();
     expect(sign).toBeCalled();
+  });
+
+  it("should throw an error when user not found", async function () {
+    prisma.user.findOne.mockImplementationOnce(() => Promise.resolve(null));
+
+    const res = await mutate({
+      mutation: SIGN_IN,
+      variables: {
+        email: "Testable8",
+        password: "Testable9",
+      },
+    });
+
+    expect(res?.errors?.length).toBeTruthy();
+    expect(res?.data?.signIn).toBeFalsy();
+  });
+
+  it("should throw an error when passwords don't match", async function () {
+    jest
+      .spyOn(bcryptjs, "compare")
+      .mockImplementationOnce(() => Promise.resolve(false));
+
+    const res = await mutate({
+      mutation: SIGN_IN,
+      variables: {
+        email: "The@email.com",
+        password: "TestingIsEasy1",
+      },
+    });
+
+    expect(res?.errors?.length).toBeTruthy();
+    expect(res?.data?.signIn).toBeFalsy();
   });
 });
