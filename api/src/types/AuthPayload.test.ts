@@ -28,18 +28,26 @@ const { mutate } = createTestClient(server);
 
 describe("sign up", function () {
   it("should call prisma.user, hash, compare", async () => {
-    const user = { name: "testN", email: "testE", password: "testP" };
+    const user = {
+      firstName: "testN",
+      lastName: "dsa",
+      email: "testE",
+      birthday: new Date(),
+      password: "testP",
+      gender: "MALE",
+    };
 
     const res = await mutate({
       mutation: SIGN_UP,
       variables: user,
     });
 
+    const { password, ...userWithoutPassword } = user;
+
     expect(hash).toBeCalledWith(user.password, 10);
     expect(prisma.user.create).toBeCalledWith({
       data: {
-        name: user.name,
-        email: user.email,
+        ...userWithoutPassword,
         passwordHash: HASH_RESPONSE,
       },
     });

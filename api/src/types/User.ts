@@ -9,7 +9,8 @@ export const User = objectType({
     t.model.email();
     t.model.birthday();
     t.model.gender();
-    t.model.friends({pagination: false});
-    t.model.posts({ pagination: true });
+    t.model.sentFriendInvitations();
+    t.model.receivedFriendInvitations();
+    t.model.posts({ pagination: false });
   },
 });

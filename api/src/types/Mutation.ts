@@ -3,6 +3,9 @@ import { compare, hash } from "bcryptjs";
 import { sign } from "jsonwebtoken";
 import { JWT_SECRET } from "../config";
 import { getUserId } from "../utils";
+import { requiredDateTimeArg, requiredGenderArg, requiredStringArg} from "./helpers";
+
+
 
 export const Mutation = objectType({
   name: "Mutation",
@@ -10,17 +13,24 @@ export const Mutation = objectType({
     t.field("signUp", {
       type: "AuthPayload",
       args: {
-        name: stringArg({ nullable: false }),
-        email: stringArg({ nullable: false }),
-        password: stringArg({ nullable: false }),
+        // empty object so it doesn't trigger ts error
+        // the option required is already set
+        firstName: requiredStringArg({}),
+        lastName: requiredStringArg({}),
+        email: requiredStringArg({}),
+        password: requiredStringArg({}),
+        // types are already given therefore:
+        // @ts-ignore
+        birthday: requiredDateTimeArg(),
+        // @ts-ignore
+        gender: requiredGenderArg()
       },
-      resolve: async (_parent, { name, email, password }, ctx) => {
+      resolve: async (_parent, {password, ...rest}, ctx) => {
         const passwordHash = await hash(password, 10);
         const user = await ctx.prisma.user.create({
           data: {
-            name,
-            email,
             passwordHash,
+            ...rest
           },
         });
 
@@ -33,8 +43,8 @@ export const Mutation = objectType({
     t.field("signIn", {
       type: "AuthPayload",
       args: {
-        email: stringArg({ nullable: false }),
-        password: stringArg({ nullable: false }),
+        email: requiredStringArg({}),
+        password: requiredStringArg({}),
       },
       resolve: async (_parent, { email, password }, ctx) => {
         const user = await ctx.prisma.user.findOne({ where: { email } });
