@@ -4,8 +4,12 @@ export const User = objectType({
   name: "User",
   definition(t) {
     t.model.id();
-    t.model.name();
+    t.model.firstName();
+    t.model.lastName();
     t.model.email();
-    t.model.posts({ pagination: false });
+    t.model.birthday();
+    t.model.gender();
+    t.model.friends({pagination: false});
+    t.model.posts({ pagination: true });
   },
 });
