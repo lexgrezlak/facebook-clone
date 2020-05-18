@@ -10,6 +10,7 @@ import {
   FormikState,
 } from "formik";
 import * as Yup from "yup";
+import DateField from "./DateField";
 
 enum Gender {
   Female = "FEMALE",
@@ -48,6 +49,7 @@ function SignUpForm() {
     passwordConfirm,
     ...signUpData
   }: SignUpFormFields) {
+    console.log(signUpData);
     return signUp({ variables: { ...signUpData } });
   }
 
@@ -80,7 +82,7 @@ function SignUpForm() {
             name="passwordConfirm"
             placeholder="Confirm password"
           />
-          <Field type="date" name="birthday" placeholder="Birthday" />
+          <DateField name="birthday" />
           <Field
             name="gender"
             placeholder="Gender"

@@ -54,7 +54,8 @@ export const GET_FEED = gql`
       id
       content
       author {
-        name
+        firstName
+        lastName
       }
       createdAt
     }

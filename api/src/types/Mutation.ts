@@ -3,9 +3,11 @@ import { compare, hash } from "bcryptjs";
 import { sign } from "jsonwebtoken";
 import { JWT_SECRET } from "../config";
 import { getUserId } from "../utils";
-import { requiredDateTimeArg, requiredGenderArg, requiredStringArg} from "./helpers";
-
-
+import {
+  requiredDateTimeArg,
+  requiredGenderArg,
+  requiredStringArg,
+} from "./helpers";
 
 export const Mutation = objectType({
   name: "Mutation",
@@ -23,16 +25,20 @@ export const Mutation = objectType({
         // @ts-ignore
         birthday: requiredDateTimeArg(),
         // @ts-ignore
-        gender: requiredGenderArg()
+        gender: requiredGenderArg(),
       },
-      resolve: async (_parent, {password, ...rest}, ctx) => {
+      resolve: async (_parent, { password, ...rest }, ctx) => {
         const passwordHash = await hash(password, 10);
-        const user = await ctx.prisma.user.create({
-          data: {
-            passwordHash,
-            ...rest
-          },
-        });
+        try {
+          const user = await ctx.prisma.user.create({
+            data: {
+              passwordHash,
+              ...rest,
+            },
+          });
+        } catch (e) {
+          console.log(e);
+        }
 
         const token = sign({ userId: user.id }, JWT_SECRET);
 
