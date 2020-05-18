@@ -7,6 +7,14 @@ type AuthPayload {
   user: User!
 }
 
+scalar DateTime
+
+enum e_gender {
+  FEMALE
+  MALE
+  OTHER
+}
+
 type Mutation {
   createPost(content: String!): Post
   deletePost(id: Int!): Post
@@ -17,7 +25,12 @@ type Mutation {
 type Post {
   author: User!
   content: String
+  createdAt: DateTime!
   id: Int!
+}
+
+input PostWhereUniqueInput {
+  id: Int
 }
 
 type Query {
@@ -28,8 +41,11 @@ type Query {
 }
 
 type User {
+  birthday: DateTime!
   email: String!
+  firstName: String!
+  gender: e_gender!
   id: Int!
-  name: String!
-  posts: [Post!]!
+  lastName: String!
+  posts(after: PostWhereUniqueInput, before: PostWhereUniqueInput, first: Int, last: Int, skip: Int): [Post!]!
 }

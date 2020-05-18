@@ -1,25 +1,52 @@
-DROP TABLE public."User" CASCADE;
-DROP TABLE public."Post" CASCADE;
-DROP TABLE public."Profile" CASCADE;
+drop table public."User" cascade;
+drop table public."Friendship" cascade;
+drop table public."Post" cascade;
+drop table public."Profile" cascade;
+drop type e_gender;
+drop view friendships;
 
-CREATE TABLE "public"."User" (
-  id SERIAL PRIMARY KEY NOT NULL,
-  name VARCHAR(255) NOT NULL,
-  email VARCHAR(255) UNIQUE NOT NULL,
-  "passwordHash" VARCHAR(255) NOT NULL
+create type e_gender as enum('FEMALE', 'MALE', 'OTHER');
+
+create table "public"."User"
+(
+    id             serial primary key  not null,
+    "firstName"    varchar(255)        not null,
+    "lastName"     varchar(255)        not null,
+    email          varchar(255) unique not null,
+    "passwordHash" varchar(255)        not null,
+    birthday       date                not null,
+    gender         e_gender            not null
 );
 
-CREATE TABLE "public"."Post" (
-  id SERIAL PRIMARY KEY NOT NULL,
-  content TEXT,
-  "createdAt" TIMESTAMP NOT NULL DEFAULT now(),
-  "authorId" INTEGER NOT NULL,
-  FOREIGN KEY ("authorId") REFERENCES "public"."User"(id)
+create table "public"."FriendStatus"
+(
+    id serial primary key not null,
+    "fromUserId" integer not null references "public"."User",
+    "toUserId" integer not null references "public"."User",
+    "statusId" integer not null default 2,
+    "sentTime" date not null default now(),
+    "responseTime" date
 );
 
-CREATE TABLE "public"."Profile" (
-  id SERIAL PRIMARY KEY NOT NULL,
-  bio TEXT,
-  "userId" INTEGER UNIQUE NOT NULL,
-  FOREIGN KEY ("userId") REFERENCES "public"."User"(id)
+
+create view friendships as
+    select distinct "fromUserId", "toUserId" from public."FriendStatus" where "statusId" = 1
+    union
+    select distinct "toUserId", "fromUserId" from public."FriendStatus" where "statusId" = 1;
+
+create table "public"."Post"
+(
+    id          serial primary key not null,
+    content     text,
+    "createdAt" timestamp          not null default now(),
+    "authorId"  integer            not null,
+    foreign key ("authorId") references "public"."User" (id)
+);
+
+create table "public"."Profile"
+(
+    id       serial primary key not null,
+    bio      text,
+    "userId" integer unique      not null,
+    foreign key ("userId") references "public"."User" (id)
 );

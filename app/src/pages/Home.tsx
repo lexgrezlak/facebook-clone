@@ -15,8 +15,16 @@ interface Post {
 function Home() {
   const client = useApolloClient();
   const [content, setContent] = useState("");
-  const { data, loading, error } = useQuery(GET_FEED);
-  const [createPost] = useMutation(CREATE_POST, {});
+  const { data, loading, error } = useQuery(GET_FEED, {
+    onError: (error) => {
+      console.log(error.graphQLErrors[0].message);
+    },
+  });
+  const [createPost] = useMutation(CREATE_POST, {
+    onError: (error) => {
+      console.log(error.graphQLErrors[0].message);
+    },
+  });
 
   async function handleSignOut() {
     localStorage.clear();
