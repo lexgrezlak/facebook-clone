@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useApolloClient, useMutation } from "@apollo/client";
-import { SIGN_IN } from "./queries";
+import { SIGN_IN } from "../../queries";
 
 function SignInForm() {
   const client = useApolloClient();

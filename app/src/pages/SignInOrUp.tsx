@@ -1,6 +1,6 @@
 import React from "react";
-import SignInForm from "./SignInForm";
-import SignUpForm from "./SignUpForm";
+import SignInForm from "./signInOrOut/SignInForm";
+import SignUpForm from "./signInOrOut/SignUpForm";
 
 function SignInOrUp() {
   return (

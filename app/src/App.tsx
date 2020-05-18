@@ -1,8 +1,8 @@
 import React from "react";
 import { useQuery } from "@apollo/client";
 import { GET_ME } from "./queries";
-import SignInOrUp from "./SignInOrUp";
-import Home from "./Home";
+import SignInOrUp from "./pages/SignInOrUp";
+import Home from "./pages/Home";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 function App() {

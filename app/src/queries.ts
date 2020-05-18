@@ -27,6 +27,8 @@ export const SIGN_IN = gql`
 export const GET_ME = gql`
   query Me {
     me {
+      firstName
+      lastName
       email
     }
   }
@@ -38,8 +40,9 @@ export const GET_FEED = gql`
       id
       content
       author {
-        email
+        name
       }
+      createdAt
     }
   }
 `;
