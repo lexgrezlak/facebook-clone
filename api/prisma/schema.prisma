@@ -8,46 +8,46 @@ datasource db {
 }
 
 model FriendStatus {
-  id                                 Int       @default(autoincrement()) @id
   fromUserId                         Int
+  id                                 Int       @default(autoincrement()) @id
   responseTime                       DateTime?
   sentTime                           DateTime  @default(now())
   statusId                           Int       @default(2)
   toUserId                           Int
-  User_FriendStatus_fromUserIdToUser User      @relation("FriendStatus_fromUserIdToUser", fields: [fromUserId], references: [id])
-  User_FriendStatus_toUserIdToUser   User      @relation("FriendStatus_toUserIdToUser", fields: [toUserId], references: [id])
+  sender                             User      @relation("FriendStatus_fromUserIdToUser", fields: [fromUserId], references: [id])
+  receiver                           User      @relation("FriendStatus_toUserIdToUser", fields: [toUserId], references: [id])
 }
 
 model Post {
-  id        Int      @default(autoincrement()) @id
-  content   String?
   authorId  Int
-  author    User     @relation(fields: [authorId], references: [id])
+  content   String?
   createdAt DateTime @default(now())
+  id        Int      @default(autoincrement()) @id
+  author      User     @relation(fields: [authorId], references: [id])
 }
 
 model Profile {
-  id     Int     @default(autoincrement()) @id
   bio    String?
+  id     Int     @default(autoincrement()) @id
   userId Int     @unique
   user   User    @relation(fields: [userId], references: [id])
 }
 
 model User {
-  id                                         Int            @default(autoincrement()) @id
-  firstName                                  String
-  lastName                                   String
-  email                                      String         @unique
   birthday                                   DateTime
-  gender                                     e_gender
+  email                                      String         @unique
+  firstName                                  String
+  gender                                     Gender
+  id                                         Int            @default(autoincrement()) @id
+  lastName                                   String
   passwordHash                               String
+  sentFriendInvitations                      FriendStatus[] @relation("FriendStatus_fromUserIdToUser")
+  receivedFriendInvitations                  FriendStatus[] @relation("FriendStatus_toUserIdToUser")
   posts                                      Post[]
   profile                                    Profile?
-  FriendStatus_FriendStatus_fromUserIdToUser FriendStatus[] @relation("FriendStatus_fromUserIdToUser")
-  FriendStatus_FriendStatus_toUserIdToUser   FriendStatus[] @relation("FriendStatus_toUserIdToUser")
 }
 
-enum e_gender {
+enum Gender {
   FEMALE
   MALE
   OTHER

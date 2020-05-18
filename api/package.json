@@ -59,6 +59,6 @@
     "graphql-middleware": "^4.0.2",
     "graphql-shield": "^7.3.0",
     "jsonwebtoken": "^8.5.1",
-    "nexus-prisma": "^0.13.0",
+    "nexus-prisma": "^0.13.0"
   }
 }

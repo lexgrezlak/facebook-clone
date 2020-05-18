@@ -1,11 +1,11 @@
 drop table public."User" cascade;
-drop table public."Friendship" cascade;
+drop table public."FriendStatus" cascade;
 drop table public."Post" cascade;
 drop table public."Profile" cascade;
-drop type e_gender;
+drop type "Gender";
 drop view friendships;
 
-create type e_gender as enum('FEMALE', 'MALE', 'OTHER');
+create type "Gender" as enum('FEMALE', 'MALE', 'OTHER');
 
 create table "public"."User"
 (
@@ -15,7 +15,7 @@ create table "public"."User"
     email          varchar(255) unique not null,
     "passwordHash" varchar(255)        not null,
     birthday       date                not null,
-    gender         e_gender            not null
+    gender         "Gender"            not null
 );
 
 create table "public"."FriendStatus"

@@ -9,7 +9,22 @@ type AuthPayload {
 
 scalar DateTime
 
-enum e_gender {
+type FriendStatus {
+  fromUserId: Int!
+  id: Int!
+  receiver: User!
+  responseTime: DateTime
+  sender: User!
+  sentTime: DateTime!
+  statusId: Int!
+  toUserId: Int!
+}
+
+input FriendStatusWhereUniqueInput {
+  id: Int
+}
+
+enum Gender {
   FEMALE
   MALE
   OTHER
@@ -19,7 +34,7 @@ type Mutation {
   createPost(content: String!): Post
   deletePost(id: Int!): Post
   signIn(email: String!, password: String!): AuthPayload!
-  signUp(email: String!, name: String!, password: String!): AuthPayload!
+  signUp(birthday: DateTime!, email: String!, firstName: String!, gender: Gender!, lastName: String!, password: String!): AuthPayload!
 }
 
 type Post {
@@ -27,10 +42,6 @@ type Post {
   content: String
   createdAt: DateTime!
   id: Int!
-}
-
-input PostWhereUniqueInput {
-  id: Int
 }
 
 type Query {
@@ -44,8 +55,10 @@ type User {
   birthday: DateTime!
   email: String!
   firstName: String!
-  gender: e_gender!
+  gender: Gender!
   id: Int!
   lastName: String!
-  posts(after: PostWhereUniqueInput, before: PostWhereUniqueInput, first: Int, last: Int, skip: Int): [Post!]!
+  posts: [Post!]!
+  receivedFriendInvitations(after: FriendStatusWhereUniqueInput, before: FriendStatusWhereUniqueInput, first: Int, last: Int, skip: Int): [FriendStatus!]!
+  sentFriendInvitations(after: FriendStatusWhereUniqueInput, before: FriendStatusWhereUniqueInput, first: Int, last: Int, skip: Int): [FriendStatus!]!
 }
