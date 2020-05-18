@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useApolloClient, useMutation } from "@apollo/client";
 import { SIGN_IN } from "../../queries";
 
@@ -7,16 +7,24 @@ function SignInForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const [signIn] = useMutation(SIGN_IN, {
+  const [signIn, { data }] = useMutation(SIGN_IN, {
     variables: { email, password },
+    onError: (error) => {
+      console.log(error.graphQLErrors[0].message);
+    },
+  });
+
+  useEffect(() => {
+    if (data?.signIn) {
+      const { token } = data.signIn;
+      localStorage.setItem("token", token);
+      client.resetStore();
+    }
   });
 
   async function onSubmit(event: React.FormEvent) {
     event.preventDefault();
-    const response = await signIn({ variables: { email, password } });
-    const { token } = response.data.signIn;
-    localStorage.setItem("token", token);
-    await client.resetStore();
+    signIn({ variables: { email, password } });
   }
 
   return (

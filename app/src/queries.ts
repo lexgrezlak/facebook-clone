@@ -9,8 +9,22 @@ export const GET_ALL_USERS = gql`
 `;
 
 export const SIGN_UP = gql`
-  mutation SignUp($name: String!, $email: String!, $password: String!) {
-    signUp(name: $name, email: $email, password: $password) {
+  mutation SignUp(
+    $firstName: String!
+    $lastName: String!
+    $email: String!
+    $password: String!
+    $birthday: DateTime!
+    $gender: Gender!
+  ) {
+    signUp(
+      firstName: $firstName
+      lastName: $lastName
+      email: $email
+      password: $password
+      birthday: $birthday
+      gender: $gender
+    ) {
       token
     }
   }

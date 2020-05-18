@@ -1,52 +1,133 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useApolloClient, useMutation } from "@apollo/client";
 import { SIGN_UP } from "../../queries";
+import {
+  Field,
+  Form,
+  Formik,
+  FormikHelpers,
+  FormikProps,
+  FormikState,
+} from "formik";
+import * as Yup from "yup";
+
+enum Gender {
+  Female = "FEMALE",
+  Male = "MALE",
+  Other = "OTHER",
+}
+
+interface SignUpFormFields {
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+  passwordConfirm: string;
+  birthday: Date;
+  gender: Gender | null;
+}
 
 function SignUpForm() {
   const client = useApolloClient();
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
 
-  const [signUp] = useMutation(SIGN_UP, {
-    variables: { name, email, password },
+  const [signUp, { data }] = useMutation(SIGN_UP, {
+    onError: (error) => {
+      console.log(error.graphQLErrors[0].message);
+    },
   });
 
-  async function onSubmit(event: React.FormEvent) {
-    event.preventDefault();
-    const response = await signUp({ variables: { name, email, password } });
-    const { token } = response.data.signUp;
-    localStorage.setItem("token", token);
-    await client.resetStore();
+  useEffect(() => {
+    if (data?.signIn) {
+      const { token } = data.signIn;
+      localStorage.setItem("token", token);
+      client.resetStore();
+    }
+  });
+
+  async function handleSubmit({
+    passwordConfirm,
+    ...signUpData
+  }: SignUpFormFields) {
+    return signUp({ variables: { ...signUpData } });
   }
 
+  const initialValues: SignUpFormFields = {
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+    passwordConfirm: "",
+    birthday: new Date("01-01-2000"),
+    gender: null,
+  };
+
   return (
-    <form onSubmit={onSubmit}>
-      <div>
-        name:
-        <input
-          type="text"
-          value={name}
-          onChange={(event) => setName(event.target.value)}
-        />
-      </div>{" "}
-      <div>
-        email:
-        <input
-          type="text"
-          value={email}
-          onChange={(event) => setEmail(event.target.value)}
-        />
-      </div>{" "}
-      <div>
-        password:
-        <input
-          value={password}
-          onChange={(event) => setPassword(event.target.value)}
-        />
-      </div>
-      <button type="submit">submit</button>
-    </form>
+    <Formik
+      initialValues={initialValues}
+      onSubmit={handleSubmit}
+      validationSchema={Yup.object().shape({
+        passwordConfirm: Yup.string().min(8, "Too short"),
+      })}
+    >
+      {({ isSubmitting }) => (
+        <Form noValidate>
+          <Field type="text" name="firstName" placeholder="First name" />
+          <Field type="text" name="lastName" placeholder="Last name" />
+          <Field type="email" name="email" placeholder="Email address" />
+          <Field type="password" name="password" placeholder="Password" />
+          <Field
+            type="password"
+            name="passwordConfirm"
+            placeholder="Confirm password"
+          />
+          <Field type="date" name="birthday" placeholder="Birthday" />
+          <Field
+            name="gender"
+            placeholder="Gender"
+            component={({ field }: any) => (
+              <>
+                <div>
+                  <input
+                    {...field}
+                    id="female"
+                    value="FEMALE"
+                    checked={field.value === "FEMALE"}
+                    name="gender"
+                    type="radio"
+                  />
+                  <label htmlFor="female">Female</label>
+                </div>
+                <div>
+                  <input
+                    {...field}
+                    id="male"
+                    value="MALE"
+                    checked={field.value === "MALE"}
+                    name="gender"
+                    type="radio"
+                  />
+                  <label htmlFor="male">Male</label>
+                </div>
+                <div>
+                  <input
+                    {...field}
+                    id="other"
+                    value="OTHER"
+                    checked={field.value === "OTHER"}
+                    name="gender"
+                    type="radio"
+                  />
+                  <label htmlFor="other">Other</label>
+                </div>
+              </>
+            )}
+          />
+          <button type="submit" disabled={isSubmitting}>
+            submit
+          </button>
+        </Form>
+      )}
+    </Formik>
   );
 }
 
