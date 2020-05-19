@@ -11,6 +11,6 @@ export const User = objectType({
     t.model.gender();
     t.model.sentFriendInvitations();
     t.model.receivedFriendInvitations();
-    t.model.posts({ pagination: false });
+    t.model.posts({ pagination: true });
   },
 });

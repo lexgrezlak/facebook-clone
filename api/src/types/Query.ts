@@ -1,5 +1,4 @@
-import { objectType, stringArg } from "@nexus/schema";
-import { getUserId } from "../utils";
+import { objectType } from "@nexus/schema";
 
 export const Query = objectType({
   name: "Query",
@@ -7,10 +6,13 @@ export const Query = objectType({
     t.field("me", {
       type: "User",
       nullable: true,
-      resolve: (_parent, _args, context) => {
-        const userId = getUserId(context);
-        if (!userId) return null;
-        return context.prisma.user.findOne({ where: { id: Number(userId) } });
+      resolve: async (_parent, _args, context) => {
+        const id = context.req.userId || "";
+        try {
+          return await context.prisma.user.findOne({ where: { id } });
+        } catch (error) {
+          return null;
+        }
       },
     });
 
@@ -24,21 +26,7 @@ export const Query = objectType({
     t.list.field("feed", {
       type: "Post",
       resolve: (_parent, _args, context) => {
-        return context.prisma.post.findMany();
-      },
-    });
-
-    t.list.field("filterPosts", {
-      type: "Post",
-      args: {
-        searchString: stringArg({ nullable: true }),
-      },
-      resolve: (_parent, { searchString }, context) => {
-        return context.prisma.post.findMany({
-          where: {
-            OR: [{ content: { contains: searchString } }],
-          },
-        });
+        return context.prisma.post.findMany({ orderBy: { createdAt: "desc" } });
       },
     });
   },
