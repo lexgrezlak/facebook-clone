@@ -29,16 +29,12 @@ export const Mutation = objectType({
       },
       resolve: async (_parent, { password, ...rest }, ctx) => {
         const passwordHash = await hash(password, 10);
-        try {
-          const user = await ctx.prisma.user.create({
-            data: {
-              passwordHash,
-              ...rest,
-            },
-          });
-        } catch (e) {
-          console.log(e);
-        }
+        const user = await ctx.prisma.user.create({
+          data: {
+            passwordHash,
+            ...rest,
+          },
+        });
 
         const token = sign({ userId: user.id }, JWT_SECRET);
 
@@ -54,7 +50,6 @@ export const Mutation = objectType({
       },
       resolve: async (_parent, { email, password }, ctx) => {
         const user = await ctx.prisma.user.findOne({ where: { email } });
-
         // user not found
         if (!user) throw new Error("Invalid password");
 
