@@ -1,13 +1,11 @@
-import { rule, shield } from "graphql-shield";
-import { getUserId } from "./utils";
+import { allow, and, rule, shield } from "graphql-shield";
 
 const rules = {
-  isAuthenticatedUser: rule()((_parent, _args, context) => {
-    const userId = getUserId(context);
-    return Boolean(userId);
+  isAuthenticated: rule({ cache: "contextual" })((_parent, _args, context) => {
+    return Boolean(context.req.userId);
   }),
   isPostOwner: rule()(async (_parent, { id }, context) => {
-    const userId = getUserId(context);
+    const userId = context.req.userId || "";
     const post = await context.prisma.post.findOne({
       where: {
         id: Number(id),
@@ -22,10 +20,14 @@ const rules = {
 
 export const permissions = shield({
   Query: {
-    feed: rules.isAuthenticatedUser,
+    "*": rules.isAuthenticated,
+    me: allow,
   },
   Mutation: {
-    createPost: rules.isAuthenticatedUser,
-    deletePost: rules.isPostOwner,
+    "*": rules.isAuthenticated,
+    signIn: allow,
+    signOut: allow,
+    signUp: allow,
+    deletePost: and(rules.isPostOwner, rules.isAuthenticated),
   },
 });
