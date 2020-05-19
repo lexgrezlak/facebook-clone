@@ -2,11 +2,6 @@
 ### Do not make changes to this file directly
 
 
-type AuthPayload {
-  token: String!
-  user: User!
-}
-
 scalar DateTime
 
 type FriendStatus {
@@ -33,8 +28,9 @@ enum Gender {
 type Mutation {
   createPost(content: String!): Post
   deletePost(id: Int!): Post
-  signIn(email: String!, password: String!): AuthPayload!
-  signUp(birthday: DateTime!, email: String!, firstName: String!, gender: Gender!, lastName: String!, password: String!): AuthPayload!
+  signIn(email: String!, password: String!): User!
+  signOut: Boolean!
+  signUp(birthday: DateTime!, email: String!, firstName: String!, gender: Gender!, lastName: String!, password: String!): User!
 }
 
 type Post {
@@ -44,10 +40,13 @@ type Post {
   id: Int!
 }
 
+input PostWhereUniqueInput {
+  id: Int
+}
+
 type Query {
   allUsers: [User!]!
   feed: [Post!]!
-  filterPosts(searchString: String): [Post!]!
   me: User
 }
 
@@ -58,7 +57,7 @@ type User {
   gender: Gender!
   id: Int!
   lastName: String!
-  posts: [Post!]!
+  posts(after: PostWhereUniqueInput, before: PostWhereUniqueInput, first: Int, last: Int, skip: Int): [Post!]!
   receivedFriendInvitations(after: FriendStatusWhereUniqueInput, before: FriendStatusWhereUniqueInput, first: Int, last: Int, skip: Int): [FriendStatus!]!
   sentFriendInvitations(after: FriendStatusWhereUniqueInput, before: FriendStatusWhereUniqueInput, first: Int, last: Int, skip: Int): [FriendStatus!]!
 }
