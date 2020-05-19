@@ -1,16 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useApolloClient, useMutation } from "@apollo/client";
 import { SIGN_UP } from "../../queries";
-import {
-  Field,
-  Form,
-  Formik,
-  FormikHelpers,
-  FormikProps,
-  FormikState,
-} from "formik";
+import { Field, Form, Formik } from "formik";
 import * as Yup from "yup";
 import DateField from "./DateField";
+import RadioField from "./RadioField";
 
 enum Gender {
   Female = "FEMALE",
@@ -83,47 +77,7 @@ function SignUpForm() {
             placeholder="Confirm password"
           />
           <DateField name="birthday" />
-          <Field
-            name="gender"
-            placeholder="Gender"
-            component={({ field }: any) => (
-              <>
-                <div>
-                  <input
-                    {...field}
-                    id="female"
-                    value="FEMALE"
-                    checked={field.value === "FEMALE"}
-                    name="gender"
-                    type="radio"
-                  />
-                  <label htmlFor="female">Female</label>
-                </div>
-                <div>
-                  <input
-                    {...field}
-                    id="male"
-                    value="MALE"
-                    checked={field.value === "MALE"}
-                    name="gender"
-                    type="radio"
-                  />
-                  <label htmlFor="male">Male</label>
-                </div>
-                <div>
-                  <input
-                    {...field}
-                    id="other"
-                    value="OTHER"
-                    checked={field.value === "OTHER"}
-                    name="gender"
-                    type="radio"
-                  />
-                  <label htmlFor="other">Other</label>
-                </div>
-              </>
-            )}
-          />
+          <RadioField name="gender" />
           <button type="submit" disabled={isSubmitting}>
             submit
           </button>

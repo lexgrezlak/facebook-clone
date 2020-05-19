@@ -25,7 +25,8 @@ export const SIGN_UP = gql`
       birthday: $birthday
       gender: $gender
     ) {
-      token
+      firstName
+      lastName
     }
   }
 `;
@@ -33,8 +34,16 @@ export const SIGN_UP = gql`
 export const SIGN_IN = gql`
   mutation SignIn($email: String!, $password: String!) {
     signIn(email: $email, password: $password) {
-      token
+      firstName
+      lastName
+      email
     }
+  }
+`;
+
+export const SIGN_OUT = gql`
+  mutation SignOut {
+    signOut
   }
 `;
 
@@ -68,8 +77,10 @@ export const CREATE_POST = gql`
       id
       content
       author {
-        email
+        firstName
+        lastName
       }
+      createdAt
     }
   }
 `;

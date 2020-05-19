@@ -7,30 +7,21 @@ import {
   createHttpLink,
   InMemoryCache,
 } from "@apollo/client";
-import { setContext } from "@apollo/link-context";
+import { BrowserRouter } from "react-router-dom";
 
-const authLink = setContext((_, { headers }) => {
-  const token = localStorage.getItem("token");
-  const authorization = token ? `Bearer ${token}` : "";
-
-  return {
-    headers: {
-      ...headers,
-      authorization,
-    },
-  };
-});
-
-const httpLink = createHttpLink({ uri: "/graphql" });
+const cache = new InMemoryCache();
+const link = createHttpLink({ uri: "/graphql", credentials: "same-origin" });
 
 const client = new ApolloClient({
-  cache: new InMemoryCache(),
-  link: authLink.concat(httpLink),
+  cache,
+  link,
 });
 
 ReactDOM.render(
-  <ApolloProvider client={client}>
-    <App />
-  </ApolloProvider>,
+  <BrowserRouter>
+    <ApolloProvider client={client}>
+      <App />
+    </ApolloProvider>
+  </BrowserRouter>,
   document.getElementById("root")
 );

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useApolloClient, useMutation } from "@apollo/client";
-import { CREATE_POST, GET_ME } from "../../queries";
+import { CREATE_POST, GET_FEED, GET_ME } from "../../queries";
 
 function CreatePostForm() {
   const client = useApolloClient();
@@ -12,11 +12,37 @@ function CreatePostForm() {
   });
 
   const data = client.readQuery({ query: GET_ME });
-  const { firstName } = data.me;
+  const { firstName, lastName } = data.me;
 
-  function handleSubmit(event: React.FormEvent) {
+  async function handleSubmit(event: React.FormEvent) {
     event.preventDefault();
-    createPost({ variables: { content } });
+    createPost({
+      variables: { content },
+      optimisticResponse: {
+        __typename: "Mutation",
+        createPost: {
+          __typename: "Post",
+          author: {
+            firstName,
+            lastName,
+            __typename: "User",
+          },
+          content,
+          createdAt: new Date(),
+          id: 100000 + Math.random() * 999999,
+        },
+      },
+      update: (store, { data: { createPost } }) => {
+        const data = store.readQuery({ query: GET_FEED }) as any;
+        store.writeQuery({
+          query: GET_FEED,
+          data: {
+            ...data,
+            feed: [createPost, ...data.feed],
+          },
+        });
+      },
+    });
     setContent("");
   }
 
