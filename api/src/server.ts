@@ -7,7 +7,7 @@ import { PORT } from "./config";
 import { permissions } from "./permissions";
 import { applyMiddleware } from "graphql-middleware";
 import cookieParser from "cookie-parser";
-import { authorization } from "./utils/utils";
+import { authorization } from "./utils/authorization";
 
 const app = express();
 app.use(cookieParser());

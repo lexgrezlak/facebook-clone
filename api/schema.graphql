@@ -45,7 +45,6 @@ input PostWhereUniqueInput {
 }
 
 type Query {
-  allUsers: [User!]!
   feed: [Post!]!
   me: User
 }

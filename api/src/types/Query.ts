@@ -16,13 +16,6 @@ export const Query = objectType({
       },
     });
 
-    t.list.field("allUsers", {
-      type: "User",
-      resolve: (_parent, _args, context) => {
-        return context.prisma.user.findMany();
-      },
-    });
-
     t.list.field("feed", {
       type: "Post",
       resolve: (_parent, _args, context) => {
