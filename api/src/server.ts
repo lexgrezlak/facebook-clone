@@ -6,8 +6,13 @@ import cors from "cors";
 import { PORT } from "./config";
 import { permissions } from "./permissions";
 import { applyMiddleware } from "graphql-middleware";
+import cookieParser from "cookie-parser";
+import { authorization } from "./utils/utils";
 
 const app = express();
+app.use(cookieParser());
+app.use(authorization());
+app.use(cors({ origin: "localhost:3000", credentials: true }));
 
 const server = new ApolloServer({
   schema: applyMiddleware(schema, permissions),
@@ -17,8 +22,9 @@ const server = new ApolloServer({
 });
 
 server.applyMiddleware({ app, path: "/graphql" });
-app.use(cors());
 
 app.listen({ port: PORT }, () => {
   console.log(`Server ready at http://localhost:${PORT}`);
 });
+
+export { server };
