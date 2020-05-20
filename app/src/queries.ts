@@ -121,3 +121,12 @@ export const GET_INVITATIONS = gql`
     }
   }
 `;
+
+export const GET_FRIENDS = gql`
+  query Friends($id: Int) {
+    friends(id: $id) {
+      firstName
+      lastName
+    }
+  }
+`;
