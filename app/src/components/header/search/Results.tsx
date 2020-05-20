@@ -23,26 +23,8 @@ function Results({ users }: Props) {
     },
   });
 
-  const [acceptInvitation] = useMutation(ACCEPT_INVITATION, {
-    onError: (error) => {
-      console.log(error.graphQLErrors[0].message);
-    },
-  });
-
-  const { data, loading } = useQuery(GET_INVITATIONS, {
-    onError: (error) => {
-      console.log(error.graphQLErrors[0].message);
-    },
-  });
-
-  console.log(data, loading);
   async function addFriend(id: number) {
     const res = await sendInvitation({ variables: { id } });
-    console.log(res);
-  }
-
-  async function acceptFriend(id: number) {
-    const res = await acceptInvitation({ variables: { id } });
     console.log(res);
   }
 
@@ -54,17 +36,6 @@ function Results({ users }: Props) {
             {`${user.firstName} ${user.lastName}`}
             <button type="button" onClick={() => addFriend(user.id)}>
               Add friend
-            </button>
-          </li>
-        ))}
-      </ul>
-      <ul>
-        {data?.invitations.map((invitation: any) => (
-          <li key={invitation.id}>
-            <button type="button" onClick={() => acceptFriend(invitation.id)}>
-              Accept invitation {JSON.stringify(invitation.id)} from{" "}
-              {JSON.stringify(invitation.fromUserId)} to{" "}
-              {JSON.stringify(invitation.toUserId)}
             </button>
           </li>
         ))}
