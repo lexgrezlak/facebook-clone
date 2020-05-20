@@ -1,7 +1,5 @@
 import { intArg, objectType, stringArg } from "@nexus/schema";
 import { compare, hash } from "bcryptjs";
-import { sign } from "jsonwebtoken";
-import { JWT_SECRET } from "../config";
 import {
   requiredDateTimeArg,
   requiredGenderArg,
@@ -9,7 +7,6 @@ import {
 } from "./helpers";
 import { AuthenticationError, UserInputError } from "apollo-server-express";
 import { clearCookie, generateToken, setCookie } from "../utils/cookies";
-import { context } from "../context";
 
 export const Mutation = objectType({
   name: "Mutation",

@@ -44,6 +44,7 @@ input PostWhereUniqueInput {
 
 type Query {
   feed: [Post!]!
+  friends(id: Int): [User!]
   invitations: [FriendStatus!]!
   me: User
   users(filter: String!): [User!]!

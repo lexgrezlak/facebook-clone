@@ -1,4 +1,4 @@
-import { objectType } from "@nexus/schema";
+import { intArg, objectType } from "@nexus/schema";
 import { requiredStringArg } from "./helpers";
 import { trimAndCapitalizeSentence } from "../utils/helpers";
 
@@ -45,6 +45,35 @@ export const Query = objectType({
             ],
           },
         });
+      },
+    });
+
+    t.list.field("friends", {
+      type: "User",
+      nullable: true,
+      args: { id: intArg({ nullable: true }) },
+      resolve: async (_parent, args, context) => {
+        const userId = context.req.userId;
+        const filteredStatuses = await context.prisma.friendStatus.findMany({
+          where: {
+            statusId: 1,
+            OR: [{ toUserId: userId }, { fromUserId: userId }],
+          },
+        });
+
+        const friendsIds = filteredStatuses.map((status) =>
+          status.fromUserId === userId ? status.toUserId : status.fromUserId
+        );
+
+        const objectIds = friendsIds.map((id) => ({ id }));
+
+        const friends = await context.prisma.user.findMany({
+          where: {
+            OR: objectIds,
+          },
+        });
+
+        return friends;
       },
     });
 
