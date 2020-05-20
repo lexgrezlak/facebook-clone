@@ -44,7 +44,8 @@ function SignUpForm() {
     ...signUpData
   }: SignUpFormFields) {
     console.log(signUpData);
-    return signUp({ variables: { ...signUpData } });
+    const res = await signUp({ variables: { ...signUpData } });
+    console.log(res);
   }
 
   const initialValues: SignUpFormFields = {
@@ -62,7 +63,7 @@ function SignUpForm() {
       initialValues={initialValues}
       onSubmit={handleSubmit}
       validationSchema={Yup.object().shape({
-        passwordConfirm: Yup.string().min(8, "Too short"),
+        // passwordConfirm: Yup.string().min(8, "Too short"),
       })}
     >
       {({ isSubmitting }) => (

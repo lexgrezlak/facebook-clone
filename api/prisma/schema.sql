@@ -21,11 +21,13 @@ create table "public"."User"
 create table "public"."FriendStatus"
 (
     id serial primary key not null,
-    "fromUserId" integer not null references "public"."User",
-    "toUserId" integer not null references "public"."User",
+    "fromUserId" integer unique not null,
+    foreign key ("fromUserId") references "public"."User" (id),
+    "toUserId" integer unique not null,
+    foreign key ("toUserId") references "public"."User" (id),
     "statusId" integer not null default 2,
-    "sentTime" date not null default now(),
-    "responseTime" date
+    "sentTime" timestamp not null default now(),
+    "responseTime" timestamp
 );
 
 

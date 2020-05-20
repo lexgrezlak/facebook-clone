@@ -84,3 +84,40 @@ export const CREATE_POST = gql`
     }
   }
 `;
+
+export const GET_USERS = gql`
+  query Users($filter: String!) {
+    users(filter: $filter) {
+      id
+      firstName
+      lastName
+    }
+  }
+`;
+
+export const SEND_INVITATION = gql`
+  mutation SendInvitation($id: Int!) {
+    sendInvitation(id: $id) {
+      statusId
+    }
+  }
+`;
+
+export const ACCEPT_INVITATION = gql`
+  mutation AcceptInvitation($id: Int!) {
+    acceptInvitation(id: $id) {
+      statusId
+    }
+  }
+`;
+
+export const GET_INVITATIONS = gql`
+  query Invitations {
+    invitations {
+      id
+      fromUserId
+      toUserId
+      statusId
+    }
+  }
+`;
