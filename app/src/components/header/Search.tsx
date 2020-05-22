@@ -4,7 +4,6 @@ import { GET_USERS } from "../../queries";
 import Results from "./search/Results";
 import Popper from "@material-ui/core/Popper";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
-import MyTextField from "../MyTextField";
 import { TextField } from "@material-ui/core";
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -13,16 +12,28 @@ const useStyles = makeStyles((theme: Theme) =>
       maxWidth: "400px",
       margin: "0 auto",
     },
-    popper: {
-      // width: "100%",
-    },
   })
 );
 
+interface User {
+  id: number;
+  firstName: string;
+  lastName: string;
+}
+
+interface UsersData {
+  users: User[];
+}
+
+interface UsersVars {
+  filter: string;
+}
+
 function Search() {
   const classes = useStyles();
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [filter, setFilter] = useState("");
-  const { data } = useQuery(GET_USERS, {
+  const { data } = useQuery<UsersData, UsersVars>(GET_USERS, {
     variables: { filter },
     skip: !filter,
     onError: (error) => {
@@ -30,18 +41,14 @@ function Search() {
     },
   });
 
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-
   const handleOpen = (event: React.MouseEvent<HTMLElement>) => {
     console.log(event.currentTarget);
     setAnchorEl(event.currentTarget);
   };
 
-  const handleClose = (event: React.MouseEvent<HTMLElement>) => {
+  const handleClose = () => {
     setAnchorEl(null);
   };
-  const open = Boolean(anchorEl);
-  const id = open ? "simple-popper" : undefined;
 
   return (
     <div
@@ -55,17 +62,14 @@ function Search() {
         id="search"
         value={filter}
         onChange={(event) => setFilter(event.target.value)}
-        placeholder="Search"
+        placeholder="Search someone"
         autoComplete="off"
       />
-      <Popper
-        id={id}
-        open={open}
-        anchorEl={anchorEl}
-        className={classes.popper}
-      >
-        {data?.users ? <Results users={data.users} /> : <div>nothing yet</div>}
-      </Popper>
+      {data?.users && (
+        <Popper id="search-popper" open={true} anchorEl={anchorEl}>
+          <Results users={data.users} />
+        </Popper>
+      )}
     </div>
   );
 }
