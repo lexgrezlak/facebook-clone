@@ -31,27 +31,12 @@ const useStyles = makeStyles((theme) =>
 
 function Results({ users }: Props) {
   const classes = useStyles();
-  const [sendInvitation] = useMutation(SEND_INVITATION, {
-    onError: (error) => {
-      console.log(error.graphQLErrors[0].message);
-    },
-  });
-
-  async function addFriend(id: number) {
-    const res = await sendInvitation({ variables: { id } });
-    console.log(res);
-  }
 
   return (
     <div className={classes.wrapper}>
       <ul>
         {users.map((user) => (
-          <li key={user.id}>
-            {`${user.firstName} ${user.lastName}`}
-            <button type="button" onClick={() => addFriend(user.id)}>
-              Add friend
-            </button>
-          </li>
+          <li key={user.id}>{`${user.firstName} ${user.lastName}`}</li>
         ))}
       </ul>
     </div>
