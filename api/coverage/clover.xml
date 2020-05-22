@@ -90,7 +90,7 @@
         <line num="99" count="0" type="stmt"/>
         <line num="100" count="0" type="stmt"/>
       </file>
-      <file name="Post.ts" path="/Users/admin/workspace/facebook-clone/api/src/types/Post.ts">
+      <file name="PostItem.ts" path="/Users/admin/workspace/facebook-clone/api/src/types/PostItem.ts">
         <metrics statements="6" coveredstatements="6" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
         <line num="1" count="2" type="stmt"/>
         <line num="3" count="2" type="stmt"/>

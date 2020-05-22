@@ -1,6 +1,6 @@
 drop table public."User" cascade;
 drop table public."FriendStatus" cascade;
-drop table public."Post" cascade;
+drop table public."PostItem" cascade;
 drop table public."Profile" cascade;
 drop type "Gender";
 drop view friendships;

@@ -47,6 +47,7 @@ type Query {
   friends(id: Int): [User!]
   invitations: [FriendStatus!]!
   me: User
+  user(where: UserWhereUniqueInput!): User
   users(filter: String!): [User!]!
 }
 
@@ -60,4 +61,9 @@ type User {
   posts(after: PostWhereUniqueInput, before: PostWhereUniqueInput, first: Int, last: Int, skip: Int): [Post!]!
   receivedFriendInvitations: FriendStatus
   sentFriendInvitations: FriendStatus
+}
+
+input UserWhereUniqueInput {
+  email: String
+  id: Int
 }

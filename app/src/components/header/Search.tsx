@@ -4,7 +4,7 @@ import { GET_USERS } from "../../queries";
 import Results from "./search/Results";
 import Popper from "@material-ui/core/Popper";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
-import { TextField } from "@material-ui/core";
+import { CircularProgress, TextField } from "@material-ui/core";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -42,7 +42,6 @@ function Search() {
   });
 
   const handleOpen = (event: React.MouseEvent<HTMLElement>) => {
-    console.log(event.currentTarget);
     setAnchorEl(event.currentTarget);
   };
 
@@ -65,9 +64,9 @@ function Search() {
         placeholder="Search someone"
         autoComplete="off"
       />
-      {data?.users && (
+      {filter && (
         <Popper id="search-popper" open={true} anchorEl={anchorEl}>
-          <Results users={data.users} />
+          {data?.users ? <Results users={data.users} /> : <CircularProgress />}
         </Popper>
       )}
     </div>

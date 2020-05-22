@@ -132,3 +132,22 @@ export const GET_FRIENDS = gql`
     }
   }
 `;
+
+export const GET_USER = gql`
+  query User($id: Int!) {
+    user(where: { id: $id }) {
+      firstName
+      lastName
+      posts {
+        id
+        content
+        createdAt
+        author {
+          id
+          firstName
+          lastName
+        }
+      }
+    }
+  }
+`;

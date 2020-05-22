@@ -48,6 +48,8 @@ export const Query = objectType({
       },
     });
 
+    t.crud.user();
+
     t.list.field("friends", {
       type: "User",
       nullable: true,

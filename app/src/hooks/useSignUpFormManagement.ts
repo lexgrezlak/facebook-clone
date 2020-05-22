@@ -2,7 +2,7 @@ import { useApolloClient, useMutation } from "@apollo/client";
 import { SIGN_UP } from "../queries";
 import * as Yup from "yup";
 
-enum Gender {
+export enum Gender {
   Female = "FEMALE",
   Male = "MALE",
   Other = "OTHER",
