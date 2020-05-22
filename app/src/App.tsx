@@ -5,6 +5,7 @@ import SignInOrUp from "./pages/SignInOrUp";
 import Home from "./pages/Home";
 import { Route, Routes } from "react-router-dom";
 import Header from "./components/Header";
+import Profile from "./pages/Profile";
 
 function App() {
   const { data, loading } = useQuery(GET_ME, {
@@ -22,6 +23,7 @@ function App() {
       <Header />
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="users/:id" element={<Profile />} />
       </Routes>
     </>
   );

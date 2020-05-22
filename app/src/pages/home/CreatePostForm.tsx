@@ -25,6 +25,7 @@ function CreatePostForm() {
           author: {
             firstName,
             lastName,
+            id: 100000 + Math.random() * 99999,
             __typename: "User",
           },
           content,

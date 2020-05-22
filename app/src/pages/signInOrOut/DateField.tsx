@@ -1,21 +1,29 @@
 import React from "react";
-import { useField, useFormikContext } from "formik";
-import DatePicker from "react-datepicker";
+import { useField } from "formik";
+import "react-datepicker/dist/react-datepicker.css";
+import { TextField } from "@material-ui/core";
 
 interface Props {
   name: string;
 }
 
 function DateField({ ...props }: Props) {
-  const { setFieldValue } = useFormikContext();
-  const [field] = useField(props);
+  const [field, { error, touched }] = useField(props);
+
+  const isError = (error && touched) as boolean;
 
   return (
-    <DatePicker
-      {...field}
+    <TextField
+      fullWidth
+      margin="normal"
+      variant="outlined"
+      id={props.name}
+      autoComplete={"date"}
+      type={"date"}
+      error={isError}
+      helperText={isError ? error : ""}
       {...props}
-      selected={(field.value && new Date(field.value)) || null}
-      onChange={(value) => setFieldValue(field.name, value)}
+      {...field}
     />
   );
 }

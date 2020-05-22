@@ -3,7 +3,7 @@ import { useMutation, useQuery } from "@apollo/client";
 import { ACCEPT_INVITATION, GET_INVITATIONS } from "../queries";
 
 function FriendInvitations() {
-  const { data, loading } = useQuery(GET_INVITATIONS, {
+  const { data } = useQuery(GET_INVITATIONS, {
     onError: (error) => {
       console.log(error.graphQLErrors[0].message);
     },

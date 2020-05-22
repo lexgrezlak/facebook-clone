@@ -63,6 +63,7 @@ export const GET_FEED = gql`
       id
       content
       author {
+        id
         firstName
         lastName
       }
@@ -125,6 +126,7 @@ export const GET_INVITATIONS = gql`
 export const GET_FRIENDS = gql`
   query Friends($id: Int) {
     friends(id: $id) {
+      id
       firstName
       lastName
     }

@@ -11,7 +11,7 @@ function FriendList() {
   return (
     <ul>
       {data?.friends?.map((friend: any) => (
-        <li>friend.firstName</li>
+        <li key={friend.id}>{friend.firstName}</li>
       ))}
     </ul>
   );

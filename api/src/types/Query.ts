@@ -52,7 +52,7 @@ export const Query = objectType({
       type: "User",
       nullable: true,
       args: { id: intArg({ nullable: true }) },
-      resolve: async (_parent, args, context) => {
+      resolve: async (_parent, _args, context) => {
         const userId = context.req.userId;
         const filteredStatuses = await context.prisma.friendStatus.findMany({
           where: {

@@ -5,6 +5,8 @@ import {
   GET_INVITATIONS,
   SEND_INVITATION,
 } from "../../../queries";
+import { createStyles } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
 
 interface User {
   firstName: string;
@@ -16,7 +18,19 @@ interface Props {
   users: User[];
 }
 
+const useStyles = makeStyles((theme) =>
+  createStyles({
+    wrapper: {
+      border: "1px solid",
+      padding: theme.spacing(1),
+      backgroundColor: theme.palette.background.paper,
+      width: "100%",
+    },
+  })
+);
+
 function Results({ users }: Props) {
+  const classes = useStyles();
   const [sendInvitation] = useMutation(SEND_INVITATION, {
     onError: (error) => {
       console.log(error.graphQLErrors[0].message);
@@ -29,7 +43,7 @@ function Results({ users }: Props) {
   }
 
   return (
-    <div>
+    <div className={classes.wrapper}>
       <ul>
         {users.map((user) => (
           <li key={user.id}>

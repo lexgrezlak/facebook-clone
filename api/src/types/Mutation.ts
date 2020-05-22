@@ -7,6 +7,7 @@ import {
 } from "./helpers";
 import { AuthenticationError, UserInputError } from "apollo-server-express";
 import { clearCookie, generateToken, setCookie } from "../utils/cookies";
+import { trimAndCapitalizeSentence } from "../utils/helpers";
 
 export const Mutation = objectType({
   name: "Mutation",
@@ -26,13 +27,21 @@ export const Mutation = objectType({
         // @ts-ignore
         gender: requiredGenderArg(),
       },
-      resolve: async (_parent, { password, email, ...rest }, context) => {
+      resolve: async (
+        _parent,
+        { firstName, lastName, password, email, ...rest },
+        context
+      ) => {
         email = email.toLowerCase();
+        firstName = trimAndCapitalizeSentence(firstName);
+        lastName = trimAndCapitalizeSentence(lastName);
 
         const passwordHash = await hash(password, 10);
         const user = await context.prisma.user.create({
           data: {
             passwordHash,
+            firstName,
+            lastName,
             email,
             ...rest,
           },
