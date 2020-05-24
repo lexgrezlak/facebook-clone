@@ -9,13 +9,13 @@ import { GET_ME } from "../queries";
 
 function Header() {
   const client = useApolloClient();
-  const me = client.readQuery({ query: GET_ME });
-  console.log(me);
+  const data = client.readQuery({ query: GET_ME });
+  const { firstName, lastName } = data.me;
   return (
     <div>
       <Link to="/">Home</Link>
       <Typography>
-        FN: {me.firstName} LN: {me.lastName}
+        FN: {firstName} LN: {lastName}
       </Typography>
       <Search />
       <FriendInvitations />
