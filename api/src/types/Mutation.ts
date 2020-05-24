@@ -37,6 +37,7 @@ export const Mutation = objectType({
         lastName = trimAndCapitalizeSentence(lastName);
 
         const passwordHash = await hash(password, 10);
+        console.log("dsadsa");
         const user = await context.prisma.user.create({
           data: {
             passwordHash,

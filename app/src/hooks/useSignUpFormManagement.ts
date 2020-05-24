@@ -14,7 +14,7 @@ interface SignUpFormFields {
   email: string;
   password: string;
   passwordConfirm: string;
-  birthday: Date;
+  birthday: string;
   gender: Gender | null;
 }
 
@@ -28,9 +28,12 @@ export const useSignUpFormManagement = () => {
 
   async function handleSubmit({
     passwordConfirm,
+    birthday,
     ...signUpData
   }: SignUpFormFields) {
-    await signUp({ variables: { ...signUpData } });
+    await signUp({
+      variables: { ...signUpData, birthday: new Date(birthday) },
+    });
     await client.resetStore();
   }
 
@@ -40,7 +43,7 @@ export const useSignUpFormManagement = () => {
     email: "",
     password: "",
     passwordConfirm: "",
-    birthday: new Date("01-01-2000"),
+    birthday: "2000-01-01",
     gender: null,
   };
 

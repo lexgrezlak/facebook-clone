@@ -18,7 +18,7 @@ model FriendStatus {
   receiver   User      @relation("FriendStatus_toUserIdToUser", fields: [toUserId], references: [id])
 }
 
-model PostItem {
+model Post {
   authorId  Int
   content   String?
   createdAt DateTime @default(now())
@@ -43,7 +43,7 @@ model User {
   passwordHash                               String
   sentFriendInvitations FriendStatus? @relation("FriendStatus_fromUserIdToUser")
   receivedFriendInvitations   FriendStatus? @relation("FriendStatus_toUserIdToUser")
-  posts                                       PostItem[]
+  posts                                       Post[]
   profile                                    Profile?
 }
 
