@@ -139,7 +139,7 @@ export const Mutation = objectType({
         id: intArg({ required: true }),
       },
       resolve: async (_parent, { id }, context) => {
-        const meId = context.req.userId;
+        const { userId } = context.req;
 
         // error while trying
         // context.prisma.friendStatus.update({fromUserId: ..., toUserId: ...}, data: {...})
@@ -148,13 +148,40 @@ export const Mutation = objectType({
         const data = await context.prisma.friendStatus.findOne({
           where: { id },
         });
-        if (data!.toUserId !== meId)
+        if (data!.toUserId !== userId)
           return new Error("It is not your invitation");
 
         return context.prisma.friendStatus.update({
           where: { id: data!.id },
           data: { responseTime: new Date(), statusId: 1 },
         });
+      },
+    });
+
+    t.field("removeFriendship", {
+      type: "Boolean",
+      nullable: true,
+      args: {
+        id: intArg({ required: true }),
+      },
+      resolve: async (_parent, { id }, context) => {
+        const { userId } = context.req;
+
+        try {
+          await context.prisma.friendStatus.deleteMany({
+            where: {
+              statusId: 1,
+              OR: [
+                { fromUserId: userId, toUserId: id },
+                { fromUserId: id, toUserId: userId },
+              ],
+            },
+          });
+          return true;
+        } catch (error) {
+          console.log(error);
+          return false;
+        }
       },
     });
   },

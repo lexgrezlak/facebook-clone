@@ -34,7 +34,7 @@ interface Friend {
 
 function Profile() {
   const { id } = useParams();
-  const { data, client } = useQuery<UserData, UserVars>(GET_USER, {
+  const { data } = useQuery<UserData, UserVars>(GET_USER, {
     onError: (error) => {
       console.log(error.graphQLErrors[0].message);
     },
@@ -43,10 +43,7 @@ function Profile() {
 
   if (!data?.user) return <CircularProgress />;
 
-  const user = data?.user;
-
-  // const me = client.readQuery({ query: GET_ME });
-  // const friendsIds = me.friends.map((friend: Friend) => friend.id);
+  const { user } = data;
 
   return (
     <div>
@@ -54,7 +51,7 @@ function Profile() {
         <Typography>
           {user.firstName} {user.lastName}
         </Typography>
-        {/*{!friendsIds.includes(id) && <AddFriendButton id={Number(id)} />}*/}
+        <AddFriendButton id={Number(id)} />
       </div>
       <div>
         <ul>

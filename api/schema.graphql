@@ -25,6 +25,7 @@ type Mutation {
   acceptInvitation(id: Int!): FriendStatus
   createPost(content: String!): Post
   deletePost(id: Int!): Post
+  removeFriendship(id: Int!): Boolean
   sendInvitation(id: Int!): FriendStatus
   signIn(email: String!, password: String!): User!
   signOut: Boolean!
@@ -46,6 +47,7 @@ type Query {
   feed: [Post!]!
   friends(id: Int): [User!]
   invitations: [FriendStatus!]!
+  isFriend(id: Int!): Boolean
   me: User
   user(where: UserWhereUniqueInput!): User
   users(filter: String!): [User!]!

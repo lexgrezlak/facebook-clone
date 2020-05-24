@@ -82,10 +82,30 @@ export const Query = objectType({
     t.list.field("invitations", {
       type: "FriendStatus",
       resolve: async (_parent, _args, context) => {
-        const userId = context.req.userId;
+        const { userId } = context.req;
         return context.prisma.friendStatus.findMany({
           where: { toUserId: userId, statusId: 2 },
         });
+      },
+    });
+
+    t.field("isFriend", {
+      type: "Boolean",
+      nullable: true,
+      args: { id: intArg({ nullable: false }) },
+      resolve: async (_parent, { id }, context) => {
+        const { userId } = context.req;
+        const list = await context.prisma.friendStatus.findMany({
+          where: {
+            statusId: 1,
+            OR: [
+              { fromUserId: userId, toUserId: id },
+              { fromUserId: id, toUserId: userId },
+            ],
+          },
+        });
+
+        return list.length > 0;
       },
     });
   },

@@ -151,3 +151,15 @@ export const GET_USER = gql`
     }
   }
 `;
+
+export const GET_IS_FRIEND = gql`
+  query IsFriend($id: Int!) {
+    isFriend(id: $id)
+  }
+`;
+
+export const REMOVE_FRIENDSHIP = gql`
+  mutation RemoveFriendship($id: Int!) {
+    removeFriendship(id: $id)
+  }
+`;
