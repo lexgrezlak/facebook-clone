@@ -28,10 +28,6 @@ interface UserVars {
   id: number;
 }
 
-interface Friend {
-  id: number;
-}
-
 function Profile() {
   const { id } = useParams();
   const { data } = useQuery<UserData, UserVars>(GET_USER, {

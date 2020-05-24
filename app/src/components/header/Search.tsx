@@ -6,7 +6,7 @@ import Popper from "@material-ui/core/Popper";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import { CircularProgress, Popover, TextField } from "@material-ui/core";
 import Autocomplete from "@material-ui/lab/Autocomplete";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -43,7 +43,7 @@ function Search() {
   });
 
   const [open, setOpen] = useState(false);
-
+  const navigate = useNavigate();
   return (
     <Autocomplete
       className={classes.wrapper}
@@ -58,13 +58,7 @@ function Search() {
       getOptionLabel={(option) => `${option.firstName} ${option.lastName}`}
       options={data?.users || []}
       loading={loading}
-      renderOption={(user) => (
-        <>
-          <Link to={`/users/${user.id}`}>
-            {user.firstName} {user.lastName}
-          </Link>
-        </>
-      )}
+      onChange={(event: any, user: any) => navigate(`/users/${user.id}`)}
       noOptionsText={"User not found"}
       renderInput={(params) => (
         <TextField

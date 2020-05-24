@@ -91,7 +91,7 @@ export const Query = objectType({
 
     t.field("isFriend", {
       type: "Boolean",
-      nullable: true,
+      nullable: false,
       args: { id: intArg({ nullable: false }) },
       resolve: async (_parent, { id }, context) => {
         const { userId } = context.req;
