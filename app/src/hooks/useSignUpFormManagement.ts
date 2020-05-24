@@ -1,12 +1,7 @@
 import { useApolloClient, useMutation } from "@apollo/client";
 import { SIGN_UP } from "../queries";
 import * as Yup from "yup";
-
-export enum Gender {
-  Female = "FEMALE",
-  Male = "MALE",
-  Other = "OTHER",
-}
+import { Gender } from "../../../common/types";
 
 interface SignUpFormFields {
   firstName: string;

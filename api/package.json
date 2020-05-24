@@ -51,10 +51,9 @@
     "typescript": "^3.9.2"
   },
   "dependencies": {
-    "@nexus/schema": "^0.13.1",
-    "@prisma/client": "^2.0.0-beta.5",
     "apollo-server-express": "^2.13.1",
     "bcryptjs": "^2.4.3",
+    "class-validator": "^0.12.2",
     "cookie-parser": "^1.4.5",
     "cors": "^2.8.5",
     "express": "^4.17.1",
@@ -62,6 +61,10 @@
     "graphql-middleware": "^4.0.2",
     "graphql-shield": "^7.3.0",
     "jsonwebtoken": "^8.5.1",
-    "nexus-prisma": "^0.13.0"
+    "pg": "^8.2.1",
+    "reflect-metadata": "^0.1.13",
+    "sequelize": "^5.21.10",
+    "type-graphql": "^1.0.0-rc.2",
+    "typeorm": "^0.2.25"
   }
 }

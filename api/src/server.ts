@@ -1,30 +1,24 @@
-import { ApolloServer } from "apollo-server-express";
-import { context } from "./context";
-import { schema } from "./schema";
+import "reflect-metadata";
 import express from "express";
 import cors from "cors";
 import { PORT } from "./config";
-import { permissions } from "./permissions";
 import { applyMiddleware } from "graphql-middleware";
 import cookieParser from "cookie-parser";
 import { authorization } from "./utils/authorization";
+import { createTypeORMConnection } from "./utils/createConnection";
+import { createServer } from "./createServer";
 
-const app = express();
-app.use(cookieParser());
-app.use(authorization());
-app.use(cors({ origin: "localhost:3000", credentials: true }));
+(async () => {
+  const server = await createServer();
+  await createTypeORMConnection();
 
-const server = new ApolloServer({
-  schema: applyMiddleware(schema, permissions),
-  context,
-  playground: true,
-  introspection: true,
-});
+  const app = express();
+  app.use(cors({ origin: "localhost:3000", credentials: true }));
+  app.use(cookieParser());
+  app.use(authorization());
+  server.applyMiddleware({ app, cors: false });
 
-server.applyMiddleware({ app, path: "/graphql" });
-
-app.listen({ port: PORT }, () => {
-  console.log(`Server ready at http://localhost:${PORT}`);
-});
-
-export { server };
+  app.listen({ port: PORT }, () => {
+    console.log(`Server ready at http://localhost:${PORT}`);
+  });
+})();

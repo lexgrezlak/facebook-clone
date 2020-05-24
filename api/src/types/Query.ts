@@ -1,6 +1,6 @@
 import { intArg, objectType } from "@nexus/schema";
 import { requiredStringArg } from "./helpers";
-import { trimAndCapitalizeSentence } from "../utils/helpers";
+import { trimAndCapitalizeSentence } from "../utils/createConnection";
 
 export const Query = objectType({
   name: "Query",

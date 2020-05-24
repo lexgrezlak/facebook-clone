@@ -128,7 +128,7 @@
         <line num="13" count="4" type="stmt"/>
         <line num="14" count="4" type="stmt"/>
       </file>
-      <file name="helpers.ts" path="/Users/admin/workspace/facebook-clone/api/src/types/helpers.ts">
+      <file name="createConnection.ts" path="/Users/admin/workspace/facebook-clone/api/src/types/createConnection.ts">
         <metrics statements="7" coveredstatements="7" conditionals="0" coveredconditionals="0" methods="3" coveredmethods="3"/>
         <line num="1" count="2" type="stmt"/>
         <line num="3" count="2" type="stmt"/>

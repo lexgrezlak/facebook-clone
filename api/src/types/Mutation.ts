@@ -7,7 +7,7 @@ import {
 } from "./helpers";
 import { AuthenticationError, UserInputError } from "apollo-server-express";
 import { clearCookie, generateToken, setCookie } from "../utils/cookies";
-import { trimAndCapitalizeSentence } from "../utils/helpers";
+import { trimAndCapitalizeSentence } from "../utils/createConnection";
 
 export const Mutation = objectType({
   name: "Mutation",

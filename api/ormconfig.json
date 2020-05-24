@@ -1,0 +1,51 @@
+[{
+  "name": "development",
+  "type": "postgres",
+  "host": "localhost",
+  "port": 5432,
+  "username": "postgres",
+  "password": "",
+  "database": "facebook-clone",
+  "synchronize": true,
+  "logging": false,
+  "entities": [
+    "src/entity/**/*.ts"
+  ],
+  "migrations": [
+    "src/migration/**/*.ts"
+  ],
+  "subscribers": [
+    "src/subscriber/**/*.ts"
+  ],
+  "cli": {
+    "entitiesDir": "src/entity",
+    "migrationsDir": "src/migration",
+    "subscribersDir": "src/subscriber"
+  }
+},
+{
+  "name": "test",
+  "type": "postgres",
+  "host": "localhost",
+  "port": 5432,
+  "username": "postgres",
+  "password": "",
+  "database": "facebook-clone-test",
+  "dropSchema": true,
+  "synchronize": true,
+  "logging": false,
+  "entities": [
+  "src/entity/**/*.ts"
+  ],
+  "migrations": [
+  "src/migration/**/*.ts"
+  ],
+  "subscribers": [
+  "src/subscriber/**/*.ts"
+  ],
+  "cli": {
+  "entitiesDir": "src/entity",
+  "migrationsDir": "src/migration",
+  "subscribersDir": "src/subscriber"
+  }
+}]

@@ -7,6 +7,12 @@ export const GET_ALL_USERS = gql`
     }
   }
 `;
+//
+// export const TEST_SIGN_UP = gql`
+//   mutation SignUp($email: String!, $password: String!) {
+//     signUp(email: $email, password: $password)
+//   }
+// `;
 
 export const SIGN_UP = gql`
   mutation SignUp(
@@ -15,7 +21,7 @@ export const SIGN_UP = gql`
     $email: String!
     $password: String!
     $birthday: DateTime!
-    $gender: Gender!
+    $gender: String!
   ) {
     signUp(
       firstName: $firstName
@@ -24,10 +30,7 @@ export const SIGN_UP = gql`
       password: $password
       birthday: $birthday
       gender: $gender
-    ) {
-      firstName
-      lastName
-    }
+    )
   }
 `;
 
