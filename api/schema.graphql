@@ -4,6 +4,14 @@
 
 scalar DateTime
 
+type File {
+  encoding: String!
+  filename: String!
+  id: ID!
+  mimetype: String!
+  url: String!
+}
+
 type FriendStatus {
   fromUserId: Int!
   id: Int!
@@ -29,12 +37,14 @@ type Mutation {
   acceptInvitation(id: Int!): FriendStatus
   createPost(content: String!): Post
   deletePost(id: Int!): Post
+  multiUpload(files: [Upload!]!): [File!]!
   removeFriendship(id: Int!): Boolean!
   removeRequest(id: Int!): Boolean!
   sendInvitation(id: Int!): FriendStatus
   signIn(email: String!, password: String!): User!
   signOut: Boolean!
   signUp(birthday: DateTime!, email: String!, firstName: String!, gender: Gender!, lastName: String!, password: String!): User!
+  singleUpload(file: Upload!): File!
 }
 
 type Post {
@@ -57,6 +67,9 @@ type Query {
   user(where: UserWhereUniqueInput!): User
   users(filter: String!): [User!]!
 }
+
+"""The `Upload` scalar type represents a file upload."""
+scalar Upload
 
 type User {
   birthday: DateTime!

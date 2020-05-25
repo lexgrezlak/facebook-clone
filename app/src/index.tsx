@@ -5,24 +5,34 @@ import {
   ApolloClient,
   ApolloProvider,
   createHttpLink,
+  from,
   InMemoryCache,
 } from "@apollo/client";
 import { BrowserRouter } from "react-router-dom";
 import { CssBaseline } from "@material-ui/core";
-const cache = new InMemoryCache();
-const link = createHttpLink({ uri: "/graphql", credentials: "same-origin" });
+import { createUploadLink } from "apollo-upload-client";
+
+// const httpLink = createHttpLink({
+//   uri: "/graphql",
+//   credentials: "same-origin",
+// });
+
+const uploadLink = createUploadLink({
+  uri: "/graphql",
+  credentials: "same-origin",
+}) as any;
 
 const client = new ApolloClient({
-  cache,
-  link,
+  cache: new InMemoryCache(),
+  link: uploadLink,
 });
 
 ReactDOM.render(
-  <BrowserRouter>
-    <ApolloProvider client={client}>
+  <ApolloProvider client={client}>
+    <BrowserRouter>
       <CssBaseline />
       <App />
-    </ApolloProvider>
-  </BrowserRouter>,
+    </BrowserRouter>
+  </ApolloProvider>,
   document.getElementById("root")
 );

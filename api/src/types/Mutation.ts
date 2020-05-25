@@ -1,4 +1,4 @@
-import { intArg, objectType, stringArg } from "@nexus/schema";
+import { arg, intArg, objectType, stringArg } from "@nexus/schema";
 import { compare, hash } from "bcryptjs";
 import {
   requiredDateTimeArg,
@@ -8,6 +8,7 @@ import {
 import { AuthenticationError, UserInputError } from "apollo-server-express";
 import { clearCookie, generateToken, setCookie } from "../utils/cookies";
 import { trimAndCapitalizeSentence } from "../utils/helpers";
+import { cloudinaryUploader } from "../../cloudinary";
 
 export const Mutation = objectType({
   name: "Mutation",
@@ -214,6 +215,26 @@ export const Mutation = objectType({
           return new Error(error);
         }
       },
+    });
+
+    t.field("singleUpload", {
+      type: "File",
+      args: {
+        file: arg({ type: "Upload", required: true }),
+      },
+      resolve: cloudinaryUploader.singleFileUploadResolver.bind(
+        cloudinaryUploader
+      ),
+    });
+
+    t.list.field("multiUpload", {
+      type: "File",
+      args: {
+        files: arg({ type: "Upload", required: true, list: true }),
+      },
+      resolve: cloudinaryUploader.singleFileUploadResolver.bind(
+        cloudinaryUploader
+      ),
     });
   },
 });

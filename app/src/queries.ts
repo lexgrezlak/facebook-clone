@@ -171,3 +171,11 @@ export const REMOVE_REQUEST = gql`
     removeRequest(id: $id)
   }
 `;
+
+export const SINGLE_UPLOAD = gql`
+  mutation SingleUpload($file: Upload!) {
+    singleUpload(file: $file) {
+      url
+    }
+  }
+`;
