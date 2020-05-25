@@ -1,10 +1,4 @@
 import React from "react";
-import { useMutation, useQuery } from "@apollo/client";
-import {
-  ACCEPT_INVITATION,
-  GET_INVITATIONS,
-  SEND_INVITATION,
-} from "../../../queries";
 import { createStyles } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 

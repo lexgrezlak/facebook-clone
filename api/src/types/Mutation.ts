@@ -119,16 +119,21 @@ export const Mutation = objectType({
       args: {
         id: intArg({ required: true }),
       },
-      resolve: (_parent, { id }, context) => {
+      resolve: async (_parent, { id: receiverId }, context) => {
         const senderId = context.req.userId;
-        if (senderId === id)
+        if (senderId === receiverId)
           return new UserInputError("You can't send an invitation to yourself");
-        return context.prisma.friendStatus.create({
-          data: {
-            sender: { connect: { id: senderId } },
-            receiver: { connect: { id } },
-          },
-        });
+
+        try {
+          return await context.prisma.friendStatus.create({
+            data: {
+              sender: { connect: { id: senderId } },
+              receiver: { connect: { id: receiverId } },
+            },
+          });
+        } catch (error) {
+          return new Error(error.message);
+        }
       },
     });
 
@@ -160,7 +165,7 @@ export const Mutation = objectType({
 
     t.field("removeFriendship", {
       type: "Boolean",
-      nullable: true,
+      nullable: false,
       args: {
         id: intArg({ required: true }),
       },
@@ -180,6 +185,32 @@ export const Mutation = objectType({
           return true;
         } catch (error) {
           console.log(error);
+          return false;
+        }
+      },
+    });
+
+    t.field("removeRequest", {
+      type: "Boolean",
+      nullable: false,
+      args: {
+        id: intArg({ required: true }),
+      },
+      resolve: async (_parent, { id }, context) => {
+        const { userId } = context.req;
+
+        try {
+          await context.prisma.friendStatus.deleteMany({
+            where: {
+              statusId: 2,
+              fromUserId: userId,
+              toUserId: id,
+            },
+          });
+
+          return true;
+        } catch (error) {
+          console.log(error.message);
           return false;
         }
       },

@@ -1,7 +1,6 @@
-import { useApolloClient, useMutation } from "@apollo/client";
-import { GET_ME, SIGN_IN, SIGN_UP } from "../queries";
+import { useMutation } from "@apollo/client";
+import { GET_ME, SIGN_IN } from "../queries";
 import * as Yup from "yup";
-import React from "react";
 
 interface SignInFormFields {
   email: string;
@@ -16,7 +15,7 @@ export const useSignInFormManagement = () => {
   });
 
   async function handleSubmit({ email, password }: SignInFormFields) {
-    await signIn({
+    return signIn({
       variables: { email, password },
       update: (store, { data }) => {
         store.writeQuery({

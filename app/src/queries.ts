@@ -117,8 +117,6 @@ export const GET_INVITATIONS = gql`
     invitations {
       id
       fromUserId
-      toUserId
-      statusId
     }
   }
 `;
@@ -161,5 +159,11 @@ export const GET_IS_FRIEND = gql`
 export const REMOVE_FRIENDSHIP = gql`
   mutation RemoveFriendship($id: Int!) {
     removeFriendship(id: $id)
+  }
+`;
+
+export const REMOVE_REQUEST = gql`
+  mutation RemoveRequest($id: Int!) {
+    removeRequest(id: $id)
   }
 `;

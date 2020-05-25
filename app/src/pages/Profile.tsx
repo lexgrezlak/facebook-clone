@@ -1,11 +1,11 @@
 import React from "react";
 import { useParams } from "react-router-dom";
-import { useMutation, useQuery } from "@apollo/client";
-import { GET_ME, GET_USER, SEND_INVITATION } from "../queries";
+import { useQuery } from "@apollo/client";
+import { GET_USER } from "../queries";
 import { CircularProgress, Typography } from "@material-ui/core";
 import PostItem from "../components/PostItem";
 import { Author } from "../types";
-import AddFriendButton from "../components/AddFriendButton";
+import FriendButton from "../components/FriendButton";
 
 interface Post {
   id: number;
@@ -29,12 +29,14 @@ interface UserVars {
 }
 
 function Profile() {
-  const { id } = useParams();
+  const { id: stringId } = useParams();
+  const id = Number(stringId);
+
   const { data } = useQuery<UserData, UserVars>(GET_USER, {
     onError: (error) => {
       console.log(error.graphQLErrors[0].message);
     },
-    variables: { id: Number(id) },
+    variables: { id },
   });
 
   if (!data?.user) return <CircularProgress />;
@@ -47,7 +49,7 @@ function Profile() {
         <Typography>
           {user.firstName} {user.lastName}
         </Typography>
-        <AddFriendButton id={Number(id)} />
+        <FriendButton id={id} />
       </div>
       <div>
         <ul>

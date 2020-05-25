@@ -1,6 +1,7 @@
 import React from "react";
 import { useApolloClient, useMutation } from "@apollo/client";
 import { GET_ME, SIGN_OUT } from "../../queries";
+import { useNavigate } from "react-router-dom";
 
 function SignOutButton() {
   const client = useApolloClient();
@@ -10,9 +11,12 @@ function SignOutButton() {
     },
   });
 
+  const navigate = useNavigate();
+
   async function handleSignOut() {
     await signOut();
-    client.writeQuery({
+    await navigate("/");
+    await client.writeQuery({
       query: GET_ME,
       data: {
         me: null,

@@ -2,8 +2,17 @@ import React from "react";
 import { useMutation, useQuery } from "@apollo/client";
 import { ACCEPT_INVITATION, GET_INVITATIONS } from "../queries";
 
+interface Invitation {
+  id: number;
+  fromUserId: number;
+}
+
+interface InvitationsData {
+  invitations: Invitation[];
+}
+
 function FriendInvitations() {
-  const { data } = useQuery(GET_INVITATIONS, {
+  const { data } = useQuery<InvitationsData>(GET_INVITATIONS, {
     onError: (error) => {
       console.log(error.graphQLErrors[0].message);
     },
@@ -16,8 +25,24 @@ function FriendInvitations() {
   });
 
   async function acceptFriend(id: number) {
-    const res = await acceptInvitation({ variables: { id } });
-    console.log(res);
+    return acceptInvitation({
+      variables: { id },
+      update: (store, { data: { acceptInvitation } }) => {
+        const invitationsData = store.readQuery({
+          query: GET_INVITATIONS,
+        }) as InvitationsData;
+
+        // update friend requests
+        store.writeQuery({
+          query: GET_INVITATIONS,
+          data: {
+            invitations: invitationsData.invitations.filter(
+              (invitation) => invitation.id !== id
+            ),
+          },
+        });
+      },
+    });
   }
 
   return (

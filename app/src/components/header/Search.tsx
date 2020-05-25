@@ -1,12 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useQuery } from "@apollo/client";
 import { GET_USERS } from "../../queries";
-import Results from "./search/Results";
-import Popper from "@material-ui/core/Popper";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
-import { CircularProgress, Popover, TextField } from "@material-ui/core";
+import { CircularProgress, TextField } from "@material-ui/core";
 import Autocomplete from "@material-ui/lab/Autocomplete";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
