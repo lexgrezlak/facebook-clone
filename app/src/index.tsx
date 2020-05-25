@@ -8,6 +8,7 @@ import {
   InMemoryCache,
 } from "@apollo/client";
 import { BrowserRouter } from "react-router-dom";
+import { CssBaseline } from "@material-ui/core";
 const cache = new InMemoryCache();
 const link = createHttpLink({ uri: "/graphql", credentials: "same-origin" });
 
@@ -19,6 +20,7 @@ const client = new ApolloClient({
 ReactDOM.render(
   <BrowserRouter>
     <ApolloProvider client={client}>
+      <CssBaseline />
       <App />
     </ApolloProvider>
   </BrowserRouter>,

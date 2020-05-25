@@ -1,32 +1,11 @@
 import React from "react";
 import { Button } from "@material-ui/core";
 import { useFriendButtonManagement } from "../hooks/useFriendButtonManagement";
+import { IsFriend } from "../hooks/FriendButtonManagement/useIsFriend";
 
 interface Props {
   id: number;
 }
-
-interface ActionProps {
-  handleClick: () => void;
-}
-
-const AddButton = ({ handleClick }: ActionProps) => (
-  <Button variant="contained" onClick={handleClick}>
-    Add friend
-  </Button>
-);
-
-const RemoveButton = ({ handleClick }: ActionProps) => (
-  <Button variant="contained" onClick={handleClick}>
-    Remove friend
-  </Button>
-);
-
-const CancelButton = ({ handleClick }: ActionProps) => (
-  <Button variant="contained" onClick={handleClick}>
-    Cancel request
-  </Button>
-);
 
 function FriendButton({ id }: Props) {
   const {
@@ -34,21 +13,38 @@ function FriendButton({ id }: Props) {
     removeFriend,
     isFriend,
     cancelRequest,
+    acceptRequest,
   } = useFriendButtonManagement({
     id,
   });
 
-  // null is strangers
-  // true is friends
-  // false is pending
+  let handleClick;
+  let text;
+
   switch (isFriend) {
-    case null:
-      return <AddButton handleClick={addFriend} />;
-    case true:
-      return <RemoveButton handleClick={removeFriend} />;
-    case false:
-      return <CancelButton handleClick={cancelRequest} />;
+    case IsFriend.IsNot:
+      handleClick = addFriend;
+      text = "Add friend";
+      break;
+    case IsFriend.Is:
+      handleClick = removeFriend;
+      text = "Remove friend";
+      break;
+    case IsFriend.MeSentRequest:
+      handleClick = cancelRequest;
+      text = "Cancel request";
+      break;
+    case IsFriend.MeReceivedRequest:
+      handleClick = acceptRequest;
+      text = "Accept request";
+      break;
   }
+
+  return (
+    <Button variant="contained" onClick={handleClick}>
+      {text}
+    </Button>
+  );
 }
 
 export default FriendButton;

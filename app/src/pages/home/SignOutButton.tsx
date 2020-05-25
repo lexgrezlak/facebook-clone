@@ -22,6 +22,7 @@ function SignOutButton() {
         me: null,
       },
     });
+    await client.resetStore();
   }
 
   return <button onClick={handleSignOut}>Sign out</button>;

@@ -89,8 +89,8 @@ export const Query = objectType({
       },
     });
 
-    t.field("isFriend", {
-      type: "Boolean",
+    t.field("friendStatus", {
+      type: "FriendStatus",
       nullable: true,
       args: { id: intArg({ nullable: false }) },
       resolve: async (_parent, { id }, context) => {
@@ -99,7 +99,7 @@ export const Query = objectType({
         // find many even though you can find only one because otherwise it throws an error because of OR
 
         try {
-          const list = await context.prisma.friendStatus.findMany({
+          const [status] = await context.prisma.friendStatus.findMany({
             where: {
               OR: [
                 { fromUserId: userId, toUserId: id },
@@ -108,20 +108,9 @@ export const Query = objectType({
             },
           });
 
-          const status = list[0];
-
-          const statusId = status.statusId;
-
-          switch (statusId) {
-            case 0:
-              return null;
-            case 1:
-              return true;
-            case 2:
-              return false;
-          }
+          return status;
         } catch (error) {
-          return null;
+          return new Error(error);
         }
       },
     });

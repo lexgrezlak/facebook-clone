@@ -15,6 +15,10 @@ type FriendStatus {
   toUserId: Int!
 }
 
+input FriendStatusWhereUniqueInput {
+  id: Int
+}
+
 enum Gender {
   FEMALE
   MALE
@@ -47,8 +51,8 @@ input PostWhereUniqueInput {
 type Query {
   feed: [Post!]!
   friends(id: Int): [User!]
+  friendStatus(id: Int!): FriendStatus
   invitations: [FriendStatus!]!
-  isFriend(id: Int!): Boolean
   me: User
   user(where: UserWhereUniqueInput!): User
   users(filter: String!): [User!]!
@@ -62,8 +66,8 @@ type User {
   id: Int!
   lastName: String!
   posts(after: PostWhereUniqueInput, before: PostWhereUniqueInput, first: Int, last: Int, skip: Int): [Post!]!
-  receivedFriendInvitations: FriendStatus
-  sentFriendInvitations: FriendStatus
+  receivedInvitations(after: FriendStatusWhereUniqueInput, before: FriendStatusWhereUniqueInput, first: Int, last: Int, skip: Int): [FriendStatus!]!
+  sentInvitations(after: FriendStatusWhereUniqueInput, before: FriendStatusWhereUniqueInput, first: Int, last: Int, skip: Int): [FriendStatus!]!
 }
 
 input UserWhereUniqueInput {

@@ -1,8 +1,19 @@
 import React, { useState } from "react";
 import { useApolloClient, useMutation } from "@apollo/client";
 import { CREATE_POST, GET_FEED, GET_ME } from "../../queries";
+import { Button, createStyles, TextField, Theme } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
+
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    root: {
+      width: "100%",
+    },
+  })
+);
 
 function CreatePostForm() {
+  const classes = useStyles();
   const client = useApolloClient();
   const [content, setContent] = useState("");
   const [createPost] = useMutation(CREATE_POST, {
@@ -16,7 +27,7 @@ function CreatePostForm() {
 
   async function handleSubmit(event: React.FormEvent) {
     event.preventDefault();
-    createPost({
+    await createPost({
       variables: { content },
       optimisticResponse: {
         __typename: "Mutation",
@@ -48,19 +59,27 @@ function CreatePostForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
-      <div>
-        <input
-          style={{ width: "100%" }}
-          id="content"
-          type="text"
-          value={content}
-          onChange={(event) => setContent(event.target.value)}
-          placeholder={`What's on your mind, ${firstName}?`}
-        />
-      </div>
-      <button type="submit">Post</button>
-    </form>
+    <div className={classes.root}>
+      <form onSubmit={handleSubmit}>
+        <div>
+          <TextField
+            id="content"
+            fullWidth
+            margin="normal"
+            variant="outlined"
+            type="text"
+            rows="5"
+            multiline
+            value={content}
+            onChange={(event) => setContent(event.target.value)}
+            placeholder={`What's on your mind, ${firstName}?`}
+          />
+        </div>
+        <Button variant="contained" type="submit">
+          Post
+        </Button>
+      </form>
+    </div>
   );
 }
 

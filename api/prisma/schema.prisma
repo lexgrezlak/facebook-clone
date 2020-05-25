@@ -8,12 +8,12 @@ datasource db {
 }
 
 model FriendStatus {
-  fromUserId                         Int       @unique
+  fromUserId                         Int
   id                                 Int       @default(autoincrement()) @id
   responseTime                       DateTime?
   sentTime                           DateTime  @default(now())
   statusId                           Int       @default(2)
-  toUserId                           Int       @unique
+  toUserId                           Int
   sender User      @relation("FriendStatus_fromUserIdToUser", fields: [fromUserId], references: [id])
   receiver   User      @relation("FriendStatus_toUserIdToUser", fields: [toUserId], references: [id])
 }
@@ -35,16 +35,26 @@ model Profile {
 
 model User {
   birthday                                   DateTime
-  email                                      String        @unique
+  email                                      String         @unique
   firstName                                  String
   gender                                     Gender
-  id                                         Int           @default(autoincrement()) @id
+  id                                         Int            @default(autoincrement()) @id
   lastName                                   String
   passwordHash                               String
-  sentFriendInvitations FriendStatus? @relation("FriendStatus_fromUserIdToUser")
-  receivedFriendInvitations   FriendStatus? @relation("FriendStatus_toUserIdToUser")
+  sentInvitations FriendStatus[] @relation("FriendStatus_fromUserIdToUser")
+  receivedInvitations   FriendStatus[] @relation("FriendStatus_toUserIdToUser")
   posts                                       Post[]
-  profile                                    Profile?
+  Profile                                    Profile?
+}
+
+model users {
+  birthday     DateTime
+  email        String
+  firstName    String
+  gender       String
+  id           Int      @default(autoincrement()) @id
+  lastName     String
+  passwordHash String
 }
 
 enum Gender {

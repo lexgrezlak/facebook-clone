@@ -1,6 +1,7 @@
 import React from "react";
 import { useQuery } from "@apollo/client";
 import { GET_FRIENDS } from "../queries";
+import { Typography } from "@material-ui/core";
 
 function FriendList() {
   const { data } = useQuery(GET_FRIENDS, {
@@ -9,11 +10,16 @@ function FriendList() {
     },
   });
   return (
-    <ul>
-      {data?.friends?.map((friend: any) => (
-        <li key={friend.id}>{friend.firstName}</li>
-      ))}
-    </ul>
+    <div>
+      <Typography variant="h5">Friends</Typography>
+      <ul>
+        {data?.friends?.map((friend: any) => (
+          <li key={friend.id}>
+            {friend.firstName} {friend.lastName}
+          </li>
+        ))}
+      </ul>
+    </div>
   );
 }
 

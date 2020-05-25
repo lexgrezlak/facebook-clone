@@ -37,7 +37,6 @@ export const Mutation = objectType({
         lastName = trimAndCapitalizeSentence(lastName);
 
         const passwordHash = await hash(password, 10);
-        console.log("dsadsa");
         const user = await context.prisma.user.create({
           data: {
             passwordHash,
@@ -120,7 +119,7 @@ export const Mutation = objectType({
         id: intArg({ required: true }),
       },
       resolve: async (_parent, { id: receiverId }, context) => {
-        const senderId = context.req.userId;
+        const { userId: senderId } = context.req;
         if (senderId === receiverId)
           return new UserInputError("You can't send an invitation to yourself");
 
@@ -143,21 +142,23 @@ export const Mutation = objectType({
       args: {
         id: intArg({ required: true }),
       },
-      resolve: async (_parent, { id }, context) => {
-        const { userId } = context.req;
+      resolve: async (_parent, { id: senderId }, context) => {
+        const { userId: receiverId } = context.req;
 
         // error while trying
         // context.prisma.friendStatus.update({fromUserId: ..., toUserId: ...}, data: {...})
         // likely due to a bug - I found an issue from March on github
         // so I did a work-around
-        const data = await context.prisma.friendStatus.findOne({
-          where: { id },
+        const [invite] = await context.prisma.friendStatus.findMany({
+          where: {
+            fromUserId: senderId,
+            toUserId: receiverId,
+            statusId: 2,
+          },
         });
-        if (data!.toUserId !== userId)
-          return new Error("It is not your invitation");
 
         return context.prisma.friendStatus.update({
-          where: { id: data!.id },
+          where: { id: invite.id },
           data: { responseTime: new Date(), statusId: 1 },
         });
       },
@@ -210,8 +211,7 @@ export const Mutation = objectType({
 
           return true;
         } catch (error) {
-          console.log(error.message);
-          return false;
+          return new Error(error);
         }
       },
     });

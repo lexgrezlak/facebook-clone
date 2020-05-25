@@ -42,7 +42,9 @@ export const permissions = shield({
     signIn: allow,
     signOut: allow,
     signUp: allow,
-    deletePost: and(rules.isPostOwner, rules.isAuthenticated),
+    deletePost: and(rules.isAuthenticated, rules.isPostOwner),
     sendInvitation: and(rules.isAuthenticated, rules.isNotTheTarget),
+    removeRequest: and(rules.isAuthenticated, rules.isNotTheTarget),
+    removeFriendship: and(rules.isAuthenticated, rules.isNotTheTarget),
   },
 });

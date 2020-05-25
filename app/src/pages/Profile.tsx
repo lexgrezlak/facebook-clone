@@ -2,12 +2,21 @@ import React from "react";
 import { useParams } from "react-router-dom";
 import { useQuery } from "@apollo/client";
 import { GET_USER } from "../queries";
-import { CircularProgress, Typography } from "@material-ui/core";
+import {
+  CircularProgress,
+  Container,
+  createStyles,
+  Grid,
+  Theme,
+} from "@material-ui/core";
 import PostItem from "../components/PostItem";
 import { Author } from "../types";
-import FriendButton from "../components/FriendButton";
+import FriendList from "../components/FriendList";
+import Header from "./profile/Header";
+import Feed from "./profile/Feed";
+import { makeStyles } from "@material-ui/core/styles";
 
-interface Post {
+export interface Post {
   id: number;
   content: string;
   createdAt: Date;
@@ -28,7 +37,21 @@ interface UserVars {
   id: number;
 }
 
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    root: {
+      flexGrow: 1,
+    },
+    grid: {
+      borderColor: "red",
+      borderStyle: "solid",
+      borderWidth: "10px",
+    },
+  })
+);
+
 function Profile() {
+  const classes = useStyles();
   const { id: stringId } = useParams();
   const id = Number(stringId);
 
@@ -43,22 +66,20 @@ function Profile() {
 
   const { user } = data;
 
+  const fullName = `${user.firstName} ${user.lastName}`;
+
   return (
-    <div>
-      <div>
-        <Typography>
-          {user.firstName} {user.lastName}
-        </Typography>
-        <FriendButton id={id} />
-      </div>
-      <div>
-        <ul>
-          {user.posts.map((post) => (
-            <PostItem key={post.id} post={post} />
-          ))}
-        </ul>
-      </div>
-    </div>
+    <Container maxWidth="md" component="main" className={classes.root}>
+      <Grid container spacing={2}>
+        <Header id={id} fullName={fullName} />
+        <Grid item xs={12} md={4} className={classes.grid}>
+          <FriendList />
+        </Grid>
+        <Grid item xs={12} md={8}>
+          <Feed posts={user.posts} />
+        </Grid>
+      </Grid>
+    </Container>
   );
 }
 

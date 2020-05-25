@@ -1,15 +1,23 @@
 import React from "react";
 import CreatePostForm from "./home/CreatePostForm";
 import Feed from "./home/Feed";
-import FriendList from "../components/FriendList";
+import { Container, createStyles, Theme } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
+
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    root: {},
+  })
+);
 
 function Home() {
+  const classes = useStyles();
+
   return (
-    <div>
+    <Container component="main" maxWidth="sm" className={classes.root}>
       <CreatePostForm />
       <Feed />
-      <FriendList />
-    </div>
+    </Container>
   );
 }
 

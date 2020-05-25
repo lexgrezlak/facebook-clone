@@ -10,7 +10,7 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     wrapper: {
       maxWidth: "400px",
-      margin: "0 auto",
+      width: "100%",
     },
   })
 );
@@ -65,6 +65,7 @@ function Search() {
           onChange={(event) => setFilter(event.target.value)}
           variant="outlined"
           fullWidth
+          style={{ backgroundColor: "white" }}
           placeholder="Search someone"
           autoComplete="off"
           InputProps={{

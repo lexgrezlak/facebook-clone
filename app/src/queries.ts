@@ -50,6 +50,7 @@ export const SIGN_OUT = gql`
 export const GET_ME = gql`
   query Me {
     me {
+      id
       firstName
       lastName
       email
@@ -150,9 +151,12 @@ export const GET_USER = gql`
   }
 `;
 
-export const GET_IS_FRIEND = gql`
-  query IsFriend($id: Int!) {
-    isFriend(id: $id)
+export const GET_FRIEND_STATUS = gql`
+  query FriendStatus($id: Int!) {
+    friendStatus(id: $id) {
+      fromUserId
+      statusId
+    }
   }
 `;
 
