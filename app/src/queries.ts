@@ -1,10 +1,11 @@
 import { gql } from "@apollo/client";
 
-export const GET_ALL_USERS = gql`
-  query AllUsers {
-    allUsers {
-      email
-    }
+const USER_PREVIEW = gql`
+  fragment UserPreview on User {
+    id
+    firstName
+    lastName
+    avatar
   }
 `;
 
@@ -50,12 +51,10 @@ export const SIGN_OUT = gql`
 export const GET_ME = gql`
   query Me {
     me {
-      id
-      firstName
-      lastName
-      avatar
+      ...UserPreview
     }
   }
+  ${USER_PREVIEW}
 `;
 
 export const GET_FEED = gql`
@@ -64,13 +63,12 @@ export const GET_FEED = gql`
       id
       content
       author {
-        id
-        firstName
-        lastName
+        ...UserPreview
       }
       createdAt
     }
   }
+  ${USER_PREVIEW}
 `;
 
 export const CREATE_POST = gql`
@@ -125,11 +123,10 @@ export const GET_INVITATIONS = gql`
 export const GET_FRIENDS = gql`
   query Friends($id: Int) {
     friends(id: $id) {
-      id
-      firstName
-      lastName
+      ...UserPreview
     }
   }
+  ${USER_PREVIEW}
 `;
 
 export const GET_USER = gql`
@@ -142,13 +139,12 @@ export const GET_USER = gql`
         content
         createdAt
         author {
-          id
-          firstName
-          lastName
+          ...UserPreview
         }
       }
     }
   }
+  ${USER_PREVIEW}
 `;
 
 export const GET_FRIEND_STATUS = gql`

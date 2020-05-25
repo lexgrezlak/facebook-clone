@@ -4,17 +4,12 @@ import { GET_FEED } from "../../queries";
 import { CircularProgress } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import PostItem from "../../components/PostItem";
-
-interface User {
-  id: number;
-  firstName: string;
-  lastName: string;
-}
+import { Author } from "../../types";
 
 interface Post {
   id: number;
   content: string;
-  author: User;
+  author: Author;
   createdAt: Date;
 }
 

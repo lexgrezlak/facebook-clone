@@ -73,7 +73,7 @@ function Profile() {
       <Grid container spacing={2}>
         <Header id={id} fullName={fullName} />
         <Grid item xs={12} md={4} className={classes.grid}>
-          <FriendList />
+          <FriendList id={id} />
         </Grid>
         <Grid item xs={12} md={8}>
           <Feed posts={user.posts} />
