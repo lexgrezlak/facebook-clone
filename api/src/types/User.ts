@@ -9,6 +9,8 @@ export const User = objectType({
     t.model.email();
     t.model.birthday();
     t.model.gender();
+    t.model.avatar();
+    t.model.background();
     t.model.sentInvitations();
     t.model.receivedInvitations();
     t.model.posts({ pagination: true });

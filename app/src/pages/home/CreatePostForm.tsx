@@ -1,13 +1,22 @@
 import React, { useState } from "react";
 import { useApolloClient, useMutation } from "@apollo/client";
 import { CREATE_POST, GET_FEED, GET_ME } from "../../queries";
-import { Button, createStyles, TextField, Theme } from "@material-ui/core";
+import {
+  Avatar,
+  Button,
+  createStyles,
+  TextField,
+  Theme,
+} from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       width: "100%",
+    },
+    img: {
+      width: "50px",
     },
   })
 );
@@ -23,7 +32,7 @@ function CreatePostForm() {
   });
 
   const data = client.readQuery({ query: GET_ME });
-  const { firstName, lastName } = data.me;
+  const { firstName, lastName, avatar } = data.me;
 
   async function handleSubmit(event: React.FormEvent) {
     event.preventDefault();
@@ -60,6 +69,7 @@ function CreatePostForm() {
 
   return (
     <div className={classes.root}>
+      {avatar && <Avatar src={avatar} alt={`${firstName} ${lastName}`} />}
       <form onSubmit={handleSubmit}>
         <div>
           <TextField

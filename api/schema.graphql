@@ -44,7 +44,7 @@ type Mutation {
   signIn(email: String!, password: String!): User!
   signOut: Boolean!
   signUp(birthday: DateTime!, email: String!, firstName: String!, gender: Gender!, lastName: String!, password: String!): User!
-  singleUpload(file: Upload!): File!
+  updateAvatar(file: Upload!): File!
 }
 
 type Post {
@@ -72,6 +72,8 @@ type Query {
 scalar Upload
 
 type User {
+  avatar: String
+  background: String
   birthday: DateTime!
   email: String!
   firstName: String!

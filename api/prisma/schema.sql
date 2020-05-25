@@ -15,8 +15,8 @@ create table "public"."User"
     "passwordHash" varchar(255)        not null,
     birthday       date                not null,
     gender         "Gender"            not null,
-    profilePicture varchar(255),
-    backgroundPicture varchar(255),
+    "avatar" varchar(255),
+    "background" varchar(255)
 );
 
 create table "public"."FriendStatus"

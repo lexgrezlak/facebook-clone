@@ -15,7 +15,7 @@ export function useAccept({ id }: Props) {
   async function acceptRequest() {
     return acceptInvitation({
       variables: { id },
-      update: (store, { data }) => {
+      update: (store) => {
         store.writeQuery({
           query: GET_FRIEND_STATUS,
           variables: { id },

@@ -16,7 +16,7 @@ export function useAdd({ id, userId }: Props) {
   async function addFriend() {
     await sendInvitation({
       variables: { id },
-      update: (store, { data: { sendInvitation } }) => {
+      update: (store) => {
         store.writeQuery({
           query: GET_FRIEND_STATUS,
           variables: { id },

@@ -34,6 +34,8 @@ model Profile {
 }
 
 model User {
+  avatar                                     String?
+  background                                 String?
   birthday                                   DateTime
   email                                      String         @unique
   firstName                                  String
@@ -44,7 +46,7 @@ model User {
   sentInvitations FriendStatus[] @relation("FriendStatus_fromUserIdToUser")
   receivedInvitations   FriendStatus[] @relation("FriendStatus_toUserIdToUser")
   posts                                       Post[]
-  Profile                                    Profile?
+  profile                                    Profile?
 }
 
 model users {

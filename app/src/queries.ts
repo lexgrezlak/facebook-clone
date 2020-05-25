@@ -53,7 +53,7 @@ export const GET_ME = gql`
       id
       firstName
       lastName
-      email
+      avatar
     }
   }
 `;
@@ -172,9 +172,9 @@ export const REMOVE_REQUEST = gql`
   }
 `;
 
-export const SINGLE_UPLOAD = gql`
-  mutation SingleUpload($file: Upload!) {
-    singleUpload(file: $file) {
+export const UPDATE_AVATAR = gql`
+  mutation UpdateAvatar($file: Upload!) {
+    updateAvatar(file: $file) {
       url
     }
   }

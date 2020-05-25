@@ -1,11 +1,11 @@
 import React from "react";
 import CreatePostForm from "./home/CreatePostForm";
 import Feed from "./home/Feed";
-import { Container, createStyles, Theme } from "@material-ui/core";
+import { Container, createStyles } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import UploadInput from "../components/UploadInput";
 
-const useStyles = makeStyles((theme: Theme) =>
+const useStyles = makeStyles(() =>
   createStyles({
     root: {},
   })

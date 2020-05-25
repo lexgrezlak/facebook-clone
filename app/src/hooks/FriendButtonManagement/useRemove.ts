@@ -15,7 +15,7 @@ export function useRemove({ id }: Props) {
   async function removeFriend() {
     return removeFriendship({
       variables: { id },
-      update: (store, { data }) => {
+      update: (store) => {
         store.writeQuery({
           query: GET_FRIEND_STATUS,
           variables: { id },

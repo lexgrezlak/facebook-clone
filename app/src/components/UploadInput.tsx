@@ -1,11 +1,11 @@
 import React from "react";
 import { useMutation } from "@apollo/client";
-import { SINGLE_UPLOAD } from "../queries";
+import { GET_ME, UPDATE_AVATAR } from "../queries";
 
 function UploadInput() {
-  const [uploadImage, { data }] = useMutation(SINGLE_UPLOAD, {
+  const [updateAvatar] = useMutation(UPDATE_AVATAR, {
     onError: (error) => {
-      console.log("error");
+      console.log(error.graphQLErrors[0].message);
     },
   });
 
@@ -15,8 +15,24 @@ function UploadInput() {
       files: [file],
     },
   }: any) {
-    console.log(file);
-    return validity.valid && uploadImage({ variables: { file } });
+    return (
+      validity.valid &&
+      updateAvatar({
+        variables: { file },
+        update: (store, { data: { updateAvatar } }) => {
+          const data = store.readQuery({ query: GET_ME }) as any;
+          store.writeQuery({
+            query: GET_ME,
+            data: {
+              me: {
+                ...data.me,
+                avatar: updateAvatar.url,
+              },
+            },
+          });
+        },
+      })
+    );
   }
 
   return (

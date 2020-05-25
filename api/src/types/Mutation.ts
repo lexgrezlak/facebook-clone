@@ -217,14 +217,27 @@ export const Mutation = objectType({
       },
     });
 
-    t.field("singleUpload", {
+    t.field("updateAvatar", {
       type: "File",
       args: {
         file: arg({ type: "Upload", required: true }),
       },
-      resolve: cloudinaryUploader.singleFileUploadResolver.bind(
-        cloudinaryUploader
-      ),
+      resolve: async (_parent, args, context) => {
+        const file = await cloudinaryUploader.singleFileUploadResolver.bind(
+          cloudinaryUploader
+        )(_parent, args);
+
+        const { url: avatar } = file;
+
+        const { userId } = context.req;
+
+        await context.prisma.user.update({
+          where: { id: userId },
+          data: { avatar },
+        });
+
+        return file;
+      },
     });
 
     t.list.field("multiUpload", {
@@ -232,7 +245,7 @@ export const Mutation = objectType({
       args: {
         files: arg({ type: "Upload", required: true, list: true }),
       },
-      resolve: cloudinaryUploader.singleFileUploadResolver.bind(
+      resolve: cloudinaryUploader.multiFileUploadResolver.bind(
         cloudinaryUploader
       ),
     });

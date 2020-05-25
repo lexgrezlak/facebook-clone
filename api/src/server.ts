@@ -17,11 +17,6 @@ app.use(cors({ origin: "localhost:3000", credentials: true }));
 const server = new ApolloServer({
   schema: applyMiddleware(schema, permissions),
   context,
-  formatError: (error) => {
-    console.log(error.message);
-
-    return error;
-  },
   playground: true,
   introspection: true,
 });

@@ -15,7 +15,7 @@ export function useCancel({ id }: Props) {
   async function cancelRequest() {
     return removeRequest({
       variables: { id },
-      update: (store, { data: { removeRequest } }) => {
+      update: (store) => {
         store.writeQuery({
           query: GET_FRIEND_STATUS,
           variables: { id },
