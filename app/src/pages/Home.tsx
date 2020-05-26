@@ -3,7 +3,7 @@ import CreatePostForm from "./home/CreatePostForm";
 import Feed from "./home/Feed";
 import { Container, createStyles } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import UploadInput from "../components/UploadInput";
+import AvatarUpload from "../components/AvatarUpload";
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -16,7 +16,7 @@ function Home() {
 
   return (
     <Container component="main" maxWidth="sm" className={classes.root}>
-      <UploadInput />
+      <AvatarUpload />
       <CreatePostForm />
       <Feed />
     </Container>

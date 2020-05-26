@@ -3,7 +3,7 @@ import { GET_ME } from "../../queries";
 import { useApolloClient } from "@apollo/client";
 import { Avatar, Badge, createStyles, Theme } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import UploadInput from "../../components/UploadInput";
+import AvatarUpload from "../../components/AvatarUpload";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -40,7 +40,7 @@ function OwnAvatar() {
           vertical: "bottom",
           horizontal: "right",
         }}
-        badgeContent={<UploadInput />}
+        badgeContent={<AvatarUpload />}
         className={classes.badge}
       >
         <Avatar alt={fullName} src={avatar} className={classes.avatar} />
