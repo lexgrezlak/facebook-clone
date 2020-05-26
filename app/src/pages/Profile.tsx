@@ -15,6 +15,7 @@ import FriendList from "../components/FriendList";
 import Header from "./profile/Header";
 import Feed from "./profile/Feed";
 import { makeStyles } from "@material-ui/core/styles";
+import OwnAvatar from "./profile/OwnAvatar";
 
 export interface Post {
   id: number;
@@ -70,6 +71,7 @@ function Profile() {
 
   return (
     <Container maxWidth="md" component="main" className={classes.root}>
+      <OwnAvatar />
       <Grid container spacing={2}>
         <Header id={id} fullName={fullName} />
         <Grid item xs={12} md={4} className={classes.grid}>

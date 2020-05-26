@@ -1,9 +1,39 @@
 import React from "react";
 import { useMutation } from "@apollo/client";
 import { GET_ME, UPDATE_AVATAR } from "../queries";
+import AddAPhotoIcon from "@material-ui/icons/AddAPhoto";
+import { makeStyles } from "@material-ui/core/styles";
+import {
+  CircularProgress,
+  createStyles,
+  IconButton,
+  Theme,
+} from "@material-ui/core";
+
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    input: {
+      display: "none",
+    },
+    icon: {
+      cursor: "pointer",
+      color: "black",
+    },
+    button: {
+      width: theme.spacing(5),
+      height: theme.spacing(5),
+      backgroundColor: "#f0f0f0",
+      borderRadius: "50%",
+      "&:hover": {
+        backgroundColor: "#e0e0e0",
+      },
+    },
+  })
+);
 
 function UploadInput() {
-  const [updateAvatar] = useMutation(UPDATE_AVATAR, {
+  const classes = useStyles();
+  const [updateAvatar, { loading }] = useMutation(UPDATE_AVATAR, {
     onError: (error) => {
       console.log(error.graphQLErrors[0].message);
     },
@@ -37,7 +67,24 @@ function UploadInput() {
 
   return (
     <div>
-      <input accept="image/*" type="file" onChange={handleChange} />
+      {loading ? (
+        <CircularProgress className={classes.button} />
+      ) : (
+        <div>
+          <input
+            id="avatar-upload"
+            accept="image/*"
+            type="file"
+            onChange={handleChange}
+            className={classes.input}
+          />
+          <label htmlFor="avatar-upload">
+            <IconButton component="span" className={classes.button}>
+              <AddAPhotoIcon className={classes.icon} />
+            </IconButton>
+          </label>
+        </div>
+      )}
     </div>
   );
 }
