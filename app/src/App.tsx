@@ -6,17 +6,10 @@ import Home from "./pages/Home";
 import { Route, Routes } from "react-router-dom";
 import Header from "./components/Header";
 import Profile from "./pages/Profile";
-import { Container } from "@material-ui/core";
-
-interface Me {
-  id: number;
-  email: string;
-  firstName: string;
-  lastName: string;
-}
+import { UserPreview } from "./types";
 
 interface MeData {
-  me: Me;
+  me: UserPreview;
 }
 
 function App() {
@@ -35,7 +28,7 @@ function App() {
       <Header />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="users/:id" element={<Profile />} />
+        <Route path="users/:id" element={<Profile meId={data.me.id} />} />
       </Routes>
     </div>
   );

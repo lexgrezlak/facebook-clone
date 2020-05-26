@@ -20,10 +20,9 @@ const rules = {
       },
     });
 
-    const { author } = post;
-
     return (
-      userId === author.id || new ForbiddenError("You are not the post owner")
+      userId === post.authorId ||
+      new ForbiddenError("You are not the post owner")
     );
   }),
   isNotTheTarget: rule()(async (_parent, { id }, context) => {

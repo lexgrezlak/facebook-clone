@@ -36,7 +36,7 @@ enum Gender {
 type Mutation {
   acceptInvitation(id: Int!): FriendStatus
   createPost(content: String!): Post
-  deletePost(id: Int!): Post
+  deletePost(id: Int!): Boolean!
   multiUpload(files: [Upload!]!): [File!]!
   removeFriendship(id: Int!): Boolean!
   removeRequest(id: Int!): Boolean!
@@ -64,6 +64,7 @@ type Query {
   friendStatus(id: Int!): FriendStatus
   invitations: [FriendStatus!]!
   me: User
+  profileFeed(id: Int!): [Post!]!
   user(where: UserWhereUniqueInput!): User
   users(filter: String!): [User!]!
 }

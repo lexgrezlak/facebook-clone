@@ -1,8 +1,8 @@
 import React from "react";
 import { useQuery } from "@apollo/client";
-import { GET_FRIENDS } from "../queries";
+import { GET_FRIENDS } from "../../queries";
 import { Avatar, Typography } from "@material-ui/core";
-import { Author } from "../types";
+import { UserPreview } from "../../types";
 
 interface Props {
   id?: number;
@@ -22,7 +22,7 @@ function FriendList({ id }: Props) {
     <div>
       <Typography variant="h5">Friends</Typography>
       <ul>
-        {data.friends.map((friend: Author) => (
+        {data.friends.map((friend: UserPreview) => (
           <li key={friend.id}>
             <Avatar src={friend.avatar} alt="Friend's avatar" />
             {friend.firstName} {friend.lastName}

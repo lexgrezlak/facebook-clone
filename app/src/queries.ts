@@ -9,6 +9,14 @@ const USER_PREVIEW = gql`
   }
 `;
 
+const POST_PREVIEW = gql`
+  fragment PostPreview on Post {
+    id
+    content
+    createdAt
+  }
+`;
+
 export const SIGN_UP = gql`
   mutation SignUp(
     $firstName: String!
@@ -60,29 +68,36 @@ export const GET_ME = gql`
 export const GET_FEED = gql`
   query Feed {
     feed {
-      id
-      content
+      ...PostPreview
       author {
         ...UserPreview
       }
-      createdAt
     }
   }
   ${USER_PREVIEW}
+  ${POST_PREVIEW}
+`;
+
+export const GET_PROFILE_FEED = gql`
+  query ProfileFeed($id: Int!) {
+    profileFeed(id: $id) {
+      ...PostPreview
+    }
+  }
+  ${POST_PREVIEW}
 `;
 
 export const CREATE_POST = gql`
   mutation CreatePost($content: String!) {
     createPost(content: $content) {
-      id
-      content
+      ...PostPreview
       author {
         firstName
         lastName
       }
-      createdAt
     }
   }
+  ${POST_PREVIEW}
 `;
 
 export const GET_USERS = gql`
@@ -132,15 +147,11 @@ export const GET_FRIENDS = gql`
 export const GET_USER = gql`
   query User($id: Int!) {
     user(where: { id: $id }) {
-      firstName
-      lastName
+      ...UserPreview
       posts {
         id
         content
         createdAt
-        author {
-          ...UserPreview
-        }
       }
     }
   }
@@ -173,5 +184,11 @@ export const UPDATE_AVATAR = gql`
     updateAvatar(file: $file) {
       url
     }
+  }
+`;
+
+export const DELETE_POST = gql`
+  mutation DeletePost($id: Int!) {
+    deletePost(id: $id)
   }
 `;

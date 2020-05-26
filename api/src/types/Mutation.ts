@@ -249,5 +249,21 @@ export const Mutation = objectType({
         cloudinaryUploader
       ),
     });
+
+    t.field("deletePost", {
+      type: "Boolean",
+      args: {
+        id: intArg({ required: true }),
+      },
+      resolve: async (_parent, { id }, context) => {
+        try {
+          await context.prisma.post.delete({ where: { id } });
+          return true;
+        } catch (error) {
+          console.log(error);
+          return false;
+        }
+      },
+    });
   },
 });

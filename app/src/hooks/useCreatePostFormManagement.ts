@@ -1,17 +1,17 @@
 import { useApolloClient, useMutation } from "@apollo/client";
 import { CREATE_POST, GET_FEED, GET_ME } from "../queries";
 import * as Yup from "yup";
+import { UserPreview } from "../types";
 
 interface CreatePostFormFields {
   content: string;
 }
 
 interface Props {
-  firstName: string;
-  lastName: string;
+  me: UserPreview;
 }
 
-export function useCreatePostFormManagement({ firstName, lastName }: Props) {
+export function useCreatePostFormManagement({ me }: Props) {
   const initialValues: CreatePostFormFields = {
     content: "",
   };
@@ -22,6 +22,8 @@ export function useCreatePostFormManagement({ firstName, lastName }: Props) {
     },
   });
 
+  const { id, firstName, lastName, avatar } = me;
+
   async function handleCreatePost({ content }: CreatePostFormFields) {
     return createPost({
       variables: { content },
@@ -30,9 +32,10 @@ export function useCreatePostFormManagement({ firstName, lastName }: Props) {
         createPost: {
           __typename: "Post",
           author: {
+            id,
             firstName,
             lastName,
-            id: 100000 + Math.random() * 99999,
+            avatar,
             __typename: "User",
           },
           content,

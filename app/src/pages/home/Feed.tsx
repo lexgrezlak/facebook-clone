@@ -3,18 +3,11 @@ import { useQuery } from "@apollo/client";
 import { GET_FEED } from "../../queries";
 import { CircularProgress } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import PostItem from "../../components/PostItem";
-import { Author } from "../../types";
-
-interface Post {
-  id: number;
-  content: string;
-  author: Author;
-  createdAt: Date;
-}
+import PostItem from "../../components/post/PostItem";
+import { PostAndAuthor } from "../../types";
 
 interface FeedData {
-  feed: Post[];
+  feed: PostAndAuthor[];
 }
 
 const useStyles = makeStyles((theme) => ({
@@ -38,7 +31,7 @@ function Feed() {
   return (
     <div className={classes.root}>
       {data?.feed.map((post) => (
-        <PostItem post={post} key={post.id} />
+        <PostItem post={post} key={post.id} author={post.author} />
       ))}
     </div>
   );

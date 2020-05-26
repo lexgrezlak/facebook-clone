@@ -1,6 +1,6 @@
 import React from "react";
 import { useMutation, useQuery } from "@apollo/client";
-import { ACCEPT_INVITATION, GET_INVITATIONS } from "../queries";
+import { ACCEPT_INVITATION, GET_INVITATIONS } from "../../queries";
 
 interface Invitation {
   id: number;

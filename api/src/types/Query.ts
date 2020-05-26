@@ -114,5 +114,22 @@ export const Query = objectType({
         }
       },
     });
+
+    t.list.field("profileFeed", {
+      type: "Post",
+      nullable: false,
+      args: { id: intArg({ nullable: false }) },
+      resolve: async (_parent, { id }, context) => {
+        try {
+          const posts = await context.prisma.post.findMany({
+            where: { authorId: id },
+            orderBy: { createdAt: "desc" },
+          });
+          return posts;
+        } catch (error) {
+          return new Error(error);
+        }
+      },
+    });
   },
 });
