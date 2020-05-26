@@ -5,24 +5,19 @@ import { TextField } from "@material-ui/core";
 interface Props {
   name: string;
   type: string;
-  label: string;
+  label?: string;
   autoFocus?: boolean;
   required?: boolean;
   rows?: number;
   multiline?: boolean;
   InputProps?: any;
+  variant?: any;
+  placeholder?: string;
+  autoComplete?: string;
+  margin?: any;
 }
 
-const MyTextField: React.FC<Props> = ({
-  name,
-  type,
-  label,
-  autoFocus,
-  required,
-  multiline,
-  rows,
-  InputProps,
-}) => {
+const MyTextField: React.FC<Props> = ({ name, type, variant, ...rest }) => {
   const [field, { error, touched }] = useField({
     name,
     type,
@@ -37,16 +32,11 @@ const MyTextField: React.FC<Props> = ({
       variant="outlined"
       id={name}
       autoComplete={type}
-      label={label}
       type={type}
       error={isError}
       helperText={isError ? error : ""}
-      autoFocus={autoFocus}
-      required={required}
-      multiline={multiline}
-      InputProps={InputProps}
-      rows={rows || 1}
       {...field}
+      {...rest}
     />
   );
 };

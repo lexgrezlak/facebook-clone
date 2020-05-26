@@ -29,8 +29,7 @@ function OwnAvatar() {
   const classes = useStyles();
   const client = useApolloClient();
   const data = client.readQuery({ query: GET_ME });
-  const { avatar, firstName, lastName } = data.me;
-  const fullName = `${firstName} ${lastName}`;
+  const { avatar } = data.me;
 
   return (
     <div className={classes.root}>
@@ -43,7 +42,7 @@ function OwnAvatar() {
         badgeContent={<AvatarUpload />}
         className={classes.badge}
       >
-        <Avatar alt={fullName} src={avatar} className={classes.avatar} />
+        <Avatar alt="Your avatar" src={avatar} className={classes.avatar} />
       </Badge>
     </div>
   );

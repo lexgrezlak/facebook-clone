@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import Moment from "react-moment";
 import { makeStyles } from "@material-ui/core/styles";
 import { Author } from "../types";
+import CustomPaper from "./CustomPaper";
 
 interface Post {
   id: number;
@@ -17,11 +18,6 @@ interface Props {
 }
 
 const useStyles = makeStyles((theme) => ({
-  paper: {
-    maxWidth: 400,
-    margin: `${theme.spacing(1)}px auto`,
-    padding: theme.spacing(2),
-  },
   header: {
     display: "flex",
     justifyContent: "space-between",
@@ -35,7 +31,7 @@ function PostItem({ post }: Props) {
   const fullName = `${author.firstName} ${author.lastName}`;
 
   return (
-    <Paper className={classes.paper}>
+    <CustomPaper>
       <div className={classes.header}>
         <div>
           <Link to={`/users/${author.id}`}>
@@ -53,7 +49,7 @@ function PostItem({ post }: Props) {
       <div>
         <Typography>{post.content}</Typography>
       </div>
-    </Paper>
+    </CustomPaper>
   );
 }
 

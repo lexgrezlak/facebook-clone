@@ -46,12 +46,7 @@ function SignUpForm({ setVisible }: any) {
             />
             <MyTextField name="lastName" type="text" label="Last name" />
             <MyTextField name="email" type="email" label="Email address" />
-            <MyTextField
-              name="password"
-              type="password"
-              label="Password"
-              autoFocus
-            />
+            <MyTextField name="password" type="password" label="Password" />
             <MyTextField
               name="passwordConfirm"
               type="password"

@@ -1,95 +1,89 @@
-import React, { useState } from "react";
-import { useApolloClient, useMutation } from "@apollo/client";
-import { CREATE_POST, GET_FEED, GET_ME } from "../../queries";
-import {
-  Avatar,
-  Button,
-  createStyles,
-  TextField,
-  Theme,
-} from "@material-ui/core";
+import React from "react";
+import { useApolloClient } from "@apollo/client";
+import { GET_ME } from "../../queries";
+import { Button, createStyles, Theme } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
+import CustomAvatar from "../../components/CustomAvatar";
+import { useCreatePostFormManagement } from "../../hooks/useCreatePostFormManagement";
+import MyTextField from "../../components/MyTextField";
+import { Form, Formik } from "formik";
+import CustomPaper from "../../components/CustomPaper";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    root: {
+    wrapper: {
       width: "100%",
+      display: "flex",
+      alignItems: "center",
     },
-    img: {
-      width: "50px",
+    form: {
+      width: "100%", // Fix IE 11 issue.
+    },
+    avatar: {
+      marginRight: theme.spacing(2),
+    },
+    flex: {
+      display: "flex",
+      alignItems: "center",
+    },
+    button: {
+      margin: theme.spacing(2, 0, 1),
     },
   })
 );
 
 function CreatePostForm() {
   const classes = useStyles();
+
   const client = useApolloClient();
-  const [content, setContent] = useState("");
-  const [createPost] = useMutation(CREATE_POST, {
-    onError: (error) => {
-      console.log(error.graphQLErrors[0].message);
-    },
-  });
-
   const data = client.readQuery({ query: GET_ME });
-  const { firstName, lastName, avatar } = data.me;
+  const { firstName, lastName, avatar, id } = data.me;
 
-  async function handleSubmit(event: React.FormEvent) {
-    event.preventDefault();
-    await createPost({
-      variables: { content },
-      optimisticResponse: {
-        __typename: "Mutation",
-        createPost: {
-          __typename: "Post",
-          author: {
-            firstName,
-            lastName,
-            id: 100000 + Math.random() * 99999,
-            __typename: "User",
-          },
-          content,
-          createdAt: new Date(),
-          id: 100000 + Math.random() * 999999,
-        },
-      },
-      update: (store, { data: { createPost } }) => {
-        const data = store.readQuery({ query: GET_FEED }) as any;
-        store.writeQuery({
-          query: GET_FEED,
-          data: {
-            ...data,
-            feed: [createPost, ...data.feed],
-          },
-        });
-      },
-    });
-    setContent("");
-  }
+  const {
+    handleCreatePost,
+    initialValues,
+    validationSchema,
+  } = useCreatePostFormManagement({ firstName, lastName });
 
   return (
-    <div className={classes.root}>
-      {avatar && <Avatar src={avatar} alt={`${firstName} ${lastName}`} />}
-      <form onSubmit={handleSubmit}>
-        <div>
-          <TextField
-            id="content"
-            fullWidth
-            margin="normal"
-            variant="outlined"
-            type="text"
-            rows="5"
-            multiline
-            value={content}
-            onChange={(event) => setContent(event.target.value)}
-            placeholder={`What's on your mind, ${firstName}?`}
-          />
-        </div>
-        <Button variant="contained" type="submit">
-          Post
-        </Button>
-      </form>
-    </div>
+    <CustomPaper>
+      <div className={classes.wrapper}>
+        <Formik
+          initialValues={initialValues}
+          onSubmit={handleCreatePost}
+          validationSchema={validationSchema}
+        >
+          {() => (
+            <Form noValidate className={classes.form}>
+              <div className={classes.flex}>
+                <CustomAvatar
+                  src={avatar}
+                  id={id}
+                  alt={`${firstName} ${lastName}`}
+                />
+                <MyTextField
+                  type="text"
+                  name="content"
+                  rows={2}
+                  multiline
+                  placeholder={`What's on your mind, ${firstName}?`}
+                  autoComplete="off"
+                  margin="none"
+                />
+              </div>
+              <Button
+                variant="contained"
+                type="submit"
+                fullWidth
+                className={classes.button}
+              >
+                Post
+              </Button>
+            </Form>
+          )}
+        </Formik>
+      </div>
+    </CustomPaper>
   );
 }
 

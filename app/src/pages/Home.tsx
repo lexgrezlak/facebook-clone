@@ -16,7 +16,6 @@ function Home() {
 
   return (
     <Container component="main" maxWidth="sm" className={classes.root}>
-      <AvatarUpload />
       <CreatePostForm />
       <Feed />
     </Container>
