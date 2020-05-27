@@ -1,6 +1,7 @@
 import { useMutation } from "@apollo/client";
-import { GET_ME, SIGN_IN } from "../queries";
+import { GET_ME } from "../graphql/queries";
 import * as Yup from "yup";
+import { SIGN_IN } from "../graphql/mutations";
 
 interface SignInFormFields {
   email: string;

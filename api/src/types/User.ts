@@ -1,4 +1,4 @@
-import { objectType } from "@nexus/schema";
+import { enumType, objectType } from "@nexus/schema";
 
 export const User = objectType({
   name: "User",
@@ -6,7 +6,6 @@ export const User = objectType({
     t.model.id();
     t.model.firstName();
     t.model.lastName();
-    t.model.email();
     t.model.birthday();
     t.model.gender();
     t.model.avatar();

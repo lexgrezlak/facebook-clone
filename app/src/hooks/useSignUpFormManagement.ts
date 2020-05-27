@@ -1,6 +1,6 @@
 import { useApolloClient, useMutation } from "@apollo/client";
-import { SIGN_UP } from "../queries";
 import * as Yup from "yup";
+import { SIGN_UP } from "../graphql/mutations";
 
 export enum Gender {
   Female = "FEMALE",

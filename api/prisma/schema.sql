@@ -28,7 +28,8 @@ create table "public"."FriendStatus"
     foreign key ("toUserId") references "public"."User" (id),
     "statusId" integer not null default 2,
     "sentTime" timestamp not null default now(),
-    "responseTime" timestamp
+    "responseTime" timestamp,
+    unique ("fromUserId", "toUserId")
 );
 
 

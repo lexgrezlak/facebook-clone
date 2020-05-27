@@ -1,7 +1,7 @@
 import React from "react";
 import { useParams } from "react-router-dom";
 import { useQuery } from "@apollo/client";
-import { GET_USER } from "../queries";
+import { GET_USER } from "../graphql/queries";
 import {
   CircularProgress,
   Container,
@@ -16,6 +16,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import OwnAvatar from "./ownProfile/OwnAvatar";
 import { UserPreviewAndPosts } from "../types";
 import { StyledProfileAvatar } from "../styled/StyledProfileAvatar";
+import OwnBackground from "./ownProfile/OwnBackground";
 
 interface UserData {
   user: UserPreviewAndPosts;
@@ -57,18 +58,10 @@ function Profile({ meId }: Props) {
   if (!data?.user) return <CircularProgress />;
 
   const { user } = data;
-
-  const fullName = `${user.firstName} ${user.lastName}`;
-
   return (
     <Container maxWidth="md" component="main" className={classes.root}>
-      {meId === id ? (
-        <OwnAvatar />
-      ) : (
-        <StyledProfileAvatar src={user.avatar} alt={fullName} />
-      )}
+      <ProfileHeader user={user} meId={meId} />
       <Grid container spacing={2}>
-        <ProfileHeader id={id} fullName={fullName} />
         <Grid item xs={12} md={4} className={classes.grid}>
           <FriendList id={id} />
         </Grid>

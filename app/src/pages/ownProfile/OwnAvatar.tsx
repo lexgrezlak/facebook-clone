@@ -1,5 +1,5 @@
 import React from "react";
-import { GET_ME } from "../../queries";
+import { GET_ME } from "../../graphql/queries";
 import { useApolloClient } from "@apollo/client";
 import { Avatar, Badge, createStyles, Theme } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
@@ -9,10 +9,13 @@ import { StyledProfileAvatar } from "../../styled/StyledProfileAvatar";
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
+      position: "absolute",
       display: "flex",
+      justifyContent: "center",
       "& > *": {
         margin: theme.spacing(1),
       },
+      zIndex: 999,
     },
 
     badge: {

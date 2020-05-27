@@ -1,16 +1,12 @@
 import React from "react";
 import { useQuery } from "@apollo/client";
-import { GET_ME } from "./queries";
+import { GET_ME } from "./graphql/queries";
 import SignInOrUp from "./pages/SignInOrUp";
 import Home from "./pages/Home";
 import { Route, Routes } from "react-router-dom";
 import Header from "./components/Header";
 import Profile from "./pages/Profile";
-import { UserPreview } from "./types";
-
-interface MeData {
-  me: UserPreview;
-}
+import { MeData } from "./types";
 
 function App() {
   const { data, loading } = useQuery<MeData>(GET_ME, {

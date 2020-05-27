@@ -1,19 +1,23 @@
 import React from "react";
-import { createStyles, Theme, Typography } from "@material-ui/core";
+import { Container, createStyles, Theme, Typography } from "@material-ui/core";
 import FriendButton from "../../components/friend/FriendButton";
-import { GET_ME } from "../../queries";
+import { GET_ME } from "../../graphql/queries";
 import { useApolloClient } from "@apollo/client";
 import { makeStyles } from "@material-ui/core/styles";
+import OwnAvatar from "../ownProfile/OwnAvatar";
+import OwnBackground from "../ownProfile/OwnBackground";
+import { StyledProfileAvatar } from "../../styled/StyledProfileAvatar";
+import { UserPreviewAndPosts } from "../../types";
 
 interface Props {
-  id: number;
-  fullName: string;
+  user: UserPreviewAndPosts;
+  meId: number;
 }
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
-      display: "flex",
+      justifyContent: "center",
       width: "100%",
       padding: theme.spacing(3),
       marginBottom: theme.spacing(2),
@@ -23,18 +27,39 @@ const useStyles = makeStyles((theme: Theme) =>
       borderStyle: "solid",
       borderWidth: "10px",
     },
+    images: {
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "flex-end",
+      alignSelf: "flex-start",
+      width: "100%",
+      position: "relative",
+    },
+    name: {
+      width: "100%",
+    },
   })
 );
 
-function ProfileHeader({ fullName, id }: Props) {
+function ProfileHeader({ user, meId }: Props) {
+  const { firstName, lastName, id, background, avatar } = user;
   const classes = useStyles();
-  const client = useApolloClient();
-  const meData = client.readQuery({ query: GET_ME });
-  const { id: meId } = meData.me;
 
   return (
     <div className={classes.root}>
-      <Typography variant="h2">{fullName}</Typography>
+      <OwnBackground background={background} />
+      {meId === id ? (
+        <div className={classes.images}>
+          <OwnAvatar />
+        </div>
+      ) : (
+        <StyledProfileAvatar src={avatar} alt={"Avatar"} />
+      )}
+      <div className={classes.name}>
+        <Typography align="center" variant="h2">
+          {firstName} {lastName}
+        </Typography>
+      </div>
       {meId !== id && <FriendButton id={id} />}
     </div>
   );

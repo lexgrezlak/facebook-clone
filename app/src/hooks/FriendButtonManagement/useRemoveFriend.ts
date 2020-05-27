@@ -1,19 +1,20 @@
 import { useMutation } from "@apollo/client";
-import { GET_FRIEND_STATUS, REMOVE_FRIENDSHIP } from "../../queries";
+import { GET_FRIEND_STATUS } from "../../graphql/queries";
+import { REMOVE_FRIEND } from "../../graphql/mutations";
 
 interface Props {
   id: number;
 }
 
-export function useRemove({ id }: Props) {
-  const [removeFriendship] = useMutation(REMOVE_FRIENDSHIP, {
+export function useRemoveFriend({ id }: Props) {
+  const [removeFriend] = useMutation(REMOVE_FRIEND, {
     onError: (error) => {
       console.log(error.graphQLErrors[0].message);
     },
   });
 
-  async function removeFriend() {
-    return removeFriendship({
+  async function handleRemoveFriend() {
+    return removeFriend({
       variables: { id },
       update: (store) => {
         store.writeQuery({
@@ -27,5 +28,5 @@ export function useRemove({ id }: Props) {
     });
   }
 
-  return { removeFriend };
+  return { handleRemoveFriend };
 }

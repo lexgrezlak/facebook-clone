@@ -1,9 +1,9 @@
 import { useApolloClient } from "@apollo/client";
-import { GET_ME } from "../queries";
-import { useAdd } from "./FriendButtonManagement/useAdd";
-import { useRemove } from "./FriendButtonManagement/useRemove";
-import { useCancel } from "./FriendButtonManagement/useCancel";
-import { useAccept } from "./FriendButtonManagement/useAccept";
+import { GET_ME } from "../graphql/queries";
+import { useAddFriend } from "./FriendButtonManagement/useAddFriend";
+import { useRemoveFriend } from "./FriendButtonManagement/useRemoveFriend";
+import { useRemoveRequest } from "./FriendButtonManagement/useRemoveRequest";
+import { useAcceptRequest } from "./FriendButtonManagement/useAcceptRequest";
 import { useIsFriend } from "./FriendButtonManagement/useIsFriend";
 
 interface Props {
@@ -15,11 +15,19 @@ export const useFriendButtonManagement = ({ id }: Props) => {
   const meData = client.readQuery({ query: GET_ME });
   const { id: userId } = meData.me;
 
-  const { addFriend } = useAdd({ id, userId });
-  const { removeFriend } = useRemove({ id });
-  const { cancelRequest } = useCancel({ id });
-  const { acceptRequest } = useAccept({ id });
+  const { handleAddFriend } = useAddFriend({ id, userId });
+  const { handleRemoveFriend } = useRemoveFriend({ id });
+
+  const { handleRemoveRequest } = useRemoveRequest({ id });
+  const { handleAcceptRequest } = useAcceptRequest({ id });
+
   const { isFriend } = useIsFriend({ id, userId });
 
-  return { isFriend, addFriend, removeFriend, cancelRequest, acceptRequest };
+  return {
+    isFriend,
+    handleAddFriend,
+    handleRemoveFriend,
+    handleRemoveRequest,
+    handleAcceptRequest,
+  };
 };

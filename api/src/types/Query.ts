@@ -79,12 +79,14 @@ export const Query = objectType({
       },
     });
 
-    t.list.field("invitations", {
+    t.list.field("friendRequests", {
       type: "FriendStatus",
       resolve: async (_parent, _args, context) => {
         const { userId } = context.req;
         return context.prisma.friendStatus.findMany({
           where: { toUserId: userId, statusId: 2 },
+          include: { sender: true },
+          orderBy: { sentTime: "desc" },
         });
       },
     });

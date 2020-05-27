@@ -1,15 +1,16 @@
 import { useMutation } from "@apollo/client";
 import { GET_ME } from "../graphql/queries";
-import { UPDATE_AVATAR } from "../graphql/mutations";
+import { UPDATE_BACKGROUND } from "../graphql/mutations";
+import { MeData } from "../types";
 
-export function useAvatarUploadManagement() {
-  const [updateAvatar, { loading }] = useMutation(UPDATE_AVATAR, {
+export function useBackgroundUploadManagement() {
+  const [updateBackground, { loading }] = useMutation(UPDATE_BACKGROUND, {
     onError: (error) => {
       console.log(error.graphQLErrors[0].message);
     },
   });
 
-  function handleUpdateAvatar({
+  function handleUpdateBackground({
     target: {
       validity,
       files: [file],
@@ -17,16 +18,16 @@ export function useAvatarUploadManagement() {
   }: any) {
     return (
       validity.valid &&
-      updateAvatar({
+      updateBackground({
         variables: { file },
-        update: (store, { data: { updateAvatar } }) => {
-          const data = store.readQuery({ query: GET_ME }) as any;
+        update: (store, { data: { updateBackground } }) => {
+          const data = store.readQuery({ query: GET_ME }) as MeData;
           store.writeQuery({
             query: GET_ME,
             data: {
               me: {
                 ...data.me,
-                avatar: updateAvatar.url,
+                background: updateBackground.url,
               },
             },
           });
@@ -35,5 +36,5 @@ export function useAvatarUploadManagement() {
     );
   }
 
-  return { handleUpdateAvatar, loading };
+  return { handleUpdateBackground, loading };
 }

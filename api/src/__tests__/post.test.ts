@@ -1,7 +1,7 @@
 import prisma from "../utils/mocks/prisma";
 import { createTestServer } from "../testUtils";
 import { createTestClient } from "apollo-server-testing";
-import { CREATE_POST } from "../../../app/src/queries";
+import { CREATE_POST } from "../../../app/src/graphql/queries";
 
 const context = ({ req, res }: any) => {
   return { req, res, prisma };

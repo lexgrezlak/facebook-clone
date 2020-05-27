@@ -1,6 +1,6 @@
 import React from "react";
 import { useApolloClient } from "@apollo/client";
-import { GET_ME } from "../../queries";
+import { GET_ME } from "../../graphql/queries";
 import { Avatar, Button, createStyles, Theme } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { useCreatePostFormManagement } from "../../hooks/useCreatePostFormManagement";

@@ -9,11 +9,11 @@ interface Props {
 
 function FriendButton({ id }: Props) {
   const {
-    addFriend,
-    removeFriend,
+    handleAddFriend,
+    handleRemoveFriend,
     isFriend,
-    cancelRequest,
-    acceptRequest,
+    handleRemoveRequest,
+    handleAcceptRequest,
   } = useFriendButtonManagement({
     id,
   });
@@ -23,19 +23,19 @@ function FriendButton({ id }: Props) {
 
   switch (isFriend) {
     case IsFriend.IsNot:
-      handleClick = addFriend;
+      handleClick = handleAddFriend;
       text = "Add friend";
       break;
     case IsFriend.Is:
-      handleClick = removeFriend;
+      handleClick = handleRemoveFriend;
       text = "Remove friend";
       break;
     case IsFriend.MeSentRequest:
-      handleClick = cancelRequest;
+      handleClick = handleRemoveRequest;
       text = "Cancel request";
       break;
     case IsFriend.MeReceivedRequest:
-      handleClick = acceptRequest;
+      handleClick = handleAcceptRequest;
       text = "Accept request";
       break;
   }

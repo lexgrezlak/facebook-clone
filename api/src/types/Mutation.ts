@@ -8,7 +8,7 @@ import {
 import { AuthenticationError, UserInputError } from "apollo-server-express";
 import { clearCookie, generateToken, setCookie } from "../utils/cookies";
 import { trimAndCapitalizeSentence } from "../utils/helpers";
-import { cloudinaryUploader } from "../../cloudinary";
+import { cloudinaryUploader } from "../utils/cloudinary";
 
 export const Mutation = objectType({
   name: "Mutation",
@@ -234,6 +234,29 @@ export const Mutation = objectType({
         await context.prisma.user.update({
           where: { id: userId },
           data: { avatar },
+        });
+
+        return file;
+      },
+    });
+
+    t.field("updateBackground", {
+      type: "File",
+      args: {
+        file: arg({ type: "Upload", required: true }),
+      },
+      resolve: async (_parent, args, context) => {
+        const file = await cloudinaryUploader.singleFileUploadResolver.bind(
+          cloudinaryUploader
+        )(_parent, args);
+
+        const { url: background } = file;
+
+        const { userId } = context.req;
+
+        await context.prisma.user.update({
+          where: { id: userId },
+          data: { background },
         });
 
         return file;

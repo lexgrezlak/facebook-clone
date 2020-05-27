@@ -1,6 +1,6 @@
 import React from "react";
 import { useQuery } from "@apollo/client";
-import { GET_FEED } from "../../queries";
+import { GET_FEED } from "../../graphql/queries";
 import { CircularProgress } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import PostItem from "../../components/post/PostItem";

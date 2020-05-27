@@ -15,6 +15,7 @@ import SearchIcon from "@material-ui/icons/Search";
 import MenuIcon from "@material-ui/icons/Menu";
 import { makeStyles } from "@material-ui/core/styles";
 import Search from "./header/Search";
+import FriendRequests from "./FriendRequests";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -91,6 +92,7 @@ function Header() {
             <SearchIcon fontSize="large" />
           </IconButton>
           <Search />
+          <FriendRequests />
           <IconButton
             aria-label="display more actions"
             edge="end"

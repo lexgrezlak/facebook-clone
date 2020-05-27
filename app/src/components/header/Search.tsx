@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useQuery } from "@apollo/client";
-import { GET_USERS } from "../../queries";
+import { GET_USERS } from "../../graphql/queries";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import { CircularProgress, TextField } from "@material-ui/core";
 import Autocomplete from "@material-ui/lab/Autocomplete";

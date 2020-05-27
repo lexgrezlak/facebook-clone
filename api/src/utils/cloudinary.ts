@@ -3,7 +3,7 @@ import {
   CLOUDINARY_API_KEY,
   CLOUDINARY_API_SECRET,
   CLOUDINARY_CLOUD_NAME,
-} from "./src/config";
+} from "../config";
 
 namespace ApolloServerFileUploads {
   export type File = {
@@ -20,7 +20,7 @@ namespace ApolloServerFileUploads {
     url: string;
   };
 
-  export interface IUploader {
+  export interface Uploader {
     singleFileUploadResolver: (
       parent: any,
       { file }: { file: File }
@@ -34,7 +34,7 @@ type CloudinaryUploadConfig = {
   apiSecret: string;
 };
 
-export class CloudinaryUploader implements ApolloServerFileUploads.IUploader {
+export class CloudinaryUploader implements ApolloServerFileUploads.Uploader {
   constructor(config: CloudinaryUploadConfig) {
     cloudinary.v2.config({
       cloud_name: config.cloudName,

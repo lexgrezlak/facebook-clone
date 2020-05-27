@@ -1,6 +1,7 @@
 import { useMutation } from "@apollo/client";
-import { DELETE_POST, GET_FEED } from "../queries";
+import { GET_FEED } from "../graphql/queries";
 import { PostAndAuthor } from "../types";
+import { DELETE_POST } from "../graphql/mutations";
 
 interface Props {
   id: number;

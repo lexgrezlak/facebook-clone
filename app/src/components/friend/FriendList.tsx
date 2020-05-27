@@ -1,6 +1,6 @@
 import React from "react";
 import { useQuery } from "@apollo/client";
-import { GET_FRIENDS } from "../../queries";
+import { GET_FRIENDS } from "../../graphql/queries";
 import { Avatar, Typography } from "@material-ui/core";
 import { UserPreview } from "../../types";
 

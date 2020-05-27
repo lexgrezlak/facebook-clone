@@ -7,7 +7,7 @@ import { StyledPaper } from "../../styled/StyledPaper";
 import { UserPreview } from "../../types";
 import PostMenu from "./PostMenu";
 import { useApolloClient } from "@apollo/client";
-import { GET_ME } from "../../queries";
+import { GET_ME } from "../../graphql/queries";
 
 interface Post {
   id: number;

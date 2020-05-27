@@ -1,5 +1,5 @@
 import { useQuery } from "@apollo/client";
-import { GET_FRIEND_STATUS } from "../../queries";
+import { GET_FRIEND_STATUS } from "../../graphql/queries";
 
 interface FriendStatus {
   fromUserId: number;

@@ -1,7 +1,8 @@
-import { useApolloClient, useMutation } from "@apollo/client";
-import { CREATE_POST, GET_FEED, GET_ME } from "../queries";
+import { useMutation } from "@apollo/client";
+import { GET_FEED } from "../graphql/queries";
 import * as Yup from "yup";
 import { UserPreview } from "../types";
+import { CREATE_POST } from "../graphql/mutations";
 
 interface CreatePostFormFields {
   content: string;

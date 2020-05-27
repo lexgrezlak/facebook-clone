@@ -1,6 +1,6 @@
 import { createTestServer } from "../testUtils";
 import { createTestClient } from "apollo-server-testing";
-import { SIGN_IN, SIGN_OUT, SIGN_UP } from "../../../app/src/queries";
+import { SIGN_IN, SIGN_OUT, SIGN_UP } from "../../../app/src/graphql/queries";
 import bcryptjs, { compare, hash } from "bcryptjs";
 import { sign } from "jsonwebtoken";
 import prisma from "../utils/mocks/prisma";

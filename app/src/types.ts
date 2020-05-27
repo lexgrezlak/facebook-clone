@@ -16,5 +16,20 @@ export interface PostAndAuthor extends Post {
 }
 
 export interface UserPreviewAndPosts extends UserPreview {
+  background: string;
   posts: Post[];
+}
+
+export interface FriendRequest {
+  id: number;
+  sender: UserPreview;
+  sentTime: Date;
+}
+
+export interface FriendRequestsData {
+  friendRequests: FriendRequest[];
+}
+
+export interface MeData {
+  me: UserPreview;
 }

@@ -1,20 +1,21 @@
 import { useMutation } from "@apollo/client";
-import { GET_FRIEND_STATUS, SEND_INVITATION } from "../../queries";
+import { GET_FRIEND_STATUS } from "../../graphql/queries";
+import { ADD_FRIEND } from "../../graphql/mutations";
 
 interface Props {
   id: number;
   userId: number;
 }
 
-export function useAdd({ id, userId }: Props) {
-  const [sendInvitation] = useMutation(SEND_INVITATION, {
+export function useAddFriend({ id, userId }: Props) {
+  const [addFriend] = useMutation(ADD_FRIEND, {
     onError: (error) => {
       console.log(error.graphQLErrors[0].message);
     },
   });
 
-  async function addFriend() {
-    await sendInvitation({
+  async function handleAddFriend() {
+    await addFriend({
       variables: { id },
       update: (store) => {
         store.writeQuery({
@@ -32,5 +33,5 @@ export function useAdd({ id, userId }: Props) {
     });
   }
 
-  return { addFriend };
+  return { handleAddFriend };
 }

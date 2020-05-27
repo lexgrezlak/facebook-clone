@@ -1,7 +1,8 @@
 import React from "react";
 import { useApolloClient, useMutation } from "@apollo/client";
-import { GET_ME, SIGN_OUT } from "../../queries";
+import { GET_ME } from "../../graphql/queries";
 import { useNavigate } from "react-router-dom";
+import { SIGN_OUT } from "../../graphql/mutations";
 
 function SignOutButton() {
   const client = useApolloClient();
