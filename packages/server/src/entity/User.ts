@@ -4,17 +4,10 @@ import {
   Column,
   Entity,
   PrimaryGeneratedColumn,
-  OneToOne,
-  JoinColumn,
   OneToMany,
 } from "typeorm";
 import { Field, ID, ObjectType, Root } from "type-graphql";
-import { Length } from "class-validator";
 import { FriendStatus } from "./FriendStatus";
-
-// registerEnumType(Gender, {
-//   name: "Gender",
-// });
 
 @ObjectType()
 @Entity()
@@ -47,7 +40,7 @@ export class User extends BaseEntity {
   @Column("date")
   birthday: Date;
 
-  @Field()
+  @Field({ nullable: true })
   @Column("text", { nullable: true })
   avatar: string;
 
