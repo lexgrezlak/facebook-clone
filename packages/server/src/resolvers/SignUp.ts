@@ -1,14 +1,17 @@
+import { Context } from "./../context";
 import { hash } from "bcryptjs";
-import { Mutation, Arg, Resolver } from "type-graphql";
+import { Mutation, Arg, Resolver, Ctx } from "type-graphql";
 import { User } from "../entity/User";
 import { SignUpInput } from "./SignUpInput";
+import { generateToken, setCookie } from "../utils/cookies";
 
 @Resolver()
 export class SignUpResolver {
   @Mutation(() => User)
   async signUp(
     @Arg("data")
-    { email, firstName, lastName, password, birthday }: SignUpInput
+    { email, firstName, lastName, password, birthday }: SignUpInput,
+    @Ctx() ctx: Context
   ): Promise<User> {
     const passwordHash = await hash(password, 12);
 
@@ -19,6 +22,9 @@ export class SignUpResolver {
       birthday,
       email,
     }).save();
+
+    const token = generateToken({ userId: user.id });
+    setCookie(ctx.res, token);
 
     return user;
   }

@@ -1,19 +1,12 @@
 .idea
-server/node_modules
-server/package-lock.json
-server/build
+.vscode
 
-server/.env
-server/.env.development
-server/.env.test
-server/docker.env
+packages/*/.env
+packages/*/.env.development
+packages/*/.env.test
+packages/*/docker.env
+packages/*/node_modules
+packages/*/build
+packages/*/package-lock.json
 
-
-app/.env
-app/.env.development
-app/.env.test
-
-app/node_modules
-app/package-lock.json
-app/build
 node_modules

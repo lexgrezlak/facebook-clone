@@ -18,6 +18,7 @@ export class SignInResolver {
     if (!user) throw new AuthenticationError("Wrong email or password");
 
     const isPasswordValid = await compare(password, user.passwordHash);
+    console.log(email, password);
 
     if (!isPasswordValid)
       throw new AuthenticationError("Wrong email or password");

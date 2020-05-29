@@ -1,3 +1,6 @@
+import { Resolver, Mutation, Arg } from "type-graphql";
+import { Post } from "../entity/Post";
+
 @Resolver()
 export class CreatePostResolver {
   @Mutation(() => Post)

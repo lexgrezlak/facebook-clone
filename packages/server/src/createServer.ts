@@ -1,3 +1,6 @@
+import { FeedResolver } from "./resolvers/Feed";
+import { SignOutResolver } from "./resolvers/SignOut";
+import { CreatePostResolver } from "./resolvers/CreatePost";
 import { SignInResolver } from "./resolvers/SignIn";
 import { buildSchema } from "type-graphql";
 import { ApolloServer } from "apollo-server-express";
@@ -7,7 +10,14 @@ import { SignUpResolver } from "./resolvers/SignUp";
 
 export const createServer = async () => {
   const schema = await buildSchema({
-    resolvers: [MeResolver, SignUpResolver, SignInResolver],
+    resolvers: [
+      MeResolver,
+      SignUpResolver,
+      SignInResolver,
+      CreatePostResolver,
+      SignOutResolver,
+      FeedResolver,
+    ],
   });
 
   const server = new ApolloServer({

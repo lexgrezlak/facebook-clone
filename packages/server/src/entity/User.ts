@@ -47,6 +47,17 @@ export class User extends BaseEntity {
   @Column("date")
   birthday: Date;
 
+  @Field()
+  @Column("text", { nullable: true })
+  avatar: string;
+
+  @Field()
+  @Column("text", {
+    default:
+      "https://pixabay.com/get/53e9d4454953b10ff3d89960c62d3e7e123dd6e05550_640.jpg",
+  })
+  background: string;
+
   @OneToMany(() => Post, (post) => post.user)
   posts: Post[];
 
