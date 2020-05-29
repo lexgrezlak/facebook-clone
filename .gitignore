@@ -1,13 +1,13 @@
 .idea
-api/node_modules
-api/package-lock.json
-api/build
-api/src/generated
-api/prisma/.env
+server/node_modules
+server/package-lock.json
+server/build
 
-api/.env
-api/.env.development
-api/.env.test
+server/.env
+server/.env.development
+server/.env.test
+server/docker.env
+
 
 app/.env
 app/.env.development
@@ -16,3 +16,4 @@ app/.env.test
 app/node_modules
 app/package-lock.json
 app/build
+node_modules
