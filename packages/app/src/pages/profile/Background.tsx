@@ -29,14 +29,21 @@ interface Props {
   background: string;
 }
 
-function OwnBackground({ background }: Props) {
+function Background({ background }: Props) {
   const classes = useStyles();
 
   return (
     <div className={classes.root}>
-      <img src={background} alt="Your background" className={classes.img} />
+      <img
+        src={
+          background ||
+          "https://cdn.pixabay.com/photo/2018/07/18/19/45/brick-3547144_960_720.jpg"
+        }
+        alt="Your background"
+        className={classes.img}
+      />
     </div>
   );
 }
 
-export default OwnBackground;
+export default Background;

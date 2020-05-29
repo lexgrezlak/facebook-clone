@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Dispatch } from "react";
 import { Form, Formik } from "formik";
 import { useSignInFormManagement } from "../../hooks/useSignInFormManagement";
 import { Button, Grid, Link } from "@material-ui/core";
@@ -16,7 +16,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function SignInForm({ setVisible }: any) {
+interface Props {
+  setVisible: Dispatch<React.SetStateAction<boolean>>;
+}
+
+function SignInForm({ setVisible }: Props) {
   const classes = useStyles();
   const {
     handleSubmit,

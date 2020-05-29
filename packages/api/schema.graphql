@@ -48,6 +48,11 @@ type Mutation {
   updateBackground(file: Upload!): File!
 }
 
+type PageInfo {
+  endCursor: Int!
+  hasNextPage: Boolean!
+}
+
 type Post {
   author: User!
   content: String
@@ -55,12 +60,17 @@ type Post {
   id: Int!
 }
 
+type PostConnection {
+  edges: [Post!]!
+  pageInfo: PageInfo!
+}
+
 input PostWhereUniqueInput {
   id: Int
 }
 
 type Query {
-  feed: [Post!]!
+  feed(cursor: Int): [PostConnection!]!
   friendRequests: [FriendStatus!]!
   friends(id: Int): [User!]
   friendStatus(id: Int!): FriendStatus

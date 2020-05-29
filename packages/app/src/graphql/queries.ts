@@ -13,9 +13,15 @@ export const GET_ME = gql`
 export const GET_FEED = gql`
   query Feed {
     feed {
-      ...PostPreview
-      author {
-        ...UserPreview
+      edges {
+        ...PostPreview
+        author {
+          ...UserPreview
+        }
+      }
+      pageInfo {
+        hasNextPage
+        endCursor
       }
     }
   }

@@ -4,7 +4,7 @@
  */
 
 import * as Context from "../context"
-import { core } from "@nexus/schema"
+import { core, connectionPluginCore } from "@nexus/schema"
 declare global {
   interface NexusGenCustomInputMethods<TypeName extends string> {
     upload<FieldName extends string>(fieldName: FieldName, opts?: core.ScalarInputFieldConfig<core.GetGen3<"inputTypes", TypeName, FieldName>>): void // "Upload";
@@ -13,6 +13,10 @@ declare global {
 declare global {
   interface NexusGenCustomOutputMethods<TypeName extends string> {
     upload<FieldName extends string>(fieldName: FieldName, ...opts: core.ScalarOutSpread<TypeName, FieldName>): void // "Upload";
+    connectionField<FieldName extends string>(
+            fieldName: FieldName, 
+            config: connectionPluginCore.ConnectionFieldConfig<TypeName, FieldName> 
+          ): void
   }
 }
 declare global {
@@ -60,10 +64,18 @@ export interface NexusGenRootTypes {
     toUserId: number; // Int!
   }
   Mutation: {};
+  PageInfo: { // root type
+    endCursor: number; // Int!
+    hasNextPage: boolean; // Boolean!
+  }
   Post: { // root type
     content?: string | null; // String
     createdAt: any; // DateTime!
     id: number; // Int!
+  }
+  PostConnection: { // root type
+    edges: NexusGenRootTypes['Post'][]; // [Post!]!
+    pageInfo: NexusGenRootTypes['PageInfo']; // PageInfo!
   }
   Query: {};
   User: { // root type
@@ -123,14 +135,22 @@ export interface NexusGenFieldTypes {
     updateAvatar: NexusGenRootTypes['File']; // File!
     updateBackground: NexusGenRootTypes['File']; // File!
   }
+  PageInfo: { // field return type
+    endCursor: number; // Int!
+    hasNextPage: boolean; // Boolean!
+  }
   Post: { // field return type
     author: NexusGenRootTypes['User']; // User!
     content: string | null; // String
     createdAt: any; // DateTime!
     id: number; // Int!
   }
+  PostConnection: { // field return type
+    edges: NexusGenRootTypes['Post'][]; // [Post!]!
+    pageInfo: NexusGenRootTypes['PageInfo']; // PageInfo!
+  }
   Query: { // field return type
-    feed: NexusGenRootTypes['Post'][]; // [Post!]!
+    feed: NexusGenRootTypes['PostConnection'][]; // [PostConnection!]!
     friendRequests: NexusGenRootTypes['FriendStatus'][]; // [FriendStatus!]!
     friends: NexusGenRootTypes['User'][] | null; // [User!]
     friendStatus: NexusGenRootTypes['FriendStatus'] | null; // FriendStatus
@@ -196,6 +216,9 @@ export interface NexusGenArgTypes {
     }
   }
   Query: {
+    feed: { // args
+      cursor?: number | null; // Int
+    }
     friends: { // args
       id?: number | null; // Int
     }
@@ -242,7 +265,7 @@ export interface NexusGenAbstractResolveReturnTypes {
 
 export interface NexusGenInheritedFields {}
 
-export type NexusGenObjectNames = "File" | "FriendStatus" | "Mutation" | "Post" | "Query" | "User";
+export type NexusGenObjectNames = "File" | "FriendStatus" | "Mutation" | "PageInfo" | "Post" | "PostConnection" | "Query" | "User";
 
 export type NexusGenInputNames = "FriendStatusWhereUniqueInput" | "PostWhereUniqueInput" | "UserWhereUniqueInput";
 
@@ -280,6 +303,7 @@ declare global {
   interface NexusGenPluginTypeConfig<TypeName extends string> {
   }
   interface NexusGenPluginFieldConfig<TypeName extends string, FieldName extends string> {
+    
   }
   interface NexusGenPluginSchemaConfig {
   }

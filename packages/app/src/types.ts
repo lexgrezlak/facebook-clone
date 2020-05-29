@@ -13,6 +13,17 @@ export enum IsFriend {
   MeReceivedRequest,
 }
 
+export interface FeedData {
+  feed: {
+    __typename: "feed";
+    edges: PostAndAuthor[];
+    pageInfo: {
+      hasNextPage: boolean;
+      endCursor: number;
+    };
+  };
+}
+
 export interface UserPreview {
   id: number;
   firstName: string;

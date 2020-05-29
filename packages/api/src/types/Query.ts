@@ -19,9 +19,38 @@ export const Query = objectType({
     });
 
     t.list.field("feed", {
-      type: "Post",
-      resolve: (_parent, _args, context) => {
-        return context.prisma.post.findMany({ orderBy: { createdAt: "desc" } });
+      type: "PostConnection",
+      args: { cursor: intArg({ nullable: true }) },
+      resolve: async (_parent, { cursor }, context) => {
+        const FIRST = 3;
+
+        type After = {
+          after?: {
+            id: number;
+          };
+        };
+
+        const after: After = cursor ? { after: { id: cursor } } : {};
+
+        const posts = await context.prisma.post.findMany({
+          orderBy: { createdAt: "desc" },
+          first: FIRST,
+          ...after,
+        });
+
+        const hasNextPage = posts.length > FIRST;
+        const edges = hasNextPage ? posts.slice(0, -1) : posts;
+        const endCursor = edges[edges.length - 1].id;
+
+        console.log(edges);
+
+        return {
+          edges,
+          pageInfo: {
+            hasNextPage,
+            endCursor,
+          },
+        };
       },
     });
 
