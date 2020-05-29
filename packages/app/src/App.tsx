@@ -21,10 +21,10 @@ const App: React.FC = () => {
 
   return (
     <div>
-      <Header />
+      {/* <Header /> */}
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="users/:id" element={<Profile meId={data.me.id} />} />
+        {/* <Route path="users/:id" element={<Profile meId={data.me.id} />} /> */}
       </Routes>
     </div>
   );

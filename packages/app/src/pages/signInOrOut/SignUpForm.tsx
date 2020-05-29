@@ -53,6 +53,7 @@ function SignUpForm({ setVisible }: any) {
               label="Confirm password"
             />
             <DateField name="birthday" />
+            <RadioField name="gender" />
             <Button
               variant="contained"
               color="primary"

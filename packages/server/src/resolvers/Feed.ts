@@ -5,14 +5,21 @@ import { Query, Resolver, Arg } from "type-graphql";
 @Resolver()
 export class FeedResolver {
   @Query(() => PostConnection)
-  async feed(@Arg("cursor") cursor: number): Promise<PostConnection> {
-    const LIMIT = 5;
+  async feed(
+    @Arg("cursor", { defaultValue: 0 }) cursor: number
+  ): Promise<PostConnection> {
+    const LIMIT = 10;
 
-    const posts = await Post.find({ take: LIMIT + 1, skip: cursor });
+    const posts = await Post.find({
+      order: { createdAt: "DESC" },
+      skip: cursor || undefined,
+      take: LIMIT + 1,
+      relations: ["user"],
+    });
 
     const hasNextPage = posts.length > LIMIT;
     const edges = hasNextPage ? posts.slice(0, -1) : posts;
-    const endCursor = edges[edges.length - 1].id;
+    const endCursor = cursor + Math.min(LIMIT, edges.length);
 
     return {
       edges,

@@ -1,6 +1,6 @@
 import { useMutation } from "@apollo/client";
 import { GET_FEED } from "../graphql/queries";
-import { PostAndAuthor } from "../types";
+import { PostAndUser } from "../types";
 import { DELETE_POST } from "../graphql/mutations";
 
 interface Props {
@@ -22,7 +22,7 @@ export function useDeletePostManagement({ id }: Props) {
         store.writeQuery({
           query: GET_FEED,
           data: {
-            feed: data.feed.filter((post: PostAndAuthor) => post.id !== id),
+            feed: data.feed.filter((post: PostAndUser) => post.id !== id),
           },
         });
       },

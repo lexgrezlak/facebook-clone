@@ -17,7 +17,7 @@ interface Post {
 
 interface Props {
   post: Post;
-  author: UserPreview;
+  user: UserPreview;
 }
 
 const useStyles = makeStyles((theme) => ({
@@ -41,25 +41,26 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function PostItem({ post, author }: Props) {
+function PostItem({ post, user }: Props) {
   const client = useApolloClient();
   const data = client.readQuery({ query: GET_ME });
   const classes = useStyles();
-  const fullName = `${author.firstName} ${author.lastName}`;
+
+  const { fullName } = user;
 
   return (
     <StyledPaper>
       <div className={classes.header}>
         <div className={classes.flex}>
-          <Link to={`/users/${author.id}`}>
-            <Avatar src={author.avatar} alt={fullName} />
+          <Link to={`/users/${user.id}`}>
+            <Avatar src={user.avatar} alt={fullName} />
           </Link>
           <div className={classes.postInfo}>
             <Typography
               className={classes.link}
               variant="subtitle1"
               component={Link}
-              to={`/users/${author.id}`}
+              to={`/users/${user.id}`}
             >
               {fullName}
             </Typography>
@@ -68,7 +69,7 @@ function PostItem({ post, author }: Props) {
             </Typography>
           </div>
         </div>
-        {data.me.id === author.id && <PostMenu id={post.id} />}
+        {data.me.id === user.id && <PostMenu id={post.id} />}
       </div>
 
       <div>

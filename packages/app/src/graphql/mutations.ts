@@ -1,17 +1,24 @@
 import { gql } from "@apollo/client";
 import { POST_PREVIEW } from "./fragments";
 
-interface SignUpInput {
-  firstName: string;
-  lastName: string;
-  email: string;
-  password: string;
-  birthday: string;
-}
-
 export const SIGN_UP = gql`
-  mutation SignUp($data: SignUpInput!) {
-    signUp(data: $data) {
+  mutation SignUp(
+    $firstName: String!
+    $lastName: String!
+    $email: String!
+    $password: String!
+    $birthday: DateTime!
+    $gender: Gender!
+  ) {
+    signUp(
+      firstName: $firstName
+      lastName: $lastName
+      email: $email
+      password: $password
+      birthday: $birthday
+      gender: $gender
+    ) {
+      id
       firstName
       lastName
     }
@@ -38,7 +45,7 @@ export const CREATE_POST = gql`
   mutation CreatePost($content: String!) {
     createPost(content: $content) {
       ...PostPreview
-      author {
+      user {
         firstName
         lastName
       }

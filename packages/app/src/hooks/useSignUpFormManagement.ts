@@ -2,6 +2,12 @@ import { useApolloClient, useMutation } from "@apollo/client";
 import * as Yup from "yup";
 import { SIGN_UP } from "../graphql/mutations";
 
+export enum Gender {
+  Female = "FEMALE",
+  Male = "MALE",
+  Other = "OTHER",
+}
+
 interface SignUpFormFields {
   firstName: string;
   lastName: string;
@@ -9,6 +15,7 @@ interface SignUpFormFields {
   password: string;
   passwordConfirm: string;
   birthday: string;
+  gender: Gender | null;
 }
 
 export const useSignUpFormManagement = () => {
@@ -22,10 +29,10 @@ export const useSignUpFormManagement = () => {
   async function handleSubmit({
     passwordConfirm,
     birthday,
-    ...remainingData
+    ...signUpData
   }: SignUpFormFields) {
     await signUp({
-      variables: { data: { ...remainingData, birthday: new Date(birthday) } },
+      variables: { ...signUpData, birthday: new Date(birthday) },
     });
     await client.resetStore();
   }
@@ -37,6 +44,7 @@ export const useSignUpFormManagement = () => {
     password: "",
     passwordConfirm: "",
     birthday: "2000-01-01",
+    gender: null,
   };
 
   const validationSchema = Yup.object().shape({});

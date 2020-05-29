@@ -11,11 +11,17 @@ export const GET_ME = gql`
 `;
 
 export const GET_FEED = gql`
-  query Feed {
-    feed {
-      ...PostPreview
-      author {
-        ...UserPreview
+  query Feed($cursor: Float) {
+    feed(cursor: $cursor) {
+      edges {
+        ...PostPreview
+        user {
+          ...UserPreview
+        }
+      }
+      pageInfo {
+        hasNextPage
+        endCursor
       }
     }
   }

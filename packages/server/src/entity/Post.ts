@@ -4,6 +4,7 @@ import {
   Entity,
   PrimaryGeneratedColumn,
   ManyToOne,
+  JoinColumn,
 } from "typeorm";
 import { Field, ID, ObjectType } from "type-graphql";
 import { User } from "./User";
@@ -15,6 +16,9 @@ export class Post extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
+  @Column()
+  userId: number;
+
   @Field()
   @Column("text")
   content: string;
@@ -24,6 +28,6 @@ export class Post extends BaseEntity {
   user: User;
 
   @Field()
-  @Column("date", { default: new Date() })
+  @Column({ default: new Date() })
   createdAt: Date;
 }

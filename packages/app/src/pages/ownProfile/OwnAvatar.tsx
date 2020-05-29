@@ -8,16 +8,6 @@ import { StyledProfileAvatar } from "../../styled/StyledProfileAvatar";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    root: {
-      position: "absolute",
-      display: "flex",
-      justifyContent: "center",
-      "& > *": {
-        margin: theme.spacing(1),
-      },
-      zIndex: 999,
-    },
-
     badge: {
       width: theme.spacing(20),
       height: theme.spacing(20),
@@ -32,19 +22,17 @@ function OwnAvatar() {
   const { avatar } = data.me;
 
   return (
-    <div className={classes.root}>
-      <Badge
-        overlap="circle"
-        anchorOrigin={{
-          vertical: "bottom",
-          horizontal: "right",
-        }}
-        badgeContent={<AvatarUpload />}
-        className={classes.badge}
-      >
-        <StyledProfileAvatar alt="Your avatar" src={avatar} />
-      </Badge>
-    </div>
+    <Badge
+      overlap="circle"
+      anchorOrigin={{
+        vertical: "bottom",
+        horizontal: "right",
+      }}
+      badgeContent={<AvatarUpload />}
+      className={classes.badge}
+    >
+      <StyledProfileAvatar alt="Your avatar" src={avatar} />
+    </Badge>
   );
 }
 

@@ -1,3 +1,4 @@
+import { FeedData } from "./../types";
 import { useMutation } from "@apollo/client";
 import { GET_FEED } from "../graphql/queries";
 import * as Yup from "yup";
@@ -23,36 +24,41 @@ export function useCreatePostFormManagement({ me }: Props) {
     },
   });
 
-  const { id, firstName, lastName, avatar } = me;
+  const { id, fullName, avatar } = me;
 
-  async function handleCreatePost({ content }: CreatePostFormFields) {
+  function handleCreatePost(
+    { content }: CreatePostFormFields,
+    { resetForm }: any
+  ) {
     return createPost({
       variables: { content },
       optimisticResponse: {
         __typename: "Mutation",
         createPost: {
           __typename: "Post",
-          author: {
+          user: {
             id,
-            firstName,
-            lastName,
+            fullName,
             avatar,
             __typename: "User",
           },
           content,
           createdAt: new Date(),
-          id: 100000 + Math.random() * 999999,
+          id: 100000 + Math.floor(Math.random() * 999999),
         },
       },
       update: (store, { data: { createPost } }) => {
-        const data = store.readQuery({ query: GET_FEED }) as any;
+        const data = store.readQuery({ query: GET_FEED }) as FeedData;
+
         store.writeQuery({
           query: GET_FEED,
           data: {
             ...data,
-            feed: [createPost, ...data.feed],
+            edges: [createPost, ...data.feed.edges],
           },
         });
+
+        resetForm();
       },
     });
   }

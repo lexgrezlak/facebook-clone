@@ -5,6 +5,7 @@ import {
   Entity,
   PrimaryGeneratedColumn,
   OneToMany,
+  JoinColumn,
 } from "typeorm";
 import { Field, ID, ObjectType, Root } from "type-graphql";
 import { FriendStatus } from "./FriendStatus";
@@ -25,7 +26,7 @@ export class User extends BaseEntity {
   lastName: string;
 
   @Field({ complexity: 3 })
-  name(@Root() parent: User): string {
+  fullName(@Root() parent: User): string {
     return `${parent.firstName} ${parent.lastName}`;
   }
 
@@ -51,6 +52,7 @@ export class User extends BaseEntity {
   })
   background: string;
 
+  @Field(() => [Post])
   @OneToMany(() => Post, (post) => post.user)
   posts: Post[];
 

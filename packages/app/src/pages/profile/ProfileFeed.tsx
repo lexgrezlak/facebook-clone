@@ -7,13 +7,13 @@ interface Props {
 }
 
 function ProfileFeed({ user }: Props) {
-  const { posts, ...author } = user;
+  const { posts, ...restUser } = user;
 
   return (
     <div>
       <ul>
         {posts.map((post: Post) => (
-          <PostItem key={post.id} post={post} author={author} />
+          <PostItem key={post.id} post={post} user={restUser} />
         ))}
       </ul>
     </div>

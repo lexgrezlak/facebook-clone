@@ -17,7 +17,7 @@ interface Props {
 
 function FriendRequestItem({ friendRequest }: Props) {
   const {
-    sender: { avatar, firstName, lastName, id },
+    sender: { avatar, fullName, id },
     sentTime,
   } = friendRequest;
 
@@ -31,7 +31,7 @@ function FriendRequestItem({ friendRequest }: Props) {
       </ListItemAvatar>
       <div>
         <ListItemText
-          primary={`${firstName} ${lastName}`}
+          primary={fullName}
           secondary={<Moment fromNow date={sentTime} />}
         />
         <div>
