@@ -1,6 +1,16 @@
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Post } from "./Post";
+import {
+  BaseEntity,
+  Column,
+  Entity,
+  PrimaryGeneratedColumn,
+  OneToOne,
+  JoinColumn,
+  OneToMany,
+} from "typeorm";
 import { Field, ID, ObjectType, Root } from "type-graphql";
 import { Length } from "class-validator";
+import { FriendStatus } from "./FriendStatus";
 
 // registerEnumType(Gender, {
 //   name: "Gender",
@@ -36,4 +46,13 @@ export class User extends BaseEntity {
   @Field()
   @Column("date")
   birthday: Date;
+
+  @OneToMany(() => Post, (post) => post.user)
+  posts: Post[];
+
+  @OneToMany(() => FriendStatus, (friendStatus) => friendStatus.fromUser)
+  sentRequests: FriendStatus[];
+
+  @OneToMany(() => FriendStatus, (friendStatus) => friendStatus.fromUser)
+  receivedRequests: FriendStatus[];
 }
