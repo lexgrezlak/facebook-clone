@@ -10,3 +10,4 @@ packages/*/build
 packages/*/package-lock.json
 
 node_modules
+.DS_STORE
