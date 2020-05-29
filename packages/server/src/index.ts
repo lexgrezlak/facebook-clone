@@ -2,7 +2,6 @@ import "reflect-metadata";
 import express from "express";
 import cors from "cors";
 import { PORT } from "./config";
-import { applyMiddleware } from "graphql-middleware";
 import cookieParser from "cookie-parser";
 import { authorization } from "./utils/authorization";
 import { createServer } from "./createServer";
