@@ -9,7 +9,7 @@ import {
 import Moment from "react-moment";
 import { FriendRequest } from "../../types";
 import { useAcceptRequest } from "../../hooks/FriendButtonManagement/useAcceptRequest";
-import { useRemoveRequest } from "../../hooks/FriendButtonManagement/useRemoveRequest";
+import { useCancelRequest } from "../../hooks/FriendButtonManagement/useCancelRequest";
 
 interface Props {
   friendRequest: FriendRequest;
@@ -17,12 +17,12 @@ interface Props {
 
 function FriendRequestItem({ friendRequest }: Props) {
   const {
-    sender: { avatar, fullName, id },
+    fromUser: { avatar, fullName, id: userId },
     sentTime,
   } = friendRequest;
 
-  const { handleAcceptRequest } = useAcceptRequest({ id });
-  const { handleRemoveRequest } = useRemoveRequest({ id });
+  const { handleAcceptRequest } = useAcceptRequest({ userId });
+  const { handleCancelRequest } = useCancelRequest({ userId });
 
   return (
     <ListItem>

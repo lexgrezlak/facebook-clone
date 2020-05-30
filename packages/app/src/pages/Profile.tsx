@@ -15,7 +15,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { UserData, UserVars } from "../types";
 
 interface Props {
-  meId: number;
+  meId: string;
 }
 
 const useStyles = makeStyles(() =>
@@ -33,8 +33,7 @@ const useStyles = makeStyles(() =>
 
 function Profile({ meId }: Props) {
   const classes = useStyles();
-  const { id: stringId } = useParams();
-  const id = Number(stringId);
+  const { id } = useParams();
 
   const { data } = useQuery<UserData, UserVars>(GET_USER, {
     onError: (error) => {
@@ -52,7 +51,7 @@ function Profile({ meId }: Props) {
       <ProfileHeader user={user} meId={meId} />
       <Grid container spacing={2}>
         <Grid item xs={12} md={4} className={classes.grid}>
-          <FriendList id={id} />
+          <FriendList userId={id} />
         </Grid>
         <Grid item xs={12} md={8}>
           <ProfileFeed user={user} />

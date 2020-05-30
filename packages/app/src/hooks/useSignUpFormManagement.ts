@@ -40,10 +40,12 @@ export const useSignUpFormManagement = () => {
   });
 
   async function handleSubmit(input: SignUpFormFields) {
+    // no need to send password confirm to the server because of validation
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { passwordConfirm, birthday, ...restInput } = input;
 
     await signUp({
-      variables: { input: { ...restInput, birthday: new Date() } },
+      variables: { input: { ...restInput, birthday: new Date(birthday) } },
     });
     await client.resetStore();
   }

@@ -28,9 +28,11 @@ export class FriendStatus extends BaseEntity {
   @Column("timestamp", { default: () => "CURRENT_TIMESTAMP(6)" })
   sentTime: Date;
 
+  @Field()
   @Column()
   fromUserId: string;
 
+  @Field()
   @Column()
   toUserId: string;
 

@@ -39,30 +39,26 @@ export const CREATE_POST = gql`
 `;
 
 export const ACCEPT_REQUEST = gql`
-  mutation AcceptInvitation($id: ID!) {
-    acceptInvitation(id: $id) {
-      statusId
-    }
+  mutation AcceptRequest($userId: String!) {
+    acceptRequest(userId: $userId)
   }
 `;
 
-export const ADD_FRIEND = gql`
-  mutation SendInvitation($id: ID!) {
-    sendInvitation(id: $id) {
-      statusId
-    }
+export const SEND_REQUEST = gql`
+  mutation SendRequest($userId: String!) {
+    sendRequest(userId: $userId)
   }
 `;
 
-export const REMOVE_FRIEND = gql`
-  mutation RemoveFriendship($id: ID!) {
-    removeFriendship(id: $id)
+export const UNFRIEND = gql`
+  mutation Unfriend($userId: String!) {
+    unfriend(userId: $userId)
   }
 `;
 
-export const REMOVE_REQUEST = gql`
-  mutation RemoveRequest($id: ID!) {
-    removeRequest(id: $id)
+export const CANCEL_REQUEST = gql`
+  mutation CancelRequest($userId: String!) {
+    cancelRequest(userId: $userId)
   }
 `;
 
@@ -83,7 +79,7 @@ export const UPDATE_BACKGROUND = gql`
 `;
 
 export const DELETE_POST = gql`
-  mutation DeletePost($id: ID!) {
+  mutation DeletePost($id: String!) {
     deletePost(id: $id)
   }
 `;

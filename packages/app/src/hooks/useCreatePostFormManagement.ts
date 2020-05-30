@@ -1,69 +1,69 @@
-import { FeedData } from "./../types";
+import { CreatePostInput } from "./../../../server/src/resolvers/CreatePostInput";
+import { FeedData, PostAndUser } from "./../types";
 import { useMutation } from "@apollo/client";
 import { GET_FEED } from "../graphql/queries";
 import * as Yup from "yup";
 import { UserPreview } from "../types";
 import { CREATE_POST } from "../graphql/mutations";
 
-interface CreatePostFormFields {
-  content: string;
-}
-
 interface Props {
   me: UserPreview;
 }
 
+interface CreatePostData {
+  createPost: PostAndUser;
+}
+
+interface CreatePostVars {
+  input: CreatePostInput;
+}
+
 export function useCreatePostFormManagement({ me }: Props) {
-  const initialValues: CreatePostFormFields = {
+  const initialValues: CreatePostInput = {
     content: "",
   };
 
-  const [createPost] = useMutation(CREATE_POST, {
-    onError: (error) => {
-      console.log(error.graphQLErrors[0].message);
-    },
-  });
+  const [createPost] = useMutation<CreatePostData, CreatePostVars>(
+    CREATE_POST,
+    {
+      onError: (error) => {
+        console.log(error.graphQLErrors[0].message);
+      },
+    }
+  );
 
   const { id, fullName, avatar } = me;
 
-  function handleCreatePost(
-    { content }: CreatePostFormFields,
-    { resetForm }: any
-  ) {
+  function handleCreatePost(input: CreatePostInput, { resetForm }: any) {
     return createPost({
-      variables: { content },
+      variables: { input },
       optimisticResponse: {
-        __typename: "Mutation",
+        // __typename: "Mutation",
         createPost: {
-          __typename: "Post",
+          // __typename: "Post",
           user: {
             id,
             fullName,
             avatar,
-            __typename: "User",
+            // __typename: "User",
           },
-          content,
+          content: input.content,
           createdAt: new Date(),
-          id: 100000 + Math.floor(Math.random() * 999999),
+          id: (Math.random() * 999999).toString(),
         },
       },
-      update: (store, { data: { createPost } }) => {
-        const data = store.readQuery({ query: GET_FEED }) as FeedData;
-        console.log(data);
-
-        console.log(createPost);
-
-        console.log(data.feed.edges[0]);
-
-        store.writeQuery({
-          query: GET_FEED,
-          data: {
-            feed: {
-              ...data.feed,
-              edges: [createPost, ...data.feed.edges],
+      update: (store, { data }) => {
+        const dataInStore = store.readQuery({ query: GET_FEED }) as FeedData;
+        data?.createPost &&
+          store.writeQuery({
+            query: GET_FEED,
+            data: {
+              feed: {
+                ...dataInStore.feed,
+                edges: [createPost, ...dataInStore.feed.edges],
+              },
             },
-          },
-        });
+          });
 
         resetForm();
       },

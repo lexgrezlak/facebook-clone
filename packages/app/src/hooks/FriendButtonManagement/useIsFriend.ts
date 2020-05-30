@@ -1,11 +1,11 @@
-import { Status } from "./../../../../server/src/entity/FriendStatus";
 import { useQuery } from "@apollo/client";
 import { GET_FRIEND_STATUS } from "../../graphql/queries";
-import { IsFriend } from "../../types";
+import { FriendshipStatus } from "../../types";
+import { Status } from "../../enums";
 
 interface FriendStatus {
-  fromUserId: number;
-  statusId: Status;
+  fromUserId: string;
+  status: Status;
 }
 
 interface FriendStatusData {
@@ -13,44 +13,47 @@ interface FriendStatusData {
 }
 
 interface FriendStatusVars {
-  id: string;
-}
-
-interface Props {
-  id: string;
   userId: string;
 }
 
-export function useIsFriend({ id, userId }: Props) {
+interface Props {
+  userId: string;
+}
+
+export function useIsFriend({ userId }: Props) {
   const { data } = useQuery<FriendStatusData, FriendStatusVars>(
     GET_FRIEND_STATUS,
     {
       onError: (error) => {
         console.log(error.graphQLErrors[0].message);
       },
-      variables: { id },
+      variables: { userId },
     }
   );
 
   const fromUserId = data?.friendStatus?.fromUserId;
-  const statusId = data?.friendStatus?.statusId;
+  const status = data?.friendStatus?.status;
 
-  let isFriend: IsFriend;
+  console.log(fromUserId, userId);
 
-  switch (statusId) {
-    case 1:
-      isFriend = IsFriend.Is;
+  let friendshipStatus: FriendshipStatus;
+
+  switch (status) {
+    case Status.FRIENDS:
+      friendshipStatus = FriendshipStatus.FRIEND;
       break;
-    case 2:
-      isFriend =
+    case Status.PENDING:
+      friendshipStatus =
         userId === fromUserId
-          ? IsFriend.MeSentRequest
-          : IsFriend.MeReceivedRequest;
+          ? FriendshipStatus.ME_RECEIVED_REQUEST
+          : FriendshipStatus.ME_SENT_REQUEST;
       break;
     default:
-      isFriend = IsFriend.IsNot;
+      friendshipStatus = FriendshipStatus.STRANGER;
       break;
   }
 
-  return { isFriend };
+  console.log(friendshipStatus);
+
+  return { isFriend: friendshipStatus };
 }

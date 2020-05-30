@@ -2,12 +2,13 @@ import { useMutation } from "@apollo/client";
 import { GET_FRIEND_REQUESTS, GET_FRIEND_STATUS } from "../../graphql/queries";
 import { ACCEPT_REQUEST } from "../../graphql/mutations";
 import { FriendRequest, FriendRequestsData } from "../../types";
+import { Status } from "../../enums";
 
 interface Props {
-  id: string;
+  userId: string;
 }
 
-export function useAcceptRequest({ id }: Props) {
+export function useAcceptRequest({ userId }: Props) {
   const [acceptRequest] = useMutation(ACCEPT_REQUEST, {
     onError: (error) => {
       console.log(error.graphQLErrors[0].message);
@@ -16,13 +17,15 @@ export function useAcceptRequest({ id }: Props) {
 
   async function handleAcceptRequest() {
     return acceptRequest({
-      variables: { id },
+      variables: { userId },
       update: (store) => {
         store.writeQuery({
           query: GET_FRIEND_STATUS,
-          variables: { id },
+          variables: { userId },
           data: {
-            friendStatus: 1,
+            friendStatus: {
+              status: Status.FRIENDS,
+            },
           },
         });
 
@@ -33,7 +36,8 @@ export function useAcceptRequest({ id }: Props) {
           query: GET_FRIEND_REQUESTS,
           data: {
             friendRequests: data.friendRequests.filter(
-              (friendRequest: FriendRequest) => friendRequest.sender.id !== id
+              (friendRequest: FriendRequest) =>
+                friendRequest.fromUser.id !== userId
             ),
           },
         });

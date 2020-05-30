@@ -1,3 +1,4 @@
+import { UsersInput } from "./../../../server/src/resolvers/UsersInput";
 import { gql } from "@apollo/client";
 import { POST_PREVIEW, USER_PREVIEW } from "./fragments";
 
@@ -39,13 +40,12 @@ export const GET_PROFILE_FEED = gql`
 `;
 
 export const GET_USERS = gql`
-  query Users($filter: String!) {
-    users(filter: $filter) {
-      id
-      firstName
-      lastName
+  query Users($input: UsersInput!) {
+    users(input: $input) {
+      ...UserPreview
     }
   }
+  ${USER_PREVIEW}
 `;
 
 export const GET_FRIEND_REQUESTS = gql`
@@ -53,7 +53,7 @@ export const GET_FRIEND_REQUESTS = gql`
     friendRequests {
       id
       sentTime
-      sender {
+      fromUser {
         ...UserPreview
       }
     }
@@ -62,8 +62,8 @@ export const GET_FRIEND_REQUESTS = gql`
 `;
 
 export const GET_FRIENDS = gql`
-  query Friends($id: ID!) {
-    friends(id: $id) {
+  query Friends($userId: String!) {
+    friends(userId: $userId) {
       ...UserPreview
     }
   }
@@ -71,25 +71,24 @@ export const GET_FRIENDS = gql`
 `;
 
 export const GET_USER = gql`
-  query User($id: ID!) {
-    user(where: { id: $id }) {
+  query User($id: String!) {
+    user(id: $id) {
       background
       ...UserPreview
       posts {
-        id
-        content
-        createdAt
+        ...PostPreview
       }
     }
   }
   ${USER_PREVIEW}
+  ${POST_PREVIEW}
 `;
 
 export const GET_FRIEND_STATUS = gql`
-  query FriendStatus($id: ID!) {
-    friendStatus(id: $id) {
+  query FriendStatus($userId: String!) {
+    friendStatus(userId: $userId) {
       fromUserId
-      statusId
+      status
     }
   }
 `;

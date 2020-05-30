@@ -5,12 +5,14 @@ import { makeStyles } from "@material-ui/core/styles";
 import OwnAvatar from "../ownProfile/OwnAvatar";
 import Background from "./Background";
 import { StyledProfileAvatar } from "../../styled/StyledProfileAvatar";
-import { UserPreviewAndPosts } from "../../types";
+import { UserPreviewAndPosts, MeData } from "../../types";
 import OwnMenu from "../ownProfile/OwnMenu";
+import { useApolloClient } from "@apollo/client";
+import { GET_ME } from "../../graphql/queries";
 
 interface Props {
   user: UserPreviewAndPosts;
-  meId: number;
+  meId: string;
 }
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -52,6 +54,8 @@ const useStyles = makeStyles((theme: Theme) =>
 const ProfileHeader = ({ user, meId }: Props) => {
   const { fullName, id, background, avatar } = user;
   const classes = useStyles();
+  const client = useApolloClient();
+  const { me } = client.readQuery({ query: GET_ME }) as MeData;
 
   return (
     <div className={classes.root}>
@@ -71,7 +75,7 @@ const ProfileHeader = ({ user, meId }: Props) => {
         </Typography>
       </div>
       <OwnMenu />
-      {meId !== id && <FriendButton id={id} />}
+      {me.id !== id && <FriendButton userId={id} />}
     </div>
   );
 };

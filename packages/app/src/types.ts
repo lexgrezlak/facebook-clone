@@ -6,11 +6,11 @@ export interface UserVars {
   id: string;
 }
 
-export enum IsFriend {
-  IsNot,
-  Is,
-  MeSentRequest,
-  MeReceivedRequest,
+export enum FriendshipStatus {
+  STRANGER = "stranger",
+  FRIEND = "friend",
+  ME_SENT_REQUEST = "me sent request",
+  ME_RECEIVED_REQUEST = "me received request",
 }
 
 export interface FeedData {
@@ -47,8 +47,8 @@ export interface UserPreviewAndPosts extends UserPreview {
 
 export interface FriendRequest {
   id: string;
-  sender: UserPreview;
   sentTime: Date;
+  fromUser: UserPreview;
 }
 
 export interface FriendRequestsData {

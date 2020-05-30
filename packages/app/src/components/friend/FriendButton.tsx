@@ -1,40 +1,41 @@
 import React from "react";
 import { Button } from "@material-ui/core";
 import { useFriendButtonManagement } from "../../hooks/useFriendButtonManagement";
-import { IsFriend } from "../../types";
+import { FriendshipStatus, MeData } from "../../types";
+import { GET_ME } from "../../graphql/queries";
 
 interface Props {
-  id: string;
+  userId: string;
 }
 
-function FriendButton({ id }: Props) {
+function FriendButton({ userId }: Props) {
   const {
-    handleAddFriend,
-    handleRemoveFriend,
+    handleSendRequest,
+    handleUnfriend,
     isFriend,
-    handleRemoveRequest,
+    handleCancelRequest,
     handleAcceptRequest,
   } = useFriendButtonManagement({
-    id,
+    userId,
   });
 
   let handleClick;
   let text;
 
   switch (isFriend) {
-    case IsFriend.IsNot:
-      handleClick = handleAddFriend;
+    case FriendshipStatus.STRANGER:
+      handleClick = handleSendRequest;
       text = "Add friend";
       break;
-    case IsFriend.Is:
-      handleClick = handleRemoveFriend;
-      text = "Remove friend";
+    case FriendshipStatus.FRIEND:
+      handleClick = handleUnfriend;
+      text = "Unfriend";
       break;
-    case IsFriend.MeSentRequest:
-      handleClick = handleRemoveRequest;
+    case FriendshipStatus.ME_SENT_REQUEST:
+      handleClick = handleCancelRequest;
       text = "Cancel request";
       break;
-    case IsFriend.MeReceivedRequest:
+    case FriendshipStatus.ME_RECEIVED_REQUEST:
       handleClick = handleAcceptRequest;
       text = "Accept request";
       break;

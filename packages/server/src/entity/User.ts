@@ -6,6 +6,7 @@ import {
   PrimaryGeneratedColumn,
   OneToMany,
   JoinColumn,
+  Index,
 } from "typeorm";
 import { Field, ID, ObjectType, Root } from "type-graphql";
 import { FriendStatus } from "./FriendStatus";

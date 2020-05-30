@@ -13,15 +13,15 @@ import { UserPreview } from "../../types";
 import { Link } from "react-router-dom";
 
 interface Props {
-  id?: number;
+  userId: string;
 }
 
-function FriendList({ id }: Props) {
+function FriendList({ userId }: Props) {
   const { data } = useQuery(GET_FRIENDS, {
     onError: (error) => {
       console.log(error.graphQLErrors[0].message);
     },
-    variables: { id },
+    variables: { userId },
   });
 
   if (!data?.friends) return null;

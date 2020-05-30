@@ -14,7 +14,7 @@ export class SignInResolver {
     { email, password }: SignInInput,
     @Ctx() ctx: Context
   ): Promise<User | null> {
-    const user = await User.findOne({ where: email });
+    const user = await User.findOne({ where: { email } });
 
     if (!user) throw new AuthenticationError("Wrong email or password");
 
