@@ -1,12 +1,9 @@
+import { SignUpInput } from "./../../../server/src/resolvers/SignUpInput";
 import { useApolloClient, useMutation } from "@apollo/client";
 import * as Yup from "yup";
 import { SIGN_UP } from "../graphql/mutations";
-
-export enum Gender {
-  Female = "FEMALE",
-  Male = "MALE",
-  Other = "OTHER",
-}
+import { GET_ME } from "../graphql/queries";
+import { UserPreview } from "../types";
 
 interface SignUpFormFields {
   firstName: string;
@@ -15,24 +12,38 @@ interface SignUpFormFields {
   password: string;
   passwordConfirm: string;
   birthday: string;
-  gender: Gender | null;
+}
+
+interface SignUpData {
+  signUp: UserPreview;
+}
+
+interface SignUpVars {
+  input: SignUpInput;
 }
 
 export const useSignUpFormManagement = () => {
   const client = useApolloClient();
-  const [signUp] = useMutation(SIGN_UP, {
+  const [signUp] = useMutation<SignUpData, SignUpVars>(SIGN_UP, {
     onError: (error) => {
       console.log(error.graphQLErrors[0].message);
     },
+    update: (store, { data }) => {
+      data?.signUp &&
+        store.writeQuery({
+          query: GET_ME,
+          data: {
+            me: data.signUp,
+          },
+        });
+    },
   });
 
-  async function handleSubmit({
-    passwordConfirm,
-    birthday,
-    ...signUpData
-  }: SignUpFormFields) {
+  async function handleSubmit(input: SignUpFormFields) {
+    const { passwordConfirm, birthday, ...restInput } = input;
+
     await signUp({
-      variables: { ...signUpData, birthday: new Date(birthday) },
+      variables: { input: { ...restInput, birthday: new Date() } },
     });
     await client.resetStore();
   }
@@ -43,8 +54,9 @@ export const useSignUpFormManagement = () => {
     email: "",
     password: "",
     passwordConfirm: "",
+    // birthday is a string because otherwise the calendar doesn't work properly
+    // TODO
     birthday: "2000-01-01",
-    gender: null,
   };
 
   const validationSchema = Yup.object().shape({});

@@ -11,20 +11,6 @@ export function trimAndCapitalizeSentence(string: string) {
 }
 
 export const createTypeORMConnection = async () => {
-  let retries = 5;
-  while (retries) {
-    try {
-      const options = await getConnectionOptions(NODE_ENV);
-      return createConnection({ ...options, name: "default" });
-    } catch (error) {
-      console.log(error);
-      retries -= 1;
-      console.log(`${retries} retries left`);
-
-      // wait 5 seconds
-      await new Promise((res) => setTimeout(res, 5000));
-    }
-  }
-
-  return null;
+  const options = await getConnectionOptions(NODE_ENV);
+  return createConnection({ ...options, name: "default" });
 };

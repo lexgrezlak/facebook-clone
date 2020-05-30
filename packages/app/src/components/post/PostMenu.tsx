@@ -4,7 +4,7 @@ import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
 import { useDeletePostManagement } from "../../hooks/useDeletePostManagement";
 
 interface Props {
-  id: number;
+  id: string;
 }
 
 function PostMenu({ id }: Props) {

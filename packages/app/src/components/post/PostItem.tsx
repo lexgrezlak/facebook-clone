@@ -4,16 +4,10 @@ import { Link } from "react-router-dom";
 import Moment from "react-moment";
 import { makeStyles } from "@material-ui/core/styles";
 import { StyledPaper } from "../../styled/StyledPaper";
-import { UserPreview } from "../../types";
+import { UserPreview, Post } from "../../types";
 import PostMenu from "./PostMenu";
 import { useApolloClient } from "@apollo/client";
 import { GET_ME } from "../../graphql/queries";
-
-interface Post {
-  id: number;
-  content: string;
-  createdAt: Date;
-}
 
 interface Props {
   post: Post;

@@ -1,3 +1,4 @@
+import { CreatePostInput } from "./CreatePostInput";
 import { Context } from "./../context";
 import { Resolver, Mutation, Arg, Ctx } from "type-graphql";
 import { Post } from "../entity/Post";
@@ -5,10 +6,17 @@ import { Post } from "../entity/Post";
 @Resolver()
 export class CreatePostResolver {
   @Mutation(() => Post)
-  createPost(@Arg("content") content: string, @Ctx() ctx: Context) {
+  async createPost(
+    @Arg("input") { content }: CreatePostInput,
+    @Ctx() ctx: Context
+  ) {
     const { userId } = ctx.req;
-    console.log(typeof userId);
 
-    return Post.create({ content, userId: Number(userId) }).save();
+    const { id } = await Post.create({
+      content,
+      userId,
+    }).save();
+
+    return Post.findOne({ where: { id }, relations: ["user"] });
   }
 }

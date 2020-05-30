@@ -1,10 +1,11 @@
+import { Status } from "./../../../../server/src/entity/FriendStatus";
 import { useQuery } from "@apollo/client";
 import { GET_FRIEND_STATUS } from "../../graphql/queries";
 import { IsFriend } from "../../types";
 
 interface FriendStatus {
   fromUserId: number;
-  statusId: number;
+  statusId: Status;
 }
 
 interface FriendStatusData {
@@ -12,12 +13,12 @@ interface FriendStatusData {
 }
 
 interface FriendStatusVars {
-  id: number;
+  id: string;
 }
 
 interface Props {
-  id: number;
-  userId: number;
+  id: string;
+  userId: string;
 }
 
 export function useIsFriend({ id, userId }: Props) {

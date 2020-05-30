@@ -1,10 +1,11 @@
+import { FeedData } from "./../types";
 import { useMutation } from "@apollo/client";
 import { GET_FEED } from "../graphql/queries";
 import { PostAndUser } from "../types";
 import { DELETE_POST } from "../graphql/mutations";
 
 interface Props {
-  id: number;
+  id: string;
 }
 
 export function useDeletePostManagement({ id }: Props) {
@@ -18,11 +19,11 @@ export function useDeletePostManagement({ id }: Props) {
     return deletePost({
       variables: { id },
       update: (store) => {
-        const data = store.readQuery({ query: GET_FEED }) as any;
+        const data = store.readQuery({ query: GET_FEED }) as FeedData;
         store.writeQuery({
           query: GET_FEED,
           data: {
-            feed: data.feed.filter((post: PostAndUser) => post.id !== id),
+            feed: data.feed.edges.filter((post: PostAndUser) => post.id !== id),
           },
         });
       },

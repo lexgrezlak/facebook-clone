@@ -49,12 +49,19 @@ export function useCreatePostFormManagement({ me }: Props) {
       },
       update: (store, { data: { createPost } }) => {
         const data = store.readQuery({ query: GET_FEED }) as FeedData;
+        console.log(data);
+
+        console.log(createPost);
+
+        console.log(data.feed.edges[0]);
 
         store.writeQuery({
           query: GET_FEED,
           data: {
-            ...data,
-            edges: [createPost, ...data.feed.edges],
+            feed: {
+              ...data.feed,
+              edges: [createPost, ...data.feed.edges],
+            },
           },
         });
 

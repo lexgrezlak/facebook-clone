@@ -3,7 +3,7 @@ import { GET_FRIEND_STATUS } from "../../graphql/queries";
 import { REMOVE_FRIEND } from "../../graphql/mutations";
 
 interface Props {
-  id: number;
+  id: string;
 }
 
 export function useRemoveFriend({ id }: Props) {

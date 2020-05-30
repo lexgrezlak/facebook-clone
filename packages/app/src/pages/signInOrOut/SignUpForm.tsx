@@ -1,7 +1,6 @@
 import React from "react";
 import { Form, Formik } from "formik";
 import DateField from "./DateField";
-import RadioField from "./RadioField";
 import { useSignUpFormManagement } from "../../hooks/useSignUpFormManagement";
 import { Button, Grid, Link } from "@material-ui/core";
 import MyTextField from "../../components/MyTextField";
@@ -53,7 +52,6 @@ function SignUpForm({ setVisible }: any) {
               label="Confirm password"
             />
             <DateField name="birthday" />
-            <RadioField name="gender" />
             <Button
               variant="contained"
               color="primary"

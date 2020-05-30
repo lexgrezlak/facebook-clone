@@ -7,13 +7,13 @@ import { useAcceptRequest } from "./FriendButtonManagement/useAcceptRequest";
 import { useIsFriend } from "./FriendButtonManagement/useIsFriend";
 
 interface Props {
-  id: number;
+  id: string;
 }
 
 export const useFriendButtonManagement = ({ id }: Props) => {
   const client = useApolloClient();
-  const meData = client.readQuery({ query: GET_ME });
-  const { id: userId } = meData.me;
+  const data = client.readQuery({ query: GET_ME });
+  const { id: userId } = data.me;
 
   const { handleAddFriend } = useAddFriend({ id, userId });
   const { handleRemoveFriend } = useRemoveFriend({ id });

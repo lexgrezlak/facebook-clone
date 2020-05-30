@@ -30,7 +30,7 @@ export const GET_FEED = gql`
 `;
 
 export const GET_PROFILE_FEED = gql`
-  query ProfileFeed($id: Int!) {
+  query ProfileFeed($id: ID!) {
     profileFeed(id: $id) {
       ...PostPreview
     }
@@ -62,7 +62,7 @@ export const GET_FRIEND_REQUESTS = gql`
 `;
 
 export const GET_FRIENDS = gql`
-  query Friends($id: Int) {
+  query Friends($id: ID!) {
     friends(id: $id) {
       ...UserPreview
     }
@@ -71,7 +71,7 @@ export const GET_FRIENDS = gql`
 `;
 
 export const GET_USER = gql`
-  query User($id: Int!) {
+  query User($id: ID!) {
     user(where: { id: $id }) {
       background
       ...UserPreview
@@ -86,7 +86,7 @@ export const GET_USER = gql`
 `;
 
 export const GET_FRIEND_STATUS = gql`
-  query FriendStatus($id: Int!) {
+  query FriendStatus($id: ID!) {
     friendStatus(id: $id) {
       fromUserId
       statusId

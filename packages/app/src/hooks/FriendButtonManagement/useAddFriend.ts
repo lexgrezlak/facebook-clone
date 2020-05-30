@@ -3,8 +3,8 @@ import { GET_FRIEND_STATUS } from "../../graphql/queries";
 import { ADD_FRIEND } from "../../graphql/mutations";
 
 interface Props {
-  id: number;
-  userId: number;
+  id: string;
+  userId: string;
 }
 
 export function useAddFriend({ id, userId }: Props) {

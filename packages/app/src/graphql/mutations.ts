@@ -1,38 +1,22 @@
 import { gql } from "@apollo/client";
-import { POST_PREVIEW } from "./fragments";
+import { POST_PREVIEW, USER_PREVIEW } from "./fragments";
 
 export const SIGN_UP = gql`
-  mutation SignUp(
-    $firstName: String!
-    $lastName: String!
-    $email: String!
-    $password: String!
-    $birthday: DateTime!
-    $gender: Gender!
-  ) {
-    signUp(
-      firstName: $firstName
-      lastName: $lastName
-      email: $email
-      password: $password
-      birthday: $birthday
-      gender: $gender
-    ) {
-      id
-      firstName
-      lastName
+  mutation SignUp($input: SignUpInput!) {
+    signUp(input: $input) {
+      ...UserPreview
     }
   }
+  ${USER_PREVIEW}
 `;
 
 export const SIGN_IN = gql`
-  mutation SignIn($email: String!, $password: String!) {
-    signIn(email: $email, password: $password) {
-      id
-      firstName
-      lastName
+  mutation SignIn($input: SignInInput!) {
+    signIn(input: $input) {
+      ...UserPreview
     }
   }
+  ${USER_PREVIEW}
 `;
 
 export const SIGN_OUT = gql`
@@ -42,20 +26,20 @@ export const SIGN_OUT = gql`
 `;
 
 export const CREATE_POST = gql`
-  mutation CreatePost($content: String!) {
-    createPost(content: $content) {
+  mutation CreatePost($input: CreatePostInput!) {
+    createPost(input: $input) {
       ...PostPreview
       user {
-        firstName
-        lastName
+        ...UserPreview
       }
     }
   }
   ${POST_PREVIEW}
+  ${USER_PREVIEW}
 `;
 
 export const ACCEPT_REQUEST = gql`
-  mutation AcceptInvitation($id: Int!) {
+  mutation AcceptInvitation($id: ID!) {
     acceptInvitation(id: $id) {
       statusId
     }
@@ -63,7 +47,7 @@ export const ACCEPT_REQUEST = gql`
 `;
 
 export const ADD_FRIEND = gql`
-  mutation SendInvitation($id: Int!) {
+  mutation SendInvitation($id: ID!) {
     sendInvitation(id: $id) {
       statusId
     }
@@ -71,13 +55,13 @@ export const ADD_FRIEND = gql`
 `;
 
 export const REMOVE_FRIEND = gql`
-  mutation RemoveFriendship($id: Int!) {
+  mutation RemoveFriendship($id: ID!) {
     removeFriendship(id: $id)
   }
 `;
 
 export const REMOVE_REQUEST = gql`
-  mutation RemoveRequest($id: Int!) {
+  mutation RemoveRequest($id: ID!) {
     removeRequest(id: $id)
   }
 `;
@@ -99,7 +83,7 @@ export const UPDATE_BACKGROUND = gql`
 `;
 
 export const DELETE_POST = gql`
-  mutation DeletePost($id: Int!) {
+  mutation DeletePost($id: ID!) {
     deletePost(id: $id)
   }
 `;

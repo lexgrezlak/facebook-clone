@@ -4,7 +4,7 @@ import { useFriendButtonManagement } from "../../hooks/useFriendButtonManagement
 import { IsFriend } from "../../types";
 
 interface Props {
-  id: number;
+  id: string;
 }
 
 function FriendButton({ id }: Props) {

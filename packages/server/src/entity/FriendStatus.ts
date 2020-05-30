@@ -17,26 +17,32 @@ export enum Status {
 @Entity()
 export class FriendStatus extends BaseEntity {
   @Field(() => ID)
-  @PrimaryGeneratedColumn()
-  id: number;
+  @PrimaryGeneratedColumn("uuid")
+  id: string;
 
   @Field()
-  @Column("date", { default: null })
+  @Column("timestamp", { default: null })
   responseTime: Date;
 
   @Field()
-  @Column("date", { default: new Date() })
+  @Column("timestamp", { default: () => "CURRENT_TIMESTAMP(6)" })
   sentTime: Date;
+
+  @Column()
+  fromUserId: string;
+
+  @Column()
+  toUserId: string;
 
   @Field()
   @Column("enum", { enum: Status, default: Status.PENDING })
   status: Status;
 
   @Field(() => User)
-  @ManyToOne(() => User, (user) => user.friendStatuses)
+  @ManyToOne(() => User, (user) => user.sentRequests)
   fromUser: User;
 
   @Field(() => User)
-  @ManyToOne(() => User, (user) => user.friendStatuses)
+  @ManyToOne(() => User, (user) => user.receivedRequests)
   toUser: User;
 }

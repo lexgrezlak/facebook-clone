@@ -3,7 +3,7 @@ export interface UserData {
 }
 
 export interface UserVars {
-  id: number;
+  id: string;
 }
 
 export enum IsFriend {
@@ -25,13 +25,13 @@ export interface FeedData {
 }
 
 export interface UserPreview {
-  id: number;
+  id: string;
   fullName: string;
   avatar: string;
 }
 
 export interface Post {
-  id: number;
+  id: string;
   content: string;
   createdAt: Date;
 }
@@ -46,7 +46,7 @@ export interface UserPreviewAndPosts extends UserPreview {
 }
 
 export interface FriendRequest {
-  id: number;
+  id: string;
   sender: UserPreview;
   sentTime: Date;
 }

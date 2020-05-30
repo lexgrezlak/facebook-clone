@@ -1,3 +1,4 @@
+import { DeletePostResolver } from "./resolvers/DeletePost";
 import { FeedResolver } from "./resolvers/Feed";
 import { SignOutResolver } from "./resolvers/SignOut";
 import { CreatePostResolver } from "./resolvers/CreatePost";
@@ -17,6 +18,7 @@ export const createServer = async () => {
       CreatePostResolver,
       SignOutResolver,
       FeedResolver,
+      DeletePostResolver,
     ],
   });
 

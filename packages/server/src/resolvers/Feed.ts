@@ -19,7 +19,7 @@ export class FeedResolver {
 
     const hasNextPage = posts.length > LIMIT;
     const edges = hasNextPage ? posts.slice(0, -1) : posts;
-    const endCursor = cursor + Math.min(LIMIT, edges.length);
+    const endCursor = cursor + LIMIT;
 
     return {
       edges,

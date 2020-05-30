@@ -4,7 +4,7 @@ import { REMOVE_REQUEST } from "../../graphql/mutations";
 import { FriendRequest, FriendRequestsData } from "../../types";
 
 interface Props {
-  id: number;
+  id: string;
 }
 
 export function useRemoveRequest({ id }: Props) {

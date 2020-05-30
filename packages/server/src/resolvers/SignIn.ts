@@ -1,3 +1,4 @@
+import { SignInInput } from "./SignInInput";
 import { AuthenticationError } from "apollo-server-express";
 import { compare } from "bcryptjs";
 import { Context } from "./../context";
@@ -9,8 +10,8 @@ import { generateToken, setCookie } from "../utils/cookies";
 export class SignInResolver {
   @Mutation(() => User, { nullable: true })
   async signIn(
-    @Arg("email") email: string,
-    @Arg("password") password: string,
+    @Arg("input")
+    { email, password }: SignInInput,
     @Ctx() ctx: Context
   ): Promise<User | null> {
     const user = await User.findOne({ where: email });
@@ -18,7 +19,6 @@ export class SignInResolver {
     if (!user) throw new AuthenticationError("Wrong email or password");
 
     const isPasswordValid = await compare(password, user.passwordHash);
-    console.log(email, password);
 
     if (!isPasswordValid)
       throw new AuthenticationError("Wrong email or password");

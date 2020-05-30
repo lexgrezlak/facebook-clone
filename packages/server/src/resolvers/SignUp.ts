@@ -9,7 +9,7 @@ import { generateToken, setCookie } from "../utils/cookies";
 export class SignUpResolver {
   @Mutation(() => User)
   async signUp(
-    @Arg("data")
+    @Arg("input")
     { email, firstName, lastName, password, birthday }: SignUpInput,
     @Ctx() ctx: Context
   ): Promise<User> {
