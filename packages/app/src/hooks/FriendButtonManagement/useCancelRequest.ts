@@ -25,20 +25,6 @@ export function useCancelRequest({ userId }: Props) {
             friendStatus: null,
           },
         });
-
-        const data = store.readQuery({
-          query: GET_FRIEND_REQUESTS,
-        }) as FriendRequestsData;
-
-        store.writeQuery({
-          query: GET_FRIEND_REQUESTS,
-          data: {
-            friendRequests: data.friendRequests.filter(
-              (friendRequest: FriendRequest) =>
-                friendRequest.fromUser.id !== userId
-            ),
-          },
-        });
       },
     });
   }

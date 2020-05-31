@@ -7,7 +7,7 @@ import {
   IconButton,
   Theme,
 } from "@material-ui/core";
-import { useAvatarUploadManagement } from "../hooks/useAvatarUploadManagement";
+import { useUpdateAvatarManagement } from "../hooks/useUpdateAvatarManagement";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 function AvatarUpload() {
   const classes = useStyles();
-  const { handleUpdateAvatar, loading } = useAvatarUploadManagement();
+  const { handleUpdateAvatar, loading } = useUpdateAvatarManagement();
 
   if (loading) return <CircularProgress className={classes.button} />;
 

@@ -1,3 +1,6 @@
+import { UpdateAvatarResolver } from "./resolvers/UpdateAvatar";
+import { UpdateBackgroundResolver } from "./resolvers/UpdateBackground";
+import { RejectRequestResolver } from "./resolvers/RejectRequest";
 import { AcceptRequestResolver } from "./resolvers/AcceptRequest";
 import { UnfriendResolver } from "./resolvers/Unfriend";
 import { CancelRequestResolver } from "./resolvers/CancelRequest";
@@ -37,6 +40,9 @@ export const createServer = async () => {
       CancelRequestResolver,
       UnfriendResolver,
       AcceptRequestResolver,
+      RejectRequestResolver,
+      UpdateBackgroundResolver,
+      UpdateAvatarResolver,
     ],
   });
 

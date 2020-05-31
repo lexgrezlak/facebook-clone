@@ -9,7 +9,7 @@ import {
 import Moment from "react-moment";
 import { FriendRequest } from "../../types";
 import { useAcceptRequest } from "../../hooks/FriendButtonManagement/useAcceptRequest";
-import { useCancelRequest } from "../../hooks/FriendButtonManagement/useCancelRequest";
+import { useRejectRequest } from "../../hooks/FriendButtonManagement/useRejectRequest";
 
 interface Props {
   friendRequest: FriendRequest;
@@ -22,7 +22,7 @@ function FriendRequestItem({ friendRequest }: Props) {
   } = friendRequest;
 
   const { handleAcceptRequest } = useAcceptRequest({ userId });
-  const { handleCancelRequest } = useCancelRequest({ userId });
+  const { handleRejectRequest } = useRejectRequest({ userId });
 
   return (
     <ListItem>
@@ -46,10 +46,10 @@ function FriendRequestItem({ friendRequest }: Props) {
           <Button
             variant="contained"
             color="secondary"
-            onClick={handleRemoveRequest}
+            onClick={handleRejectRequest}
             size="small"
           >
-            Remove
+            Reject
           </Button>
         </div>
       </div>

@@ -34,8 +34,6 @@ export function useIsFriend({ userId }: Props) {
   const fromUserId = data?.friendStatus?.fromUserId;
   const status = data?.friendStatus?.status;
 
-  console.log(fromUserId, userId);
-
   let friendshipStatus: FriendshipStatus;
 
   switch (status) {
@@ -52,8 +50,6 @@ export function useIsFriend({ userId }: Props) {
       friendshipStatus = FriendshipStatus.STRANGER;
       break;
   }
-
-  console.log(friendshipStatus);
 
   return { isFriend: friendshipStatus };
 }

@@ -50,6 +50,12 @@ export const SEND_REQUEST = gql`
   }
 `;
 
+export const REJECT_REQUEST = gql`
+  mutation RejectRequest($userId: String!) {
+    rejectRequest(userId: $userId)
+  }
+`;
+
 export const UNFRIEND = gql`
   mutation Unfriend($userId: String!) {
     unfriend(userId: $userId)
@@ -64,17 +70,13 @@ export const CANCEL_REQUEST = gql`
 
 export const UPDATE_AVATAR = gql`
   mutation UpdateAvatar($file: Upload!) {
-    updateAvatar(file: $file) {
-      url
-    }
+    updateAvatar(file: $file)
   }
 `;
 
 export const UPDATE_BACKGROUND = gql`
   mutation UpdateBackground($file: Upload!) {
-    updateBackground(file: $file) {
-      url
-    }
+    updateBackground(file: $file)
   }
 `;
 

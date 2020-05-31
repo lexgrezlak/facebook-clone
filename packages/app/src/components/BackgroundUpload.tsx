@@ -7,7 +7,7 @@ import {
 import AddAPhotoIcon from "@material-ui/icons/AddAPhoto";
 import { makeStyles } from "@material-ui/core/styles";
 import React from "react";
-import { useBackgroundUploadManagement } from "../hooks/useBackgroundUploadManagement";
+import { useUpdateBackgroundManagement } from "../hooks/useUpdateBackgroundManagement";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 function BackgroundUpload(): JSX.Element {
   const classes = useStyles();
-  const { handleUpdateBackground, loading } = useBackgroundUploadManagement();
+  const { handleUpdateBackground, loading } = useUpdateBackgroundManagement();
 
   if (loading) return <CircularProgress className={classes.button} />;
 

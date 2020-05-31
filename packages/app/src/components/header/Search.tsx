@@ -37,12 +37,14 @@ function Search() {
     notifyOnNetworkStatusChange: true,
   });
 
+  console.log(filter);
+
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
   return (
     <Autocomplete
       className={classes.wrapper}
-      id="asynchronous-demo"
+      id="search-autocomplete"
       open={open}
       onOpen={() => setOpen(true)}
       onClose={() => setOpen(false)}
@@ -50,7 +52,8 @@ function Search() {
       getOptionLabel={(option) => option.fullName}
       options={data?.users || []}
       loading={loading}
-      onChange={(_event, user) => navigate(`/users/${user?.id}`)}
+      // user because otherwise it navigates to /users/undefined
+      onChange={(_event, user) => user && navigate(`/users/${user?.id}`)}
       noOptionsText={"User not found"}
       renderInput={(params) => (
         <TextField

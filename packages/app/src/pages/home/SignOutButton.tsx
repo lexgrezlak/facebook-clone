@@ -1,6 +1,5 @@
 import React from "react";
 import { useApolloClient, useMutation } from "@apollo/client";
-import { GET_ME } from "../../graphql/queries";
 import { useNavigate } from "react-router-dom";
 import { SIGN_OUT } from "../../graphql/mutations";
 
@@ -15,14 +14,8 @@ function SignOutButton() {
   const navigate = useNavigate();
 
   async function handleSignOut() {
+    navigate("/");
     await signOut();
-    await navigate("/");
-    await client.writeQuery({
-      query: GET_ME,
-      data: {
-        me: null,
-      },
-    });
     await client.resetStore();
   }
 

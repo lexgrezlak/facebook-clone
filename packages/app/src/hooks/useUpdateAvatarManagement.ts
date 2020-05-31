@@ -1,9 +1,21 @@
 import { useMutation } from "@apollo/client";
 import { GET_ME } from "../graphql/queries";
 import { UPDATE_AVATAR } from "../graphql/mutations";
+import { MeData } from "../types";
 
-export function useAvatarUploadManagement() {
-  const [updateAvatar, { loading }] = useMutation(UPDATE_AVATAR, {
+interface UpdateAvatarData {
+  updateAvatar: string;
+}
+
+interface UpdateAvatarVars {
+  file: File;
+}
+
+export function useUpdateAvatarManagement() {
+  const [updateAvatar, { loading }] = useMutation<
+    UpdateAvatarData,
+    UpdateAvatarVars
+  >(UPDATE_AVATAR, {
     onError: (error) => {
       console.log(error.graphQLErrors[0].message);
     },
@@ -19,14 +31,15 @@ export function useAvatarUploadManagement() {
       validity.valid &&
       updateAvatar({
         variables: { file },
-        update: (store, { data: { updateAvatar } }) => {
-          const data = store.readQuery({ query: GET_ME }) as any;
+        update: (store, { data }) => {
+          const dataInStore = store.readQuery({ query: GET_ME }) as MeData;
+
           store.writeQuery({
             query: GET_ME,
             data: {
               me: {
-                ...data.me,
-                avatar: updateAvatar.url,
+                ...dataInStore.me,
+                avatar: data?.updateAvatar,
               },
             },
           });
