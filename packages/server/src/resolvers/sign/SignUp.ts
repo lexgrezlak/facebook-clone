@@ -1,9 +1,9 @@
-import { Context } from "./../context";
+import { Context } from "../../context";
 import { hash } from "bcryptjs";
 import { Mutation, Arg, Resolver, Ctx } from "type-graphql";
-import { User } from "../entity/User";
+import { User } from "../../entity/User";
 import { SignUpInput } from "./SignUpInput";
-import { generateToken, setCookie } from "../utils/cookies";
+import { generateToken, setCookie } from "../../utils/cookies";
 
 @Resolver()
 export class SignUpResolver {

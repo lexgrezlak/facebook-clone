@@ -1,25 +1,25 @@
-import { UpdateAvatarResolver } from "./resolvers/UpdateAvatar";
-import { UpdateBackgroundResolver } from "./resolvers/UpdateBackground";
-import { RejectRequestResolver } from "./resolvers/RejectRequest";
-import { AcceptRequestResolver } from "./resolvers/AcceptRequest";
-import { UnfriendResolver } from "./resolvers/Unfriend";
-import { CancelRequestResolver } from "./resolvers/CancelRequest";
-import { SendRequestResolver } from "./resolvers/SendRequest";
-import { FriendStatusResolver } from "./resolvers/FriendStatus";
-import { FriendRequestsResolver } from "./resolvers/FriendRequests";
-import { UsersResolver } from "./resolvers/Users";
-import { DeletePostResolver } from "./resolvers/DeletePost";
-import { FeedResolver } from "./resolvers/Feed";
-import { SignOutResolver } from "./resolvers/SignOut";
-import { CreatePostResolver } from "./resolvers/CreatePost";
-import { SignInResolver } from "./resolvers/SignIn";
+import { UpdateAvatarResolver } from "./resolvers/user/UpdateAvatar";
+import { UpdateBackgroundResolver } from "./resolvers/user/UpdateBackground";
+import { RejectRequestResolver } from "./resolvers/friend/RejectRequest";
+import { AcceptRequestResolver } from "./resolvers/friend/AcceptRequest";
+import { UnfriendResolver } from "./resolvers/friend/Unfriend";
+import { CancelRequestResolver } from "./resolvers/friend/CancelRequest";
+import { SendRequestResolver } from "./resolvers/friend/SendRequest";
+import { FriendStatusResolver } from "./resolvers/friend/FriendStatus";
+import { FriendRequestsResolver } from "./resolvers/friend/FriendRequests";
+import { UsersResolver } from "./resolvers/user/Users";
+import { DeletePostResolver } from "./resolvers/post/DeletePost";
+import { FeedResolver } from "./resolvers/post/Feed";
+import { SignOutResolver } from "./resolvers/sign/SignOut";
+import { CreatePostResolver } from "./resolvers/post/CreatePost";
+import { SignInResolver } from "./resolvers/sign/SignIn";
 import { buildSchema } from "type-graphql";
 import { ApolloServer } from "apollo-server-express";
 import { context } from "./context";
-import { MeResolver } from "./resolvers/Me";
-import { SignUpResolver } from "./resolvers/SignUp";
-import { UserResolver } from "./resolvers/User";
-import { FriendsResolver } from "./resolvers/Friends";
+import { SignUpResolver } from "./resolvers/sign/SignUp";
+import { UserResolver } from "./resolvers/user/User";
+import { FriendsResolver } from "./resolvers/friend/Friends";
+import { MeResolver } from "./resolvers/user/Me";
 
 export const createServer = async () => {
   const schema = await buildSchema({

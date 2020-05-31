@@ -6,7 +6,7 @@ import { CircularProgress, TextField } from "@material-ui/core";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import { useNavigate } from "react-router-dom";
 import { UserPreview } from "../../types";
-import { UsersInput } from "../../../../server/src/resolvers/UsersInput";
+import { UsersInput } from "../../../../server/src/resolvers/user/UsersInput";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({

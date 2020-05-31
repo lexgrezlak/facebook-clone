@@ -1,4 +1,4 @@
-import { CreatePostInput } from "./../../../server/src/resolvers/CreatePostInput";
+import { CreatePostInput } from "../../../server/src/resolvers/post/CreatePostInput";
 import { FeedData, PostAndUser } from "./../types";
 import { useMutation } from "@apollo/client";
 import { GET_FEED } from "../graphql/queries";

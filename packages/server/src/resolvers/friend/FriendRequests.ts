@@ -1,5 +1,5 @@
-import { FriendStatus, Status } from "./../entity/FriendStatus";
-import { Context } from "./../context";
+import { FriendStatus, Status } from "../../entity/FriendStatus";
+import { Context } from "../../context";
 import { Resolver, Ctx, Query } from "type-graphql";
 
 @Resolver()

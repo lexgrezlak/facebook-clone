@@ -1,5 +1,5 @@
 import { Query, Resolver, Arg } from "type-graphql";
-import { User } from "../entity/User";
+import { User } from "../../entity/User";
 
 @Resolver()
 export class UserResolver {

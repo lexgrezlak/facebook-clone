@@ -1,7 +1,7 @@
 import { CreatePostInput } from "./CreatePostInput";
-import { Context } from "./../context";
+import { Context } from "../../context";
 import { Resolver, Mutation, Arg, Ctx } from "type-graphql";
-import { Post } from "../entity/Post";
+import { Post } from "../../entity/Post";
 
 @Resolver()
 export class CreatePostResolver {

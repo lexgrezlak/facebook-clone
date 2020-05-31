@@ -1,5 +1,5 @@
 import { Resolver, Mutation, Arg } from "type-graphql";
-import { Post } from "../entity/Post";
+import { Post } from "../../entity/Post";
 
 @Resolver()
 export class DeletePostResolver {

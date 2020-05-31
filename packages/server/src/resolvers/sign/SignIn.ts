@@ -1,10 +1,10 @@
 import { SignInInput } from "./SignInInput";
 import { AuthenticationError } from "apollo-server-express";
 import { compare } from "bcryptjs";
-import { Context } from "./../context";
+import { Context } from "../../context";
 import { Mutation, Arg, Ctx, Resolver } from "type-graphql";
-import { User } from "../entity/User";
-import { generateToken, setCookie } from "../utils/cookies";
+import { User } from "../../entity/User";
+import { generateToken, setCookie } from "../../utils/cookies";
 
 @Resolver()
 export class SignInResolver {

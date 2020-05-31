@@ -1,9 +1,9 @@
-import { File } from "./../types";
+import { File } from "../../types";
 import { GraphQLUpload } from "apollo-server-express";
-import { User } from "./../entity/User";
-import { Context } from "./../context";
+import { User } from "../../entity/User";
+import { Context } from "../../context";
 import { Resolver, Arg, Mutation, Ctx } from "type-graphql";
-import { cloudinaryUploader } from "../cloudinary";
+import { cloudinaryUploader } from "../../cloudinary";
 
 @Resolver()
 export class UpdateAvatarResolver {

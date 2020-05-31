@@ -1,10 +1,10 @@
-import { User } from "../entity/User";
 import {
   ValidatorConstraint,
   ValidatorConstraintInterface,
   registerDecorator,
   ValidationOptions,
 } from "class-validator";
+import { User } from "../../entity/User";
 
 @ValidatorConstraint({ async: true })
 export class IsEmailUniqueConstraint implements ValidatorConstraintInterface {

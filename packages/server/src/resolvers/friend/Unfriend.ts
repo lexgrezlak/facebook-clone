@@ -1,6 +1,6 @@
-import { Context } from "./../context";
+import { Context } from "../../context";
 import { Mutation, Arg, Ctx, Resolver } from "type-graphql";
-import { FriendStatus, Status } from "../entity/FriendStatus";
+import { FriendStatus, Status } from "../../entity/FriendStatus";
 
 @Resolver()
 export class UnfriendResolver {

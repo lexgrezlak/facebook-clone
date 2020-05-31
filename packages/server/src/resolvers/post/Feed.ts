@@ -1,5 +1,5 @@
-import { PostConnection } from "../entity/PostConnection";
-import { Post } from "../entity/Post";
+import { PostConnection } from "../../entity/PostConnection";
+import { Post } from "../../entity/Post";
 import { Query, Resolver, Arg } from "type-graphql";
 
 @Resolver()
