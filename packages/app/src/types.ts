@@ -7,10 +7,21 @@ export interface UserVars {
 }
 
 export enum FriendshipStatus {
-  STRANGER = "stranger",
-  FRIEND = "friend",
-  ME_SENT_REQUEST = "me sent request",
-  ME_RECEIVED_REQUEST = "me received request",
+  Stranger = "STRANGER",
+  Friend = "FRIEND",
+  MeSentRequest = "ME_SENT_REQUEST",
+  MeReceivedRequest = "ME_RECEIVED_REQUEST",
+}
+
+export interface MessagePreview {
+  id: string;
+  userId: string;
+}
+
+export interface Chat {
+  id: string;
+  users: UserPreview[];
+  messages: MessagePreview[];
 }
 
 export interface FeedData {

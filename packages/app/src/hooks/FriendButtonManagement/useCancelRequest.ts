@@ -1,7 +1,6 @@
 import { useMutation } from "@apollo/client";
-import { GET_FRIEND_REQUESTS, GET_FRIEND_STATUS } from "../../graphql/queries";
+import { GET_FRIEND_STATUS } from "../../graphql/queries";
 import { CANCEL_REQUEST } from "../../graphql/mutations";
-import { FriendRequest, FriendRequestsData } from "../../types";
 
 interface Props {
   userId: string;

@@ -11,7 +11,7 @@ export class FriendRequestsResolver {
     return FriendStatus.find({
       where: {
         toUserId: userId,
-        status: Status.PENDING,
+        status: Status.Pending,
       },
       relations: ["fromUser"],
     });

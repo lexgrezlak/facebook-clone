@@ -9,8 +9,8 @@ export class AcceptRequestResolver {
     const { userId: toUserId } = ctx.req;
 
     await FriendStatus.update(
-      { fromUserId: userId, toUserId, status: Status.PENDING },
-      { status: Status.FRIENDS }
+      { fromUserId: userId, toUserId, status: Status.Pending },
+      { status: Status.Friends }
     );
 
     return true;

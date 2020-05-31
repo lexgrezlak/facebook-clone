@@ -3,6 +3,7 @@ export interface Context {
   res: any;
 }
 
-export const context = ({ req, res }: Context) => {
-  return { req, res };
-};
+export const context = ({ req, res }: Context) => ({
+  req,
+  res,
+});

@@ -37,17 +37,17 @@ export function useIsFriend({ userId }: Props) {
   let friendshipStatus: FriendshipStatus;
 
   switch (status) {
-    case Status.FRIENDS:
-      friendshipStatus = FriendshipStatus.FRIEND;
+    case Status.Friends:
+      friendshipStatus = FriendshipStatus.Friend;
       break;
-    case Status.PENDING:
+    case Status.Pending:
       friendshipStatus =
         userId === fromUserId
-          ? FriendshipStatus.ME_RECEIVED_REQUEST
-          : FriendshipStatus.ME_SENT_REQUEST;
+          ? FriendshipStatus.MeReceivedRequest
+          : FriendshipStatus.MeSentRequest;
       break;
     default:
-      friendshipStatus = FriendshipStatus.STRANGER;
+      friendshipStatus = FriendshipStatus.Stranger;
       break;
   }
 

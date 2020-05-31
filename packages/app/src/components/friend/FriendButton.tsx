@@ -1,8 +1,7 @@
 import React from "react";
 import { Button } from "@material-ui/core";
 import { useFriendButtonManagement } from "../../hooks/useFriendButtonManagement";
-import { FriendshipStatus, MeData } from "../../types";
-import { GET_ME } from "../../graphql/queries";
+import { FriendshipStatus } from "../../types";
 
 interface Props {
   userId: string;
@@ -23,19 +22,19 @@ function FriendButton({ userId }: Props) {
   let text;
 
   switch (isFriend) {
-    case FriendshipStatus.STRANGER:
+    case FriendshipStatus.Stranger:
       handleClick = handleSendRequest;
       text = "Add friend";
       break;
-    case FriendshipStatus.FRIEND:
+    case FriendshipStatus.Friend:
       handleClick = handleUnfriend;
       text = "Unfriend";
       break;
-    case FriendshipStatus.ME_SENT_REQUEST:
+    case FriendshipStatus.MeSentRequest:
       handleClick = handleCancelRequest;
       text = "Cancel request";
       break;
-    case FriendshipStatus.ME_RECEIVED_REQUEST:
+    case FriendshipStatus.MeReceivedRequest:
       handleClick = handleAcceptRequest;
       text = "Accept request";
       break;

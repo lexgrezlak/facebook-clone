@@ -11,7 +11,7 @@ export class CancelRequestResolver {
     await FriendStatus.delete({
       fromUserId,
       toUserId: userId,
-      status: Status.PENDING,
+      status: Status.Pending,
     });
 
     return true;

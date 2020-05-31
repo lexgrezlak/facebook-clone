@@ -11,7 +11,7 @@ export class RejectRequestResolver {
     await FriendStatus.delete({
       fromUserId: userId,
       toUserId,
-      status: Status.PENDING,
+      status: Status.Pending,
     });
 
     return true;

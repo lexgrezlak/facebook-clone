@@ -1,4 +1,3 @@
-import { UsersInput } from "../../../server/src/resolvers/user/UsersInput";
 import { gql } from "@apollo/client";
 import { POST_PREVIEW, USER_PREVIEW } from "./fragments";
 

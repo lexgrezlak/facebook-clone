@@ -1,4 +1,4 @@
 export enum Status {
-  PENDING = "pending",
-  FRIENDS = "friends",
+  Pending = "PENDING",
+  Friends = "FRIENDS",
 }

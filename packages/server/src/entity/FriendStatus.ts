@@ -8,9 +8,14 @@ import {
 import { Field, ID, ObjectType } from "type-graphql";
 import { User } from "./User";
 
+// Status is here instead of in enums beacause otherwise
+// it throws an error
+// `cannot determine graphql output
+// type for status of FriendStatus class`
+
 export enum Status {
-  PENDING = "pending",
-  FRIENDS = "friends",
+  Pending = "PENDING",
+  Friends = "FRIENDS",
 }
 
 @ObjectType()
@@ -37,7 +42,7 @@ export class FriendStatus extends BaseEntity {
   toUserId: string;
 
   @Field()
-  @Column("enum", { enum: Status, default: Status.PENDING })
+  @Column("enum", { enum: Status, default: Status.Pending })
   status: Status;
 
   @Field(() => User)

@@ -1,3 +1,4 @@
+import { UserChat } from "./UserChat";
 import { Post } from "./Post";
 import {
   BaseEntity,
@@ -5,11 +6,12 @@ import {
   Entity,
   PrimaryGeneratedColumn,
   OneToMany,
-  JoinColumn,
-  Index,
+  ManyToMany,
+  JoinTable,
 } from "typeorm";
 import { Field, ID, ObjectType, Root } from "type-graphql";
 import { FriendStatus } from "./FriendStatus";
+import { Chat } from "./Chat";
 
 @ObjectType()
 @Entity()
@@ -49,13 +51,20 @@ export class User extends BaseEntity {
   @Field()
   @Column("text", {
     default:
-      "https://pixabay.com/get/53e9d4454953b10ff3d89960c62d3e7e123dd6e05550_640.jpg",
+      "https://images.pexels.com/photos/235985/pexels-photo-235985.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260",
   })
   background: string;
 
   @Field(() => [Post])
   @OneToMany(() => Post, (post) => post.user)
   posts: Post[];
+
+  @OneToMany(() => UserChat, (userChat) => userChat.user)
+  usersChat: UserChat[];
+
+  // @Field(() => [Chat])
+  // @ManyToMany(() => Chat, (chat) => chat.users)
+  // chats: Chat[];
 
   @OneToMany(() => FriendStatus, (friendStatus) => friendStatus.fromUser)
   sentRequests: FriendStatus[];

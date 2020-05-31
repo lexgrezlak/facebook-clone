@@ -1,6 +1,14 @@
 import { gql } from "@apollo/client";
 import { POST_PREVIEW, USER_PREVIEW } from "./fragments";
 
+export const CREATE_CHAT = gql`
+  mutation CreateChat($userId: String!) {
+    createChat(userId: $userId) {
+      id
+    }
+  }
+`;
+
 export const SIGN_UP = gql`
   mutation SignUp($input: SignUpInput!) {
     signUp(input: $input) {

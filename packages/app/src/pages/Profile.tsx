@@ -50,10 +50,10 @@ function Profile({ meId }: Props) {
     <Container maxWidth="md" component="main" className={classes.root}>
       <ProfileHeader user={user} meId={meId} />
       <Grid container spacing={2}>
-        <Grid item xs={12} md={4} className={classes.grid}>
+        <Grid item xs={12} sm={4} className={classes.grid}>
           <FriendList userId={id} />
         </Grid>
-        <Grid item xs={12} md={8}>
+        <Grid item xs={12} sm={8}>
           <ProfileFeed user={user} />
         </Grid>
       </Grid>

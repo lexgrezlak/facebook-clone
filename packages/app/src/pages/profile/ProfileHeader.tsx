@@ -9,6 +9,7 @@ import { UserPreviewAndPosts, MeData } from "../../types";
 import OwnMenu from "../ownProfile/OwnMenu";
 import { useApolloClient } from "@apollo/client";
 import { GET_ME } from "../../graphql/queries";
+import ChatButton from "../../components/ChatButton";
 
 interface Props {
   user: UserPreviewAndPosts;
@@ -75,7 +76,12 @@ const ProfileHeader = ({ user, meId }: Props) => {
         </Typography>
       </div>
       <OwnMenu />
-      {me.id !== id && <FriendButton userId={id} />}
+      {me.id !== id && (
+        <div>
+          <FriendButton userId={id} />
+          <ChatButton userId={id} />
+        </div>
+      )}
     </div>
   );
 };

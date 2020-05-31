@@ -6,6 +6,7 @@ import cookieParser from "cookie-parser";
 import { authorization } from "./utils/authorization";
 import { createServer } from "./createServer";
 import { createTypeORMConnection } from "./utils/createConnection";
+import http from "http";
 
 (async () => {
   const server = await createServer();
@@ -16,8 +17,14 @@ import { createTypeORMConnection } from "./utils/createConnection";
   app.use(cookieParser());
   app.use(authorization());
   server.applyMiddleware({ app, cors: false });
+  const httpServer = http.createServer(app);
+  server.installSubscriptionHandlers(httpServer);
 
-  app.listen({ port: PORT }, () => {
-    console.log(`Server ready at http://localhost:${PORT}`);
+  httpServer.listen(PORT, () => {
+    console.log(`server ready at port ${PORT}${server.graphqlPath}`);
+    console.log(`subs ready at port ${PORT}${server.subscriptionsPath}`);
   });
+  // app.listen({ port: PORT }, () => {
+  //   console.log(`Server ready at http://localhost:${PORT}`);
+  // });
 })();

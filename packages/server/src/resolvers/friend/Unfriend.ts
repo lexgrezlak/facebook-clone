@@ -10,8 +10,8 @@ export class UnfriendResolver {
 
     const friendStatus = await FriendStatus.findOneOrFail({
       where: [
-        { fromUserId: userId, toUserId: meId, status: Status.FRIENDS },
-        { fromUserId: meId, toUserId: userId, status: Status.FRIENDS },
+        { fromUserId: userId, toUserId: meId, status: Status.Friends },
+        { fromUserId: meId, toUserId: userId, status: Status.Friends },
       ],
     });
 
