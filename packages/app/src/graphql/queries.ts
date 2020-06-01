@@ -10,6 +10,21 @@ export const GET_ME = gql`
   ${USER_PREVIEW}
 `;
 
+export const GET_CHATS = gql`
+  query Chats {
+    chats {
+      id
+      users {
+        ...UserPreview
+        chats {
+          id
+        }
+      }
+    }
+  }
+  ${USER_PREVIEW}
+`;
+
 export const GET_FEED = gql`
   query Feed($cursor: Float) {
     feed(cursor: $cursor) {

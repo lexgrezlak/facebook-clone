@@ -59,8 +59,11 @@ export class User extends BaseEntity {
   @OneToMany(() => Post, (post) => post.user)
   posts: Post[];
 
-  @OneToMany(() => UserChat, (userChat) => userChat.user)
-  usersChat: UserChat[];
+  // @OneToMany(() => UserChat, (userChat) => userChat.user)
+  // usersChat: UserChat[];
+  @Field(() => [Chat])
+  @ManyToMany(() => Chat, (chat) => chat.users)
+  chats: Chat[];
 
   // @Field(() => [Chat])
   // @ManyToMany(() => Chat, (chat) => chat.users)

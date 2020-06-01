@@ -21,12 +21,20 @@ export class Chat extends BaseEntity {
   @PrimaryGeneratedColumn("uuid")
   id: string;
 
-  @OneToMany(() => UserChat, (userChat) => userChat.chat)
-  userChat: UserChat[];
-  // @Field(() => [User])
-  // @ManyToMany(() => User, (user) => user.chats)
-  // @JoinTable()
-  // users: User[];
+  @Field(() => [User])
+  @ManyToMany(() => User, (user) => user.chats)
+  @JoinTable({
+    name: "userChat",
+    joinColumn: {
+      name: "chatId",
+      referencedColumnName: "id",
+    },
+    inverseJoinColumn: {
+      name: "userId",
+      referencedColumnName: "id",
+    },
+  })
+  users: User[];
 
   @Field(() => [Message])
   @OneToMany(() => Message, (message) => message.chat)
