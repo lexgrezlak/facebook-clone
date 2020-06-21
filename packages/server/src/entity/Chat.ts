@@ -6,7 +6,7 @@ import {
   OneToMany,
   JoinTable,
 } from "typeorm";
-import { Field, ID, ObjectType } from "type-graphql";
+import { Field, ID, ObjectType, Root } from "type-graphql";
 import { User } from "./User";
 import { Message } from "./Message";
 
@@ -36,4 +36,10 @@ export class Chat extends BaseEntity {
   @OneToMany(() => Message, (message) => message.chat)
   @JoinTable()
   messages: Message[];
+
+  @Field(() => Message)
+  lastMessage(@Root() parent: Chat): Message {
+    const lastMessage = parent.messages[parent.messages.length - 1];
+    return lastMessage;
+  }
 }

@@ -23,9 +23,14 @@ export class CreateChatResolver {
 
     const chat = await Chat.create().save();
 
-    const users = await User.find({ where: [{ id: meId }, { id: userId }] });
+    const users = await User.find({
+      where: [{ id: meId }, { id: userId }],
+      relations: ["chats"],
+    });
 
     users.forEach((user) => {
+      console.log(user.chats);
+
       user.chats ? user.chats.push(chat) : (user.chats = [chat]);
 
       user.save();

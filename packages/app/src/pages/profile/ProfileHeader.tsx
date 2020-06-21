@@ -55,8 +55,6 @@ const useStyles = makeStyles((theme: Theme) =>
 const ProfileHeader = ({ user, meId }: Props) => {
   const { fullName, id, background, avatar } = user;
   const classes = useStyles();
-  const client = useApolloClient();
-  const { me } = client.readQuery({ query: GET_ME }) as MeData;
 
   return (
     <div className={classes.root}>
@@ -76,7 +74,7 @@ const ProfileHeader = ({ user, meId }: Props) => {
         </Typography>
       </div>
       <OwnMenu />
-      {me.id !== id && (
+      {meId !== id && (
         <div>
           <FriendButton userId={id} />
           <ChatButton userId={id} />

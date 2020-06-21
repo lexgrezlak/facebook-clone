@@ -50,9 +50,11 @@ export default function ChatList() {
 
   if (!data?.chats) return <CircularProgress />;
 
+  console.log(data.chats.map((chat) => chat.lastMessage));
+
   return (
     <List className={classes.root}>
-      {data.chats.map(({ id, users, messages }) => (
+      {data.chats.map(({ id, users, lastMessage }) => (
         <Link to={`/chats/${id}`} key={id} className={classes.link}>
           <ListItem className={classes.item}>
             <ListItemAvatar>
@@ -60,7 +62,7 @@ export default function ChatList() {
             </ListItemAvatar>
             <ListItemText
               primary={users[0].fullName}
-              secondary={messages[0].content}
+              secondary={lastMessage.content}
             />
           </ListItem>
         </Link>

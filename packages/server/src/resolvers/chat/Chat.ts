@@ -1,7 +1,6 @@
 import { Chat } from "./../../entity/Chat";
 import { Context } from "./../../context";
 import { Query, Resolver, Ctx, Arg } from "type-graphql";
-import { User } from "../../entity/User";
 
 @Resolver()
 export class ChatResolver {

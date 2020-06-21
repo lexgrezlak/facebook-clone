@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import { Chat } from "./../types";
 import { useMutation } from "@apollo/client";
 import { CREATE_CHAT } from "../graphql/mutations";
@@ -15,6 +16,7 @@ interface CreateChatVars {
 }
 
 export function useCreateChat({ userId }: Props) {
+  const navigate = useNavigate();
   const [createChat] = useMutation<CreateChatData, CreateChatVars>(
     CREATE_CHAT,
     {
@@ -25,12 +27,14 @@ export function useCreateChat({ userId }: Props) {
   );
 
   async function handleCreateChat() {
-    return createChat({
+    const res = await createChat({
       variables: { userId },
       update: (store, { data }) => {
         console.log(data);
       },
     });
+
+    navigate(`/chats/${res.data?.createChat.id}`);
   }
 
   return { handleCreateChat };

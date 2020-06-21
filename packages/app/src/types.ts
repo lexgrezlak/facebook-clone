@@ -15,13 +15,13 @@ export enum FriendshipStatus {
 
 export interface MessagePreview {
   id: string;
-  userId: string;
+  content: string;
 }
 
 export interface ChatPreview {
   id: string;
   users: UserPreview[];
-  messages: MessagePreview[];
+  lastMessage: Message;
 }
 
 export interface FeedData {

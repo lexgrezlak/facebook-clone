@@ -17,6 +17,7 @@ import {
 import MyTextField from "./MyTextField";
 import { Formik, Form } from "formik";
 import { useCreateMessageFormManagement } from "../hooks/useCreateMessageFormManagement";
+import Moment from "react-moment";
 
 interface ChatVars {
   id: string;
@@ -70,7 +71,10 @@ export default function Chat() {
           // </div>
           <ListItem key={message.id}>
             <Avatar src={message.user.avatar} />
-            <ListItemText primary={message.content} />
+            <ListItemText
+              primary={message.content}
+              secondary={<Moment fromNow date={message.sentTime} />}
+            />
           </ListItem>
         ))}
       </div>
