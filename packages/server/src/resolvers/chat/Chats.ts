@@ -25,8 +25,6 @@ export class ChatsResolver {
       return chat;
     });
 
-    console.log(chatsWithoutMe);
-
     return chatsWithoutMe;
   }
 }

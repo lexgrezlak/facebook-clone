@@ -30,7 +30,6 @@ export class Message extends BaseEntity {
   @Column("timestamp", { default: () => "CURRENT_TIMESTAMP(6)" })
   sentTime: Date;
 
-  @Field()
   @Column()
   chatId: string;
 
@@ -38,12 +37,11 @@ export class Message extends BaseEntity {
   @ManyToOne(() => Chat, (chat) => chat.messages)
   chat: Chat;
 
-  @Field()
   @Column()
   userId: string;
 
   @Field(() => User)
-  @OneToOne(() => User)
+  @ManyToOne(() => User)
   @JoinColumn()
   user: User;
 }

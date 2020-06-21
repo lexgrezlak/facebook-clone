@@ -1,6 +1,6 @@
 import React from "react";
 import { useQuery } from "@apollo/client";
-import { UserPreview } from "../types";
+import { ChatPreview } from "../types";
 import { GET_CHATS } from "../graphql/queries";
 import {
   CircularProgress,
@@ -11,16 +11,7 @@ import {
   ListItemText,
   makeStyles,
 } from "@material-ui/core";
-
-interface MessagePreview {
-  content: string;
-}
-
-interface ChatPreview {
-  id: string;
-  users: UserPreview[];
-  messages: MessagePreview[];
-}
+import { Link } from "react-router-dom";
 
 interface ChatsData {
   chats: ChatPreview[];
@@ -31,6 +22,20 @@ const useStyles = makeStyles((theme) => ({
     width: "100%",
     maxWidth: 360,
     backgroundColor: theme.palette.background.paper,
+  },
+
+  link: {
+    textDecoration: "none",
+
+    "&:visited": {
+      color: "inherit",
+    },
+  },
+
+  item: {
+    "&:hover": {
+      backgroundColor: "#f0f0f0",
+    },
   },
 }));
 
@@ -45,20 +50,20 @@ export default function ChatList() {
 
   if (!data?.chats) return <CircularProgress />;
 
-  console.log(data.chats);
-
   return (
     <List className={classes.root}>
       {data.chats.map(({ id, users, messages }) => (
-        <ListItem key={id}>
-          <ListItemAvatar>
-            <Avatar src={users[0].avatar} />
-          </ListItemAvatar>
-          <ListItemText
-            primary={users[0].fullName}
-            secondary={messages[0].content}
-          />
-        </ListItem>
+        <Link to={`/chats/${id}`} key={id} className={classes.link}>
+          <ListItem className={classes.item}>
+            <ListItemAvatar>
+              <Avatar src={users[0].avatar} />
+            </ListItemAvatar>
+            <ListItemText
+              primary={users[0].fullName}
+              secondary={messages[0].content}
+            />
+          </ListItem>
+        </Link>
       ))}
     </List>
   );

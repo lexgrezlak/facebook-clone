@@ -7,16 +7,17 @@ import {
   PubSubEngine,
 } from "type-graphql";
 
+import { Topic } from "../../enums";
+import { Context } from "../../context";
 import { CreateMessageInput } from "./CreateMessageInput";
-import { Message } from "../entity/Message";
-import { Topic } from "../enums";
-import { Context } from "../context";
+import { Message } from "../../entity/Message";
 
 @Resolver()
 export class CreateMessageResolver {
   @Mutation(() => Message)
   async createMessage(
-    @Arg("input") { content, chatId }: CreateMessageInput,
+    @Arg("input") { content }: CreateMessageInput,
+    @Arg("chatId") chatId: string,
     @Ctx() ctx: Context,
     @PubSub() pubSub: PubSubEngine
   ) {

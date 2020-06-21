@@ -18,7 +18,7 @@ export interface MessagePreview {
   userId: string;
 }
 
-export interface Chat {
+export interface ChatPreview {
   id: string;
   users: UserPreview[];
   messages: MessagePreview[];
@@ -39,6 +39,23 @@ export interface UserPreview {
   id: string;
   fullName: string;
   avatar: string;
+}
+
+export interface Message {
+  id: string;
+  content: string;
+  sentTime: string;
+  user: UserPreview;
+}
+
+export interface Chat {
+  id: string;
+  messages: Message[];
+  users: UserPreview[];
+}
+
+export interface ChatData {
+  chat: Chat;
 }
 
 export interface Post {

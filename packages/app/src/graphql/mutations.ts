@@ -9,6 +9,15 @@ export const CREATE_CHAT = gql`
   }
 `;
 
+export const CREATE_MESSAGE = gql`
+  mutation CreateMessage($input: CreateMessageInput!, $chatId: String!) {
+    createMessage(input: $input, chatId: $chatId) {
+      id
+      content
+    }
+  }
+`;
+
 export const SIGN_UP = gql`
   mutation SignUp($input: SignUpInput!) {
     signUp(input: $input) {

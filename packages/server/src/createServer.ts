@@ -1,6 +1,7 @@
-import { CreateMessageResolver } from "./resolvers/CreateMessage";
+import { CreateMessageResolver } from "./resolvers/message/CreateMessage";
 import { ChatCreatedResolver } from "./resolvers/ChatCreated";
 import { ChatsResolver } from "./resolvers/chat/Chats";
+import { ChatResolver } from "./resolvers/chat/Chat";
 import { CreateChatResolver } from "./resolvers/chat/CreateChat";
 import { MessageReceivedResolver } from "./resolvers/MessageReceived";
 import { UpdateAvatarResolver } from "./resolvers/user/UpdateAvatar";
@@ -53,6 +54,7 @@ export const createServer = async () => {
       ChatsResolver,
       ChatCreatedResolver,
       CreateMessageResolver,
+      ChatResolver,
     ],
   });
 

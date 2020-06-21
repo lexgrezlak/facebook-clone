@@ -10,6 +10,26 @@ export const GET_ME = gql`
   ${USER_PREVIEW}
 `;
 
+export const GET_CHAT = gql`
+  query Chat($id: String!) {
+    chat(id: $id) {
+      id
+      messages {
+        id
+        content
+        sentTime
+        user {
+          ...UserPreview
+        }
+      }
+      users {
+        ...UserPreview
+      }
+    }
+  }
+  ${USER_PREVIEW}
+`;
+
 export const GET_CHATS = gql`
   query Chats {
     chats {

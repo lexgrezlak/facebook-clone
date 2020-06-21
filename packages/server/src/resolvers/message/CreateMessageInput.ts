@@ -6,10 +6,4 @@ export class CreateMessageInput {
   @Field()
   @Length(1, 200)
   content: string;
-
-  @Field()
-  userId: string;
-
-  @Field()
-  chatId: string;
 }

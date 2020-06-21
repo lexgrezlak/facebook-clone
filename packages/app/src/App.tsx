@@ -8,6 +8,7 @@ import Header from "./components/Header";
 import Profile from "./pages/Profile";
 import { MeData } from "./types";
 import Chats from "./components/Chats";
+import Chat from "./components/Chat";
 
 const App: React.FC = () => {
   const { data, loading } = useQuery<MeData>(GET_ME, {
@@ -26,7 +27,7 @@ const App: React.FC = () => {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="users/:id" element={<Profile meId={data.me.id} />} />
-        <Route path="chats" element={<Chats />} />
+        <Route path="chats/:id" element={<Chat />} />
       </Routes>
     </div>
   );

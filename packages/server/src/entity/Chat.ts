@@ -1,13 +1,9 @@
-import { UserChat } from "./UserChat";
 import {
   BaseEntity,
-  Column,
   Entity,
   PrimaryGeneratedColumn,
-  ManyToOne,
   ManyToMany,
   OneToMany,
-  PrimaryColumn,
   JoinTable,
 } from "typeorm";
 import { Field, ID, ObjectType } from "type-graphql";
