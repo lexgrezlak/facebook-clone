@@ -10,15 +10,22 @@ export class ChatsResolver {
     const { userId } = ctx.req;
     const { chats } = await User.findOneOrFail({
       where: { id: userId },
-      relations: ["chats", "chats.users"],
+      relations: ["chats", "chats.users", "chats.messages"],
     });
 
     const chatsWithoutMe = chats.map((chat) => {
       // get rid of me (user) from the users array
       // to not have to filter out me on the client side
       chat.users = chat.users.filter((user) => user.id !== userId);
+
+      // return only last message for the preview
+      chat.messages = [
+        chat.messages[chat.messages.length - 1] || { content: "no messages" },
+      ];
       return chat;
     });
+
+    console.log(chatsWithoutMe);
 
     return chatsWithoutMe;
   }

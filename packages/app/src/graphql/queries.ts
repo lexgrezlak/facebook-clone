@@ -16,9 +16,9 @@ export const GET_CHATS = gql`
       id
       users {
         ...UserPreview
-        chats {
-          id
-        }
+      }
+      messages {
+        content
       }
     }
   }

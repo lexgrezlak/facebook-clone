@@ -15,6 +15,7 @@ import MenuIcon from "@material-ui/icons/Menu";
 import { makeStyles } from "@material-ui/core/styles";
 import Search from "./header/Search";
 import FriendRequests from "./FriendRequests";
+import Chats from "./Chats";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -87,18 +88,9 @@ function Header() {
           >
             <FacebookIcon fontSize="large" />
           </IconButton>
-          <IconButton aria-label="search" color="inherit">
-            <SearchIcon fontSize="large" />
-          </IconButton>
           <Search />
           <FriendRequests />
-          <IconButton
-            aria-label="display more actions"
-            edge="end"
-            color="inherit"
-          >
-            <MenuIcon fontSize="large" />
-          </IconButton>
+          <Chats />
           <SignOutButton />
         </Toolbar>
       </AppBar>
