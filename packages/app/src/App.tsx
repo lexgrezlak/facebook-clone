@@ -1,5 +1,5 @@
 import React from "react";
-import { useQuery } from "@apollo/client";
+import { useQuery, useSubscription } from "@apollo/client";
 import { GET_ME } from "./graphql/queries";
 import SignInOrUp from "./pages/SignInOrUp";
 import Home from "./pages/Home";
@@ -7,8 +7,8 @@ import { Route, Routes } from "react-router-dom";
 import Header from "./components/Header";
 import Profile from "./pages/Profile";
 import { MeData } from "./types";
-import Chats from "./components/Chats";
 import Chat from "./components/Chat";
+import { MESSAGE_RECEIVED } from "./graphql/subscriptions";
 
 const App: React.FC = () => {
   const { data, loading } = useQuery<MeData>(GET_ME, {

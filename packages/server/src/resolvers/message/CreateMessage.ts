@@ -29,7 +29,7 @@ export class CreateMessageResolver {
       userId,
     }).save();
 
-    await pubSub.publish(Topic.MessageCreated, content);
+    pubSub.publish(Topic.MessageReceived, { messageReceived: message });
 
     return message;
   }

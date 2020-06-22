@@ -13,3 +13,8 @@ export type UploadedFileResponse = {
   encoding: string;
   url: string;
 };
+
+export interface Token {
+  userId: number;
+  iat: number;
+}

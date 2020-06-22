@@ -10,6 +10,17 @@ export const GET_ME = gql`
   ${USER_PREVIEW}
 `;
 
+export const GET_NOTIFICATIONS = gql`
+  query Notifications {
+    notifications {
+      id
+      message
+      receivedAt
+      link
+    }
+  }
+`;
+
 export const GET_CHAT = gql`
   query Chat($id: String!) {
     chat(id: $id) {

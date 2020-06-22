@@ -22,6 +22,13 @@ export interface LikesOfPostData {
   likesOfPost: number;
 }
 
+export interface Notification {
+  id: string;
+  message: string;
+  receivedAt: Date;
+  link: string;
+}
+
 export interface ChatPreview {
   id: string;
   users: UserPreview[];

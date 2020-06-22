@@ -1,26 +1,21 @@
 import React, { useState } from "react";
-import { ChatPreview } from "../types";
-import { useQuery, useSubscription } from "@apollo/client";
-import { GET_CHATS } from "../graphql/queries";
+import NotificationsIcon from "@material-ui/icons/Notifications";
 import { IconButton, Popover } from "@material-ui/core";
-import ChatBubbleIcon from "@material-ui/icons/ChatBubble";
-import ChatList from "./ChatList";
-import { MESSAGE_RECEIVED } from "../graphql/subscriptions";
+import { useQuery } from "@apollo/client";
+import { GET_NOTIFICATIONS } from "../../graphql/queries";
+import NotificationList from "./notifications/NotificationList";
+import { Notification } from "./../../../types";
 
-interface ChatsData {
-  chats: ChatPreview[];
+interface NotificationsData {
+  notifications: Notification[];
 }
 
-export default function Chat() {
-  const { data } = useQuery<ChatsData>(GET_CHATS, {
+export default function Notifications() {
+  const { data } = useQuery<NotificationsData>(GET_NOTIFICATIONS, {
     onError: (error) => {
       console.log(error.graphQLErrors[0].message);
     },
   });
-
-  const { data: subData } = useSubscription(MESSAGE_RECEIVED);
-
-  console.log(subData);
 
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
 
@@ -43,7 +38,7 @@ export default function Chat() {
         color="inherit"
         onClick={handleClick}
       >
-        <ChatBubbleIcon fontSize="large" />
+        <NotificationsIcon fontSize="large" />
       </IconButton>
       <Popover
         id={id}
@@ -59,7 +54,7 @@ export default function Chat() {
           horizontal: "center",
         }}
       >
-        <ChatList chats={data?.chats || []} />
+        <NotificationList notifications={data?.notifications || []} />
       </Popover>
     </div>
   );

@@ -15,6 +15,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Search from "./header/Search";
 import FriendRequests from "./FriendRequests";
 import Chats from "./Chats";
+import Notifications from "./header/Notifications";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -106,6 +107,7 @@ function Header() {
               </IconButton>
               <FriendRequests />
               <Chats />
+              <Notifications />
               <SignOutButton />
             </>
           )}

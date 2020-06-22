@@ -1,15 +1,38 @@
-import { Resolver, Subscription, Root } from "type-graphql";
+import { Chat } from "./../entity/Chat";
+import { Context } from "./../context";
+import { Resolver, Subscription, Root, Ctx } from "type-graphql";
 import { Topic } from "../enums";
 import { Message } from "../entity/Message";
 
+interface Payload {
+  messageReceived: Message;
+}
+
 @Resolver()
 export class MessageReceivedResolver {
-  @Subscription(() => String, {
+  @Subscription(() => Message, {
     topics: Topic.MessageReceived,
   })
-  messageReceived(@Root() message: Message) {
-    console.log(message);
+  async messageReceived(
+    @Root() { messageReceived }: Payload,
+    @Ctx() ctx: Context
+  ) {
+    const { userId } = ctx.connection.context;
 
-    return message;
+    const chat = await Chat.findOneOrFail({
+      where: { id: messageReceived.chatId },
+      relations: ["users"],
+    });
+
+    const usersIds = chat.users.map((user) => user.id);
+
+    console.log(usersIds, userId);
+
+    if (usersIds.includes(userId)) {
+      console.log("true");
+      return messageReceived;
+    }
+
+    return "doesnt include user id";
   }
 }

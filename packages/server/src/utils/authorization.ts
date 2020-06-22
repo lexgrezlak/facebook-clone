@@ -1,10 +1,6 @@
 import { verify } from "jsonwebtoken";
 import { JWT_SECRET } from "../config";
-
-interface Token {
-  userId: number;
-  iat: number;
-}
+import { Token } from "../types";
 
 export function authorization() {
   return function (req: any, res: any, next: any) {

@@ -15,7 +15,7 @@ import { User } from "./User";
 
 @ObjectType()
 @Entity()
-export class Post extends BaseEntity {
+export class Notification extends BaseEntity {
   @Field(() => ID)
   @PrimaryGeneratedColumn("uuid")
   id: string;
@@ -24,18 +24,19 @@ export class Post extends BaseEntity {
   userId: string;
 
   @Field(() => User)
-  @ManyToOne(() => User, (user) => user.posts)
+  @ManyToOne(() => User, (user) => user.notifications)
   @JoinColumn()
   user: User;
 
   @Field()
   @Column("text")
-  content: string;
+  message: string;
+
+  @Field()
+  @Column("text")
+  link: string;
 
   @Field()
   @Column("timestamp", { default: () => "CURRENT_TIMESTAMP(6)" })
-  createdAt: Date;
-
-  @OneToMany(() => PostLike, (postLike) => postLike.post)
-  postLikes: PostLike[];
+  receivedAt: Date;
 }

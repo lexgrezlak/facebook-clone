@@ -1,9 +1,6 @@
 import React from "react";
-import { useQuery } from "@apollo/client";
 import { ChatPreview } from "../types";
-import { GET_CHATS } from "../graphql/queries";
 import {
-  CircularProgress,
   List,
   ListItem,
   ListItemAvatar,

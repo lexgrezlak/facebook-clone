@@ -1,3 +1,6 @@
+import { JWT_SECRET } from "./config";
+import { verify } from "jsonwebtoken";
+import { NotificationsResolver } from "./resolvers/Notifications";
 import { UnlikePostResolver } from "./resolvers/post/Unlike";
 import { IsPostLikedResolver } from "./resolvers/post/IsPostLiked";
 import { LikesOfPostResolver } from "./resolvers/post/LikesOfPost";
@@ -31,6 +34,7 @@ import { UserResolver } from "./resolvers/user/User";
 import { FriendsResolver } from "./resolvers/friend/Friends";
 import { MeResolver } from "./resolvers/user/Me";
 import { CreatePostLikeResolver } from "./resolvers/post/CreatePostLike";
+import { Token } from "./types";
 
 export const createServer = async () => {
   const schema = await buildSchema({
@@ -65,6 +69,7 @@ export const createServer = async () => {
       IsPostLikedResolver,
       LikePostResolver,
       UnlikePostResolver,
+      NotificationsResolver,
     ],
   });
 
@@ -72,6 +77,17 @@ export const createServer = async () => {
     // schema: applyMiddleware(schema, permissions),
     schema,
     context,
+    subscriptions: {
+      onConnect: async (connectionParams, ws: any) => {
+        console.log(connectionParams);
+        const { cookie } = ws.upgradeReq.headers;
+        const token = cookie.replace("token=Bearer%20", "");
+        const verifiedToken = verify(token, JWT_SECRET) as Token;
+        const { userId } = verifiedToken;
+
+        return { userId };
+      },
+    },
     playground: true,
     introspection: true,
   });

@@ -1,6 +1,6 @@
 import React from "react";
 import { useParams, Link } from "react-router-dom";
-import { useQuery } from "@apollo/client";
+import { useQuery, useSubscription } from "@apollo/client";
 import { GET_CHAT } from "../graphql/queries";
 import { ChatData } from "../types";
 import {
@@ -17,6 +17,7 @@ import MyTextField from "./MyTextField";
 import { Formik, Form } from "formik";
 import { useCreateMessageFormManagement } from "../hooks/useCreateMessageFormManagement";
 import Moment from "react-moment";
+import { MESSAGE_RECEIVED } from "../graphql/subscriptions";
 
 interface ChatVars {
   id: string;
@@ -44,6 +45,13 @@ export default function Chat() {
     },
     variables: { id },
   });
+
+  // useSubscription(MESSAGE_RECEIVED, {
+  //   variables: { chatId: id },
+  //   onSubscriptionData: ({ subscriptionData }) => {
+  //     console.log(subscriptionData);
+  //   },
+  // });
 
   const {
     handleCreateMessage,

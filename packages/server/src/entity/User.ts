@@ -1,4 +1,3 @@
-import { UserChat } from "./UserChat";
 import { Post } from "./Post";
 import {
   BaseEntity,
@@ -13,6 +12,7 @@ import { Field, ID, ObjectType, Root } from "type-graphql";
 import { FriendStatus } from "./FriendStatus";
 import { Chat } from "./Chat";
 import { PostLike } from "./PostLike";
+import { Notification } from "./Notification";
 
 @ObjectType()
 @Entity()
@@ -59,6 +59,10 @@ export class User extends BaseEntity {
   @Field(() => [Post])
   @OneToMany(() => Post, (post) => post.user)
   posts: Post[];
+
+  @Field(() => [Notification])
+  @OneToMany(() => Notification, (notification) => notification.user)
+  notifications: Notification[];
 
   @Field(() => [Chat])
   @ManyToMany(() => Chat, (chat) => chat.users)
