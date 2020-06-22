@@ -83,25 +83,24 @@ function Header() {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
 
   return (
-    <div className={classes.root} onBlur={() => setIsSearchOpen(false)}>
-      <AppBar position="static">
+    <div className={classes.root}>
+      <AppBar position="static" onBlur={() => setIsSearchOpen(false)}>
         <Toolbar className={classes.toolbar}>
-          <IconButton
-            edge="start"
-            className={classes.menuButton}
-            color="inherit"
-            aria-label="home"
-            component={Link}
-            to="/"
-          >
-            <FacebookIcon fontSize="large" />
-          </IconButton>
-
           {/* otherwise search is too big for mobile */}
           {isSearchOpen ? (
             <Search />
           ) : (
             <>
+              <IconButton
+                edge="start"
+                className={classes.menuButton}
+                color="inherit"
+                aria-label="home"
+                component={Link}
+                to="/"
+              >
+                <FacebookIcon fontSize="large" />
+              </IconButton>
               <IconButton color="inherit" onClick={() => setIsSearchOpen(true)}>
                 <SearchIcon fontSize="large" />
               </IconButton>
