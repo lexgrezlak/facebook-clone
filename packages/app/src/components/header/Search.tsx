@@ -62,6 +62,7 @@ function Search() {
           onChange={(event) => setFilter(event.target.value)}
           variant="outlined"
           fullWidth
+          autoFocus
           style={{ backgroundColor: "white" }}
           placeholder="Search someone"
           autoComplete="off"

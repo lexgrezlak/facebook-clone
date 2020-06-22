@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import SignOutButton from "../pages/home/SignOutButton";
 import { Link } from "react-router-dom";
 import {
@@ -11,7 +11,6 @@ import {
 } from "@material-ui/core";
 import FacebookIcon from "@material-ui/icons/Facebook";
 import SearchIcon from "@material-ui/icons/Search";
-import MenuIcon from "@material-ui/icons/Menu";
 import { makeStyles } from "@material-ui/core/styles";
 import Search from "./header/Search";
 import FriendRequests from "./FriendRequests";
@@ -56,6 +55,9 @@ const useStyles = makeStyles((theme: Theme) =>
     inputRoot: {
       color: "inherit",
     },
+    rest: {
+      display: "flex",
+    },
     inputInput: {
       padding: theme.spacing(1, 1, 1, 0),
       // vertical padding + font size from searchIcon
@@ -74,8 +76,10 @@ const useStyles = makeStyles((theme: Theme) =>
 
 function Header() {
   const classes = useStyles();
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+
   return (
-    <div className={classes.root}>
+    <div className={classes.root} onBlur={() => setIsSearchOpen(false)}>
       <AppBar position="static">
         <Toolbar>
           <IconButton
@@ -88,10 +92,20 @@ function Header() {
           >
             <FacebookIcon fontSize="large" />
           </IconButton>
-          <Search />
-          <FriendRequests />
-          <Chats />
-          <SignOutButton />
+
+          {/* otherwise search is too big for mobile */}
+          {isSearchOpen ? (
+            <Search />
+          ) : (
+            <>
+              <IconButton color="inherit" onClick={() => setIsSearchOpen(true)}>
+                <SearchIcon fontSize="large" />
+              </IconButton>
+              <FriendRequests />
+              <Chats />
+              <SignOutButton />
+            </>
+          )}
         </Toolbar>
       </AppBar>
     </div>
