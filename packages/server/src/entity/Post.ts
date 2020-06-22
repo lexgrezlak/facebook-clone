@@ -1,3 +1,4 @@
+import { PostLike } from "./PostLike";
 import {
   BaseEntity,
   Column,
@@ -5,8 +6,11 @@ import {
   PrimaryGeneratedColumn,
   ManyToOne,
   JoinColumn,
+  ManyToMany,
+  JoinTable,
+  OneToMany,
 } from "typeorm";
-import { Field, ID, ObjectType } from "type-graphql";
+import { Field, ID, ObjectType, Root } from "type-graphql";
 import { User } from "./User";
 
 @ObjectType()
@@ -19,16 +23,38 @@ export class Post extends BaseEntity {
   @Column()
   userId: string;
 
-  @Field()
-  @Column("text")
-  content: string;
-
   @Field(() => User)
   @ManyToOne(() => User, (user) => user.posts)
   @JoinColumn()
   user: User;
 
   @Field()
+  @Column("text")
+  content: string;
+
+  @Field()
   @Column("timestamp", { default: () => "CURRENT_TIMESTAMP(6)" })
   createdAt: Date;
+
+  @OneToMany(() => PostLike, (postLike) => postLike.post)
+  postLikes: PostLike[];
+
+  // @Field()
+  // @Column({ default: 0 })
+  // likes: number;
+
+  // @Field(() => [User])
+  // @ManyToMany(() => User, (user) => user.likedPosts)
+  // @JoinTable({
+  //   name: "userWhoLikePost",
+  //   joinColumn: {
+  //     name: "postId",
+  //     referencedColumnName: "id",
+  //   },
+  //   inverseJoinColumn: {
+  //     name: "userId",
+  //     referencedColumnName: "id",
+  //   },
+  // })
+  // usersWhoLike: User[];
 }

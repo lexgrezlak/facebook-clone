@@ -18,6 +18,10 @@ export interface MessagePreview {
   content: string;
 }
 
+export interface LikesOfPostData {
+  likesOfPost: number;
+}
+
 export interface ChatPreview {
   id: string;
   users: UserPreview[];

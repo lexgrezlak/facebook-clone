@@ -3,7 +3,7 @@ import { ChatPreview } from "../types";
 import { useQuery } from "@apollo/client";
 import { GET_CHATS } from "../graphql/queries";
 import { IconButton, Popover } from "@material-ui/core";
-import ChatIcon from "@material-ui/icons/Chat";
+import ChatBubbleIcon from "@material-ui/icons/ChatBubble";
 import ChatList from "./ChatList";
 
 interface ChatsData {
@@ -38,7 +38,7 @@ export default function Chat() {
         color="inherit"
         onClick={handleClick}
       >
-        <ChatIcon fontSize="large" />
+        <ChatBubbleIcon fontSize="large" />
       </IconButton>
       <Popover
         id={id}

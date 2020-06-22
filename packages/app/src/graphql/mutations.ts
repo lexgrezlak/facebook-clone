@@ -18,6 +18,18 @@ export const CREATE_MESSAGE = gql`
   }
 `;
 
+export const LIKE_POST = gql`
+  mutation LikePost($postId: String!) {
+    likePost(postId: $postId)
+  }
+`;
+
+export const UNLIKE_POST = gql`
+  mutation UnlikePost($postId: String!) {
+    unlikePost(postId: $postId)
+  }
+`;
+
 export const SIGN_UP = gql`
   mutation SignUp($input: SignUpInput!) {
     signUp(input: $input) {

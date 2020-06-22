@@ -1,5 +1,5 @@
 import React from "react";
-import { Avatar, Typography } from "@material-ui/core";
+import { Avatar, Typography, IconButton, Badge } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import Moment from "react-moment";
 import { makeStyles } from "@material-ui/core/styles";
@@ -8,6 +8,8 @@ import { UserPreview, Post } from "../../types";
 import PostMenu from "./PostMenu";
 import { useApolloClient } from "@apollo/client";
 import { GET_ME } from "../../graphql/queries";
+import CommentIcon from "@material-ui/icons/Comment";
+import Like from "../Like";
 
 interface Props {
   post: Post;
@@ -32,6 +34,15 @@ const useStyles = makeStyles((theme) => ({
   },
   postInfo: {
     marginLeft: theme.spacing(1),
+  },
+
+  actions: {
+    display: "flex",
+    "& > *": {
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+    },
   },
 }));
 
@@ -68,6 +79,15 @@ function PostItem({ post, user }: Props) {
 
       <div>
         <Typography>{post.content}</Typography>
+      </div>
+      <div className={classes.actions}>
+        <Like postId={post.id} />
+        <div>
+          <IconButton>
+            <CommentIcon />
+          </IconButton>
+          <Typography>65</Typography>
+        </div>
       </div>
     </StyledPaper>
   );

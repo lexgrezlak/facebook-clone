@@ -45,6 +45,18 @@ export const GET_CHATS = gql`
   ${USER_PREVIEW}
 `;
 
+export const GET_LIKES_OF_POST = gql`
+  query LikesOfPost($postId: String!) {
+    likesOfPost(postId: $postId)
+  }
+`;
+
+export const GET_IS_POST_LIKED = gql`
+  query IsPostLiked($postId: String!) {
+    isPostLiked(postId: $postId)
+  }
+`;
+
 export const GET_FEED = gql`
   query Feed($cursor: Float) {
     feed(cursor: $cursor) {

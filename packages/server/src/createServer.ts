@@ -1,3 +1,7 @@
+import { UnlikePostResolver } from "./resolvers/post/Unlike";
+import { IsPostLikedResolver } from "./resolvers/post/IsPostLiked";
+import { LikesOfPostResolver } from "./resolvers/post/LikesOfPost";
+import { LikePostResolver } from "./resolvers/post/Like";
 import { CreateMessageResolver } from "./resolvers/message/CreateMessage";
 import { ChatCreatedResolver } from "./resolvers/ChatCreated";
 import { ChatsResolver } from "./resolvers/chat/Chats";
@@ -26,6 +30,7 @@ import { SignUpResolver } from "./resolvers/sign/SignUp";
 import { UserResolver } from "./resolvers/user/User";
 import { FriendsResolver } from "./resolvers/friend/Friends";
 import { MeResolver } from "./resolvers/user/Me";
+import { CreatePostLikeResolver } from "./resolvers/post/CreatePostLike";
 
 export const createServer = async () => {
   const schema = await buildSchema({
@@ -55,6 +60,11 @@ export const createServer = async () => {
       ChatCreatedResolver,
       CreateMessageResolver,
       ChatResolver,
+      CreatePostLikeResolver,
+      LikesOfPostResolver,
+      IsPostLikedResolver,
+      LikePostResolver,
+      UnlikePostResolver,
     ],
   });
 

@@ -12,6 +12,7 @@ import {
 import { Field, ID, ObjectType, Root } from "type-graphql";
 import { FriendStatus } from "./FriendStatus";
 import { Chat } from "./Chat";
+import { PostLike } from "./PostLike";
 
 @ObjectType()
 @Entity()
@@ -59,15 +60,16 @@ export class User extends BaseEntity {
   @OneToMany(() => Post, (post) => post.user)
   posts: Post[];
 
-  // @OneToMany(() => UserChat, (userChat) => userChat.user)
-  // usersChat: UserChat[];
   @Field(() => [Chat])
   @ManyToMany(() => Chat, (chat) => chat.users)
   chats: Chat[];
 
-  // @Field(() => [Chat])
-  // @ManyToMany(() => Chat, (chat) => chat.users)
-  // chats: Chat[];
+  @OneToMany(() => PostLike, (postLike) => postLike.user)
+  postLikes: PostLike[];
+
+  // @Field(() => [Post])
+  // @ManyToMany(() => Post, (post) => post.usersWhoLike)
+  // likedPosts: Post[];
 
   @OneToMany(() => FriendStatus, (friendStatus) => friendStatus.fromUser)
   sentRequests: FriendStatus[];
