@@ -58,6 +58,10 @@ const useStyles = makeStyles((theme: Theme) =>
     rest: {
       display: "flex",
     },
+    toolbar: {
+      display: "flex",
+      justifyContent: "center",
+    },
     inputInput: {
       padding: theme.spacing(1, 1, 1, 0),
       // vertical padding + font size from searchIcon
@@ -81,7 +85,7 @@ function Header() {
   return (
     <div className={classes.root} onBlur={() => setIsSearchOpen(false)}>
       <AppBar position="static">
-        <Toolbar>
+        <Toolbar className={classes.toolbar}>
           <IconButton
             edge="start"
             className={classes.menuButton}

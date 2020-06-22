@@ -47,11 +47,11 @@ export default function Chat() {
         onClose={handleClose}
         anchorOrigin={{
           vertical: "bottom",
-          horizontal: "right",
+          horizontal: "left",
         }}
         transformOrigin={{
           vertical: "top",
-          horizontal: "right",
+          horizontal: "center",
         }}
       >
         <ChatList chats={data?.chats || []} />
