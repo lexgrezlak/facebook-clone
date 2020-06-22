@@ -1,13 +1,12 @@
 import React from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { useQuery } from "@apollo/client";
 import { GET_CHAT } from "../graphql/queries";
-import { UserPreview, Message, ChatData } from "../types";
+import { ChatData } from "../types";
 import {
   CircularProgress,
   Button,
   ListItem,
-  ListItemIcon,
   ListItemText,
   Avatar,
   Typography,
@@ -27,6 +26,11 @@ const useStyles = makeStyles(() =>
   createStyles({
     userInfo: {
       display: "flex",
+      alignItems: "center",
+      textDecoration: "none",
+      "&:visited": {
+        color: "inherit",
+      },
     },
   })
 );
@@ -51,24 +55,22 @@ export default function Chat() {
 
   const { messages, users } = data.chat;
 
-  console.log(messages[1]);
-
   return (
     <div>
       <div>
         {users.map((user) => (
-          <div className={classes.userInfo} key={user.id}>
+          <Link
+            to={`/users/${user.id}`}
+            className={classes.userInfo}
+            key={user.id}
+          >
             <Avatar src={user.avatar} />
             <Typography variant="h5">{user.fullName}</Typography>
-          </div>
+          </Link>
         ))}
       </div>
       <div>
         {messages.map((message) => (
-          // <div key={message.id}>
-          //   <div>{message.user.fullName}</div>
-          //   <div>{message.content}</div>
-          // </div>
           <ListItem key={message.id}>
             <Avatar src={message.user.avatar} />
             <ListItemText
@@ -90,8 +92,6 @@ export default function Chat() {
               <MyTextField
                 type="text"
                 name="content"
-                rows={2}
-                multiline
                 autoComplete="off"
                 margin="none"
               />

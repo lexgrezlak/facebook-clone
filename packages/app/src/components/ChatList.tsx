@@ -37,6 +37,11 @@ const useStyles = makeStyles((theme) => ({
       backgroundColor: "#f0f0f0",
     },
   },
+  content: {
+    textOverflow: "ellipsis",
+    whiteSpace: "nowrap",
+    overflow: "hidden",
+  },
 }));
 
 export default function ChatList() {
@@ -50,8 +55,6 @@ export default function ChatList() {
 
   if (!data?.chats) return <CircularProgress />;
 
-  console.log(data.chats.map((chat) => chat.lastMessage));
-
   return (
     <List className={classes.root}>
       {data.chats.map(({ id, users, lastMessage }) => (
@@ -61,6 +64,7 @@ export default function ChatList() {
               <Avatar src={users[0].avatar} />
             </ListItemAvatar>
             <ListItemText
+              className={classes.content}
               primary={users[0].fullName}
               secondary={lastMessage.content}
             />
