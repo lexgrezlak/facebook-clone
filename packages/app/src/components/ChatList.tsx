@@ -13,10 +13,6 @@ import {
 } from "@material-ui/core";
 import { Link } from "react-router-dom";
 
-interface ChatsData {
-  chats: ChatPreview[];
-}
-
 const useStyles = makeStyles((theme) => ({
   root: {
     width: "100%",
@@ -44,20 +40,16 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function ChatList() {
+interface Props {
+  chats: ChatPreview[];
+}
+
+export default function ChatList({ chats }: Props) {
   const classes = useStyles();
-
-  const { data } = useQuery<ChatsData>(GET_CHATS, {
-    onError: (error) => {
-      console.log(error.graphQLErrors[0].message);
-    },
-  });
-
-  if (!data?.chats) return <CircularProgress />;
 
   return (
     <List className={classes.root}>
-      {data.chats.map(({ id, users, lastMessage }) => (
+      {chats.map(({ id, users, lastMessage }) => (
         <Link to={`/chats/${id}`} key={id} className={classes.link}>
           <ListItem className={classes.item}>
             <ListItemAvatar>

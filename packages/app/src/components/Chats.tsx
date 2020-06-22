@@ -1,12 +1,22 @@
 import React, { useState } from "react";
-import { UserPreview } from "../types";
-import { useQuery, useLazyQuery } from "@apollo/client";
+import { ChatPreview } from "../types";
+import { useQuery } from "@apollo/client";
 import { GET_CHATS } from "../graphql/queries";
-import { CircularProgress, IconButton, Popover } from "@material-ui/core";
+import { IconButton, Popover } from "@material-ui/core";
 import ChatIcon from "@material-ui/icons/Chat";
 import ChatList from "./ChatList";
 
+interface ChatsData {
+  chats: ChatPreview[];
+}
+
 export default function Chat() {
+  const { data } = useQuery<ChatsData>(GET_CHATS, {
+    onError: (error) => {
+      console.log(error.graphQLErrors[0].message);
+    },
+  });
+
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -37,14 +47,14 @@ export default function Chat() {
         onClose={handleClose}
         anchorOrigin={{
           vertical: "bottom",
-          horizontal: "center",
+          horizontal: "right",
         }}
         transformOrigin={{
           vertical: "top",
-          horizontal: "center",
+          horizontal: "right",
         }}
       >
-        <ChatList />
+        <ChatList chats={data?.chats || []} />
       </Popover>
     </div>
   );
