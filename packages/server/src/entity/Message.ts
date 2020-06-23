@@ -22,7 +22,7 @@ export class Message extends BaseEntity {
   @Column()
   content: string;
 
-  @Field()
+  @Field({ nullable: true })
   @Column("timestamp", { default: null })
   readTime: Date;
 
@@ -30,6 +30,7 @@ export class Message extends BaseEntity {
   @Column("timestamp", { default: () => "CURRENT_TIMESTAMP(6)" })
   sentTime: Date;
 
+  @Field()
   @Column()
   chatId: string;
 

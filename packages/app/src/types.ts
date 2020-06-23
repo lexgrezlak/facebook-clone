@@ -33,6 +33,7 @@ export interface ChatPreview {
   id: string;
   users: UserPreview[];
   lastMessage: Message;
+  unread: Boolean;
 }
 
 export interface FeedData {
@@ -52,11 +53,16 @@ export interface UserPreview {
   avatar: string;
 }
 
+export interface ChatsData {
+  chats: ChatPreview[];
+}
+
 export interface Message {
   id: string;
   content: string;
-  sentTime: string;
+  sentTime: Date;
   user: UserPreview;
+  chatId: string;
 }
 
 export interface Chat {

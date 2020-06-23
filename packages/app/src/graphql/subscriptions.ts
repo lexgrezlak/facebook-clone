@@ -5,6 +5,7 @@ export const MESSAGE_RECEIVED = gql`
     messageReceived {
       id
       content
+      chatId
     }
   }
 `;

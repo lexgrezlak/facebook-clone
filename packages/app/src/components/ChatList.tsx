@@ -7,8 +7,10 @@ import {
   Avatar,
   ListItemText,
   makeStyles,
+  Typography,
 } from "@material-ui/core";
 import { Link } from "react-router-dom";
+import Moment from "react-moment";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -20,16 +22,31 @@ const useStyles = makeStyles((theme) => ({
   link: {
     textDecoration: "none",
 
+    "& > *": {
+      "&:hover": {
+        backgroundColor: "#f0f0f0",
+      },
+    },
+
     "&:visited": {
       color: "inherit",
     },
   },
 
-  item: {
-    "&:hover": {
-      backgroundColor: "#f0f0f0",
+  unreadItem: {
+    backgroundColor: "#f6f6f6",
+
+    // the name of the user
+    "& span": {
+      fontWeight: "bold",
+    },
+
+    // the message content
+    "& p": {
+      fontWeight: "bold",
     },
   },
+
   content: {
     textOverflow: "ellipsis",
     whiteSpace: "nowrap",
@@ -46,9 +63,9 @@ export default function ChatList({ chats }: Props) {
 
   return (
     <List className={classes.root}>
-      {chats.map(({ id, users, lastMessage }) => (
+      {chats.map(({ id, users, lastMessage, unread }) => (
         <Link to={`/chats/${id}`} key={id} className={classes.link}>
-          <ListItem className={classes.item}>
+          <ListItem className={unread ? classes.unreadItem : ""}>
             <ListItemAvatar>
               <Avatar src={users[0].avatar} />
             </ListItemAvatar>
@@ -57,6 +74,9 @@ export default function ChatList({ chats }: Props) {
               primary={users[0].fullName}
               secondary={lastMessage.content}
             />
+            <Typography variant="caption" gutterBottom>
+              <Moment format="HH:mm" date={lastMessage.sentTime} />
+            </Typography>
           </ListItem>
         </Link>
       ))}

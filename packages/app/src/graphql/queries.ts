@@ -49,8 +49,11 @@ export const GET_CHATS = gql`
         ...UserPreview
       }
       lastMessage {
+        id
+        sentTime
         content
       }
+      unread
     }
   }
   ${USER_PREVIEW}

@@ -3,6 +3,7 @@ import { Context } from "./../context";
 import { Resolver, Subscription, Root, Ctx } from "type-graphql";
 import { Topic } from "../enums";
 import { Message } from "../entity/Message";
+import { ForbiddenError } from "apollo-server-express";
 
 interface Payload {
   messageReceived: Message;
@@ -26,13 +27,10 @@ export class MessageReceivedResolver {
 
     const usersIds = chat.users.map((user) => user.id);
 
-    console.log(usersIds, userId);
+    const isChatMember = usersIds.includes(userId);
 
-    if (usersIds.includes(userId)) {
-      console.log("true");
-      return messageReceived;
-    }
-
-    return "doesnt include user id";
+    return isChatMember
+      ? messageReceived
+      : new ForbiddenError("Not authorized");
   }
 }

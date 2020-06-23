@@ -1,3 +1,4 @@
+import { Context } from "./../context";
 import {
   BaseEntity,
   Entity,
@@ -6,7 +7,7 @@ import {
   OneToMany,
   JoinTable,
 } from "typeorm";
-import { Field, ID, ObjectType, Root } from "type-graphql";
+import { Field, ID, ObjectType, Root, Ctx } from "type-graphql";
 import { User } from "./User";
 import { Message } from "./Message";
 
@@ -37,9 +38,19 @@ export class Chat extends BaseEntity {
   @JoinTable()
   messages: Message[];
 
-  @Field(() => Message)
+  @Field(() => Message, { nullable: true })
   lastMessage(@Root() parent: Chat): Message {
     const lastMessage = parent.messages[parent.messages.length - 1];
-    return lastMessage;
+    return lastMessage ?? null;
+  }
+
+  @Field(() => Boolean)
+  unread(@Root() parent: Chat, @Ctx() ctx: Context): Boolean {
+    const { userId } = ctx.req;
+    const lastMessage = parent.messages[parent.messages.length - 1];
+    const isUnread = !lastMessage.readTime;
+    const isSentByMe = userId === lastMessage.userId;
+
+    return isUnread && !isSentByMe;
   }
 }

@@ -1,26 +1,53 @@
 import React, { useState } from "react";
-import { ChatPreview } from "../types";
-import { useQuery, useSubscription } from "@apollo/client";
+import { ChatPreview, Message, ChatsData } from "../types";
+import { useQuery, useSubscription, useApolloClient } from "@apollo/client";
 import { GET_CHATS } from "../graphql/queries";
-import { IconButton, Popover } from "@material-ui/core";
+import { IconButton, Popover, Badge } from "@material-ui/core";
 import ChatBubbleIcon from "@material-ui/icons/ChatBubble";
 import ChatList from "./ChatList";
 import { MESSAGE_RECEIVED } from "../graphql/subscriptions";
 
-interface ChatsData {
-  chats: ChatPreview[];
+interface MessageReceivedData {
+  messageReceived: Message;
 }
 
 export default function Chat() {
+  const client = useApolloClient();
   const { data } = useQuery<ChatsData>(GET_CHATS, {
     onError: (error) => {
       console.log(error.graphQLErrors[0].message);
     },
   });
 
-  const { data: subData } = useSubscription(MESSAGE_RECEIVED);
+  useSubscription<MessageReceivedData>(MESSAGE_RECEIVED, {
+    onSubscriptionData: ({ subscriptionData }) => {
+      const messageReceived = subscriptionData.data?.messageReceived;
 
-  console.log(subData);
+      if (messageReceived) {
+        const { chats } = client.readQuery({ query: GET_CHATS }) as ChatsData;
+        const messageReceivedChat = {
+          ...chats.find((chat) => chat.id === messageReceived.chatId),
+          lastMessage: messageReceived,
+        };
+
+        const otherChats = chats.filter(
+          (chat) => chat.id !== messageReceived.chatId
+        );
+
+        const updatedChats = [messageReceivedChat, ...otherChats];
+
+        client.writeQuery({
+          query: GET_CHATS,
+          data: {
+            chats: updatedChats,
+          },
+        });
+      }
+    },
+  });
+
+  const chats = data?.chats || [];
+  const amountOfUnreadChats = chats.filter((chat) => chat.unread).length;
 
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
 
@@ -43,7 +70,9 @@ export default function Chat() {
         color="inherit"
         onClick={handleClick}
       >
-        <ChatBubbleIcon fontSize="large" />
+        <Badge color="secondary" badgeContent={amountOfUnreadChats}>
+          <ChatBubbleIcon fontSize="large" />
+        </Badge>
       </IconButton>
       <Popover
         id={id}
@@ -59,7 +88,7 @@ export default function Chat() {
           horizontal: "center",
         }}
       >
-        <ChatList chats={data?.chats || []} />
+        <ChatList chats={chats} />
       </Popover>
     </div>
   );

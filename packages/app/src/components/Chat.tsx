@@ -1,8 +1,8 @@
 import React from "react";
 import { useParams, Link } from "react-router-dom";
-import { useQuery, useSubscription } from "@apollo/client";
-import { GET_CHAT } from "../graphql/queries";
-import { ChatData } from "../types";
+import { useQuery, useApolloClient } from "@apollo/client";
+import { GET_CHAT, GET_CHATS } from "../graphql/queries";
+import { ChatsData, ChatData } from "../types";
 import {
   CircularProgress,
   Button,
@@ -17,7 +17,6 @@ import MyTextField from "./MyTextField";
 import { Formik, Form } from "formik";
 import { useCreateMessageFormManagement } from "../hooks/useCreateMessageFormManagement";
 import Moment from "react-moment";
-import { MESSAGE_RECEIVED } from "../graphql/subscriptions";
 
 interface ChatVars {
   id: string;
@@ -46,12 +45,16 @@ export default function Chat() {
     variables: { id },
   });
 
-  // useSubscription(MESSAGE_RECEIVED, {
-  //   variables: { chatId: id },
-  //   onSubscriptionData: ({ subscriptionData }) => {
-  //     console.log(subscriptionData);
-  //   },
-  // });
+  const client = useApolloClient();
+  const dataInStore = client.readQuery({ query: GET_CHATS }) as ChatsData;
+  client.writeQuery({
+    query: GET_CHATS,
+    data: {
+      chats: dataInStore.chats.map((chat) =>
+        chat.id === id ? { ...chat, unread: false } : chat
+      ),
+    },
+  });
 
   const {
     handleCreateMessage,

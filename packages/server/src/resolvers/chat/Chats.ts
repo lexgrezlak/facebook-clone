@@ -13,18 +13,30 @@ export class ChatsResolver {
       relations: ["chats", "chats.users", "chats.messages"],
     });
 
-    const chatsWithoutMe = chats.map((chat) => {
+    const nonEmptyChats = chats.filter((chat) => chat.messages.length > 0);
+
+    const previewChats = nonEmptyChats.map((chat) => {
       // get rid of me (user) from the users array
       // to not have to filter out me on the client side
       chat.users = chat.users.filter((user) => user.id !== userId);
 
-      // return only last message for the preview
-      chat.messages = [
-        chat.messages[chat.messages.length - 1] || { content: "no messages" },
-      ];
       return chat;
     });
 
-    return chatsWithoutMe;
+    console.log(typeof previewChats[0].messages[0].sentTime);
+
+    // sort by sent time of the last message (latest message' chat first in the array)
+    previewChats.sort((chatA, chatB) => {
+      const lastMessageOfChatA = chatA.messages[chatA.messages.length - 1];
+      const lastMessageOfChatB = chatB.messages[chatB.messages.length - 1];
+
+      return (
+        // .getTime() because otherwise typescript throws an error (it would work in js without it)
+        lastMessageOfChatB.sentTime.getTime() -
+        lastMessageOfChatA.sentTime.getTime()
+      );
+    });
+
+    return previewChats;
   }
 }
