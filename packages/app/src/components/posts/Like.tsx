@@ -3,6 +3,9 @@ import { IconButton, Typography } from "@material-ui/core";
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import useLikeButtonManagement from "../../hooks/useLikeButtonManagement";
+import { LikesInfo } from "../../types";
+import LikeButton from "./like/LikeButton";
+import UnlikeButton from "./like/UnlikeButton";
 
 interface Props {
   likesInfo: LikesInfo;
@@ -19,13 +22,9 @@ export default function Like({ likesInfo, postId }: Props) {
   return (
     <div>
       {isLiked ? (
-        <IconButton onClick={handleUnlike}>
-          <FavoriteIcon />
-        </IconButton>
+        <UnlikeButton handleClick={handleUnlike} />
       ) : (
-        <IconButton onClick={handleLike}>
-          <FavoriteBorderIcon />
-        </IconButton>
+        <LikeButton handleClick={handleLike} />
       )}
       <Typography>{likes}</Typography>
     </div>
