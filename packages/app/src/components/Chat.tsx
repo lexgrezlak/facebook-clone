@@ -46,6 +46,15 @@ export default function Chat() {
   });
 
   const client = useApolloClient();
+
+  const {
+    handleCreateMessage,
+    initialValues,
+    validationSchema,
+  } = useCreateMessageFormManagement({ chatId: id });
+
+  if (!data?.chat) return <CircularProgress />;
+
   const dataInStore = client.readQuery({ query: GET_CHATS }) as ChatsData;
   client.writeQuery({
     query: GET_CHATS,
@@ -55,14 +64,6 @@ export default function Chat() {
       ),
     },
   });
-
-  const {
-    handleCreateMessage,
-    initialValues,
-    validationSchema,
-  } = useCreateMessageFormManagement({ chatId: id });
-
-  if (!data?.chat) return <CircularProgress />;
 
   const { messages, users } = data.chat;
 
