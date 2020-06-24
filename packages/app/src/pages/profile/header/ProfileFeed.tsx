@@ -1,6 +1,6 @@
 import React from "react";
-import PostItem from "../../components/post/PostItem";
-import { Post, UserPreviewAndPosts } from "../../types";
+import PostItem from "../../../components/post/PostItem";
+import { Post, UserPreviewAndPosts } from "../../../types";
 
 interface Props {
   user: UserPreviewAndPosts;

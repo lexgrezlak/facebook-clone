@@ -3,7 +3,7 @@ import { GET_ME } from "../../graphql/queries";
 import { useApolloClient } from "@apollo/client";
 import { Badge, createStyles, Theme } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import AvatarUpload from "../../components/AvatarUpload";
+import AvatarUpload from "./header/AvatarUpload";
 import { StyledProfileAvatar } from "../../styled/StyledProfileAvatar";
 
 const useStyles = makeStyles((theme: Theme) =>

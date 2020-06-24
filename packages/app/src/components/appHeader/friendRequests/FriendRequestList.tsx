@@ -6,7 +6,7 @@ import {
   ListItem,
   ListItemText,
 } from "@material-ui/core";
-import { FriendRequest } from "../../types";
+import { FriendRequest } from "../../../types";
 
 interface Props {
   friendRequests: FriendRequest[] | undefined;

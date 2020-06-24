@@ -1,5 +1,5 @@
 import React from "react";
-import BackgroundUpload from "../../components/BackgroundUpload";
+import BackgroundUpload from "./header/BackgroundUpload";
 
 export default function OwnMenu() {
   return (

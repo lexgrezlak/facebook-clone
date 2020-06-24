@@ -1,13 +1,13 @@
-import React from "react";
-import AddAPhotoIcon from "@material-ui/icons/AddAPhoto";
-import { makeStyles } from "@material-ui/core/styles";
 import {
   CircularProgress,
   createStyles,
   IconButton,
   Theme,
 } from "@material-ui/core";
-import { useUpdateAvatarManagement } from "../hooks/useUpdateAvatarManagement";
+import AddAPhotoIcon from "@material-ui/icons/AddAPhoto";
+import { makeStyles } from "@material-ui/core/styles";
+import React from "react";
+import { useUpdateBackgroundManagement } from "../../../hooks/useUpdateBackgroundManagement";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -30,22 +30,22 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-function AvatarUpload() {
+function BackgroundUpload(): JSX.Element {
   const classes = useStyles();
-  const { handleUpdateAvatar, loading } = useUpdateAvatarManagement();
+  const { handleUpdateBackground, loading } = useUpdateBackgroundManagement();
 
   if (loading) return <CircularProgress className={classes.button} />;
 
   return (
     <div>
       <input
-        id="avatar-upload"
+        id="background-upload"
         accept="image/*"
         type="file"
-        onChange={handleUpdateAvatar}
+        onChange={handleUpdateBackground}
         className={classes.input}
       />
-      <label htmlFor="avatar-upload">
+      <label htmlFor="background-upload">
         <IconButton component="span" className={classes.button}>
           <AddAPhotoIcon className={classes.icon} />
         </IconButton>
@@ -54,4 +54,4 @@ function AvatarUpload() {
   );
 }
 
-export default AvatarUpload;
+export default BackgroundUpload;

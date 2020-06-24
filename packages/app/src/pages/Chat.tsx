@@ -13,7 +13,7 @@ import {
   makeStyles,
   createStyles,
 } from "@material-ui/core";
-import MyTextField from "./MyTextField";
+import MyTextField from "../components/MyTextField";
 import { Formik, Form } from "formik";
 import { useCreateMessageFormManagement } from "../hooks/useCreateMessageFormManagement";
 import Moment from "react-moment";

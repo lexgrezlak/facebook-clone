@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { Badge, createStyles, IconButton, Popover } from "@material-ui/core";
 import GroupAddIcon from "@material-ui/icons/GroupAdd";
-import FriendRequestList from "./friend/FriendRequestList";
+import FriendRequestList from "./friendRequests/FriendRequestList";
 import { makeStyles } from "@material-ui/core/styles";
 import { useQuery } from "@apollo/client";
-import { FriendRequestsData } from "../types";
-import { GET_FRIEND_REQUESTS } from "../graphql/queries";
+import { FriendRequestsData } from "../../types";
+import { GET_FRIEND_REQUESTS } from "../../graphql/queries";
 
 const useStyles = makeStyles((theme) =>
   createStyles({

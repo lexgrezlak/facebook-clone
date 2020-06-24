@@ -2,20 +2,20 @@ import React, { useState } from "react";
 import SignOutButton from "../pages/home/SignOutButton";
 import { Link } from "react-router-dom";
 import {
-  AppBar,
   createStyles,
   fade,
   IconButton,
   Theme,
   Toolbar,
+  AppBar,
 } from "@material-ui/core";
 import FacebookIcon from "@material-ui/icons/Facebook";
 import SearchIcon from "@material-ui/icons/Search";
 import { makeStyles } from "@material-ui/core/styles";
-import Search from "./header/Search";
-import FriendRequests from "./FriendRequests";
-import Chats from "./Chats";
-import Notifications from "./header/Notifications";
+import Search from "./appHeader/Search";
+import FriendRequests from "./appHeader/FriendRequests";
+import Chats from "./appHeader/Chats";
+import Notifications from "./appHeader/Notifications";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -79,7 +79,7 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-function Header() {
+function AppHeader() {
   const classes = useStyles();
   const [isSearchOpen, setIsSearchOpen] = useState(false);
 
@@ -117,4 +117,4 @@ function Header() {
   );
 }
 
-export default Header;
+export default AppHeader;

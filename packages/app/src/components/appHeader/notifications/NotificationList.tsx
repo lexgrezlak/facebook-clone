@@ -1,5 +1,5 @@
 import React from "react";
-import { Notification } from "./../../../types";
+import { Notification } from "../../../types";
 
 interface Props {
   notifications: Notification[];

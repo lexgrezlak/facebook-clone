@@ -1,5 +1,5 @@
 import React from "react";
-import { ChatPreview } from "../types";
+import { ChatPreview } from "../../../types";
 import {
   List,
   ListItem,

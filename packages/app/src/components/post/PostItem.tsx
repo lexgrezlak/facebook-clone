@@ -9,7 +9,7 @@ import PostMenu from "./PostMenu";
 import { useApolloClient } from "@apollo/client";
 import { GET_ME } from "../../graphql/queries";
 import CommentIcon from "@material-ui/icons/Comment";
-import Like from "../Like";
+import Like from "./Like";
 
 interface Props {
   post: Post;

@@ -7,9 +7,9 @@ import {
   ListItemText,
 } from "@material-ui/core";
 import Moment from "react-moment";
-import { FriendRequest } from "../../types";
-import { useAcceptRequest } from "../../hooks/FriendButtonManagement/useAcceptRequest";
-import { useRejectRequest } from "../../hooks/FriendButtonManagement/useRejectRequest";
+import { FriendRequest } from "../../../types";
+import { useAcceptRequest } from "../../../hooks/FriendButtonManagement/useAcceptRequest";
+import { useRejectRequest } from "../../../hooks/FriendButtonManagement/useRejectRequest";
 
 interface Props {
   friendRequest: FriendRequest;

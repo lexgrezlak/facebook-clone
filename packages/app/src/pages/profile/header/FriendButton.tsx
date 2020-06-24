@@ -1,7 +1,7 @@
 import React from "react";
 import { Button } from "@material-ui/core";
-import { useFriendButtonManagement } from "../../hooks/useFriendButtonManagement";
-import { FriendshipStatus } from "../../types";
+import { useFriendButtonManagement } from "../../../hooks/useFriendButtonManagement";
+import { FriendshipStatus } from "../../../types";
 
 interface Props {
   userId: string;

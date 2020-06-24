@@ -8,9 +8,9 @@ import {
   createStyles,
   Grid,
 } from "@material-ui/core";
-import FriendList from "../components/friend/FriendList";
-import ProfileHeader from "./profile/ProfileHeader";
-import ProfileFeed from "./profile/ProfileFeed";
+import FriendList from "../components/appHeader/friendRequests/FriendList";
+import ProfileHeader from "./profile/Header";
+import ProfileFeed from "./profile/header/ProfileFeed";
 import { makeStyles } from "@material-ui/core/styles";
 import { UserData, UserVars } from "../types";
 

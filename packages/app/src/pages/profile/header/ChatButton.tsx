@@ -1,6 +1,6 @@
 import React from "react";
 import { Button } from "@material-ui/core";
-import { useCreateChat } from "../hooks/useCreateChat";
+import { useCreateChat } from "../../../hooks/useCreateChat";
 
 interface Props {
   userId: string;

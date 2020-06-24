@@ -1,15 +1,15 @@
 import React from "react";
 import { createStyles, Theme, Typography } from "@material-ui/core";
-import FriendButton from "../../components/friend/FriendButton";
+import FriendButton from "./header/FriendButton";
 import { makeStyles } from "@material-ui/core/styles";
-import OwnAvatar from "../ownProfile/OwnAvatar";
-import Background from "./Background";
+import OwnAvatar from "./OwnAvatar";
+import Background from "./header/Background";
 import { StyledProfileAvatar } from "../../styled/StyledProfileAvatar";
 import { UserPreviewAndPosts, MeData } from "../../types";
-import OwnMenu from "../ownProfile/OwnMenu";
+import OwnMenu from "./OwnMenu";
 import { useApolloClient } from "@apollo/client";
 import { GET_ME } from "../../graphql/queries";
-import ChatButton from "../../components/ChatButton";
+import ChatButton from "./header/ChatButton";
 
 interface Props {
   user: UserPreviewAndPosts;

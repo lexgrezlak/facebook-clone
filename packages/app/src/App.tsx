@@ -1,14 +1,13 @@
 import React from "react";
 import { useQuery, useSubscription } from "@apollo/client";
 import { GET_ME } from "./graphql/queries";
-import SignInOrUp from "./pages/SignInOrUp";
+import SignInOrUp from "./pages/Sign";
 import Home from "./pages/Home";
 import { Route, Routes } from "react-router-dom";
-import Header from "./components/Header";
+import AppHeader from "./components/AppHeader";
 import Profile from "./pages/Profile";
 import { MeData } from "./types";
-import Chat from "./components/Chat";
-import { MESSAGE_RECEIVED } from "./graphql/subscriptions";
+import Chat from "./pages/Chat";
 
 const App: React.FC = () => {
   const { data, loading } = useQuery<MeData>(GET_ME, {
@@ -23,7 +22,7 @@ const App: React.FC = () => {
 
   return (
     <div>
-      <Header />
+      <AppHeader />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="users/:id" element={<Profile meId={data.me.id} />} />

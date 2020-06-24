@@ -1,6 +1,6 @@
 import React from "react";
 import { useQuery } from "@apollo/client";
-import { GET_FRIENDS } from "../../graphql/queries";
+import { GET_FRIENDS } from "../../../graphql/queries";
 import {
   Avatar,
   Typography,
@@ -9,7 +9,7 @@ import {
   ListItemAvatar,
   ListItemText,
 } from "@material-ui/core";
-import { UserPreview } from "../../types";
+import { UserPreview } from "../../../types";
 import { Link } from "react-router-dom";
 
 interface Props {

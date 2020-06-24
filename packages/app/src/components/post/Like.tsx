@@ -3,9 +3,9 @@ import { IconButton, Typography, CircularProgress } from "@material-ui/core";
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import { useQuery } from "@apollo/client";
-import { GET_LIKES_OF_POST } from "../graphql/queries";
-import useLikeButtonManagement from "../hooks/useLikeButtonManagement";
-import { LikesOfPostData } from "../types";
+import { GET_LIKES_OF_POST } from "../../graphql/queries";
+import useLikeButtonManagement from "../../hooks/useLikeButtonManagement";
+import { LikesOfPostData } from "../../types";
 
 interface Props {
   postId: string;

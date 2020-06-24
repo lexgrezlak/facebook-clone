@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import SignUpForm from "./signInOrOut/SignUpForm";
-import SignInForm from "./signInOrOut/SignInForm";
+import SignUpForm from "./sign/SignUpForm";
+import SignInForm from "./sign/SignInForm";
 import { Avatar, Container } from "@material-ui/core";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import { makeStyles } from "@material-ui/core/styles";

@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import { ChatPreview, Message, ChatsData } from "../types";
+import { ChatPreview, Message, ChatsData } from "../../types";
 import { useQuery, useSubscription, useApolloClient } from "@apollo/client";
-import { GET_CHATS } from "../graphql/queries";
+import { GET_CHATS } from "../../graphql/queries";
 import { IconButton, Popover, Badge } from "@material-ui/core";
 import ChatBubbleIcon from "@material-ui/icons/ChatBubble";
-import ChatList from "./ChatList";
-import { MESSAGE_RECEIVED } from "../graphql/subscriptions";
+import ChatList from "./chats/ChatList";
+import { MESSAGE_RECEIVED } from "../../graphql/subscriptions";
 
 interface MessageReceivedData {
   messageReceived: Message;
