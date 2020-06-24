@@ -1,5 +1,5 @@
 import { FeedData } from "./../../types";
-import { GET_IS_POST_LIKED, GET_FEED } from "./../../graphql/queries";
+import { GET_FEED } from "./../../graphql/queries";
 import { useMutation } from "@apollo/client";
 import { UNLIKE_POST } from "../../graphql/mutations";
 
@@ -46,14 +46,6 @@ export function useUnlike({ postId }: Props) {
               ...dataInStore.feed,
               edges: updatedEdges,
             },
-          },
-        });
-
-        store.writeQuery({
-          query: GET_IS_POST_LIKED,
-          variables: { postId },
-          data: {
-            isPostLiked: false,
           },
         });
       },
