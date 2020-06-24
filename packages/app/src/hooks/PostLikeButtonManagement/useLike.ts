@@ -1,4 +1,9 @@
-import { GET_IS_POST_LIKED, GET_LIKES_OF_POST } from "./../../graphql/queries";
+import { FeedData } from "./../../types";
+import {
+  GET_IS_POST_LIKED,
+  GET_LIKES_OF_POST,
+  GET_FEED,
+} from "./../../graphql/queries";
 import { useMutation } from "@apollo/client";
 import { LIKE_POST } from "../../graphql/mutations";
 import { LikesOfPostData } from "../../types";
@@ -18,39 +23,36 @@ export function useLike({ postId }: Props) {
     return like({
       variables: { postId },
       update: (store) => {
-        store.writeQuery({
-          query: GET_IS_POST_LIKED,
-          variables: { postId },
-          data: {
-            isPostLiked: true,
-          },
+        const dataInStore = store.readQuery({
+          query: GET_FEED,
+        }) as FeedData;
+
+        const updatedEdges = dataInStore.feed.edges.map((post) => {
+          if (post.id === postId) {
+            const { likesInfo } = post;
+            const { likes } = likesInfo;
+
+            const updatedLikesInfo = {
+              ...likesInfo,
+              likes: likes + 1,
+              isLiked: true,
+            };
+            return { ...post, likesInfo: updatedLikesInfo };
+          }
+
+          return post;
         });
 
-        const { likesOfPost } = store.readQuery({
-          query: GET_LIKES_OF_POST,
-          variables: { postId },
-        }) as LikesOfPostData;
-
         store.writeQuery({
-          query: GET_LIKES_OF_POST,
+          query: GET_FEED,
           variables: { postId },
           data: {
-            likesOfPost: likesOfPost + 1,
+            feed: {
+              ...dataInStore.feed,
+              edges: updatedEdges,
+            },
           },
         });
-
-        //   const data = store.readQuery({
-        //     query: GET_FRIEND_REQUESTS,
-        //   }) as FriendRequestsData;
-        //   store.writeQuery({
-        //     query: GET_FRIEND_REQUESTS,
-        //     data: {
-        //       friendRequests: data.friendRequests.filter(
-        //         (friendRequest: FriendRequest) =>
-        //           friendRequest.fromUser.id !== userId
-        //       ),
-        //     },
-        //   });
       },
     });
   }

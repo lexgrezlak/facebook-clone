@@ -75,10 +75,16 @@ export interface ChatData {
   chat: Chat;
 }
 
+export interface LikesInfo {
+  likes: number;
+  isLiked: boolean;
+}
+
 export interface Post {
   id: string;
   content: string;
   createdAt: Date;
+  likesInfo: LikesInfo;
 }
 
 export interface PostAndUser extends Post {

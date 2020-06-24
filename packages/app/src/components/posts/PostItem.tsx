@@ -81,7 +81,7 @@ function PostItem({ post, user }: Props) {
         <Typography>{post.content}</Typography>
       </div>
       <div className={classes.actions}>
-        <Like postId={post.id} />
+        <Like postId={post.id} likesInfo={post.likesInfo} />
         <div>
           <IconButton>
             <CommentIcon />

@@ -1,5 +1,5 @@
-import { LikesOfPostData } from "./../../types";
-import { GET_LIKES_OF_POST, GET_IS_POST_LIKED } from "./../../graphql/queries";
+import { FeedData } from "./../../types";
+import { GET_IS_POST_LIKED, GET_FEED } from "./../../graphql/queries";
 import { useMutation } from "@apollo/client";
 import { UNLIKE_POST } from "../../graphql/mutations";
 
@@ -18,16 +18,34 @@ export function useUnlike({ postId }: Props) {
     return unlike({
       variables: { postId },
       update: (store) => {
-        const { likesOfPost } = store.readQuery({
-          query: GET_LIKES_OF_POST,
-          variables: { postId },
-        }) as LikesOfPostData;
+        const dataInStore = store.readQuery({
+          query: GET_FEED,
+        }) as FeedData;
+
+        const updatedEdges = dataInStore.feed.edges.map((post) => {
+          if (post.id === postId) {
+            const { likesInfo } = post;
+            const { likes } = likesInfo;
+
+            const updatedLikesInfo = {
+              ...likesInfo,
+              likes: likes - 1,
+              isLiked: false,
+            };
+            return { ...post, likesInfo: updatedLikesInfo };
+          }
+
+          return post;
+        });
 
         store.writeQuery({
-          query: GET_LIKES_OF_POST,
+          query: GET_FEED,
           variables: { postId },
           data: {
-            likesOfPost: likesOfPost - 1,
+            feed: {
+              ...dataInStore.feed,
+              edges: updatedEdges,
+            },
           },
         });
 
@@ -38,19 +56,6 @@ export function useUnlike({ postId }: Props) {
             isPostLiked: false,
           },
         });
-
-        //   const data = store.readQuery({
-        //     query: GET_FRIEND_REQUESTS,
-        //   }) as FriendRequestsData;
-        //   store.writeQuery({
-        //     query: GET_FRIEND_REQUESTS,
-        //     data: {
-        //       friendRequests: data.friendRequests.filter(
-        //         (friendRequest: FriendRequest) =>
-        //           friendRequest.fromUser.id !== userId
-        //       ),
-        //     },
-        //   });
       },
     });
   }

@@ -1,10 +1,10 @@
 import React from "react";
 import { useQuery } from "@apollo/client";
-import { GET_FEED } from "../../graphql/queries";
+import { GET_FEED } from "../graphql/queries";
 import { CircularProgress } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import PostItem from "../../components/post/PostItem";
-import { FeedData } from "../../types";
+import PostItem from "./posts/PostItem";
+import { FeedData } from "../types";
 import InfiniteScroll from "react-infinite-scroller";
 
 const useStyles = makeStyles((theme) => ({
@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function Feed() {
+function Posts() {
   const classes = useStyles();
   const { data, fetchMore } = useQuery<FeedData>(GET_FEED, {
     onError: (error) => {
@@ -56,6 +56,8 @@ function Feed() {
     });
   }
 
+  console.log(posts[0]);
+
   return (
     <div className={classes.root}>
       <InfiniteScroll
@@ -72,4 +74,4 @@ function Feed() {
   );
 }
 
-export default Feed;
+export default Posts;

@@ -13,5 +13,9 @@ export const POST_PREVIEW = gql`
     id
     content
     createdAt
+    likesInfo {
+      isLiked
+      likes
+    }
   }
 `;
