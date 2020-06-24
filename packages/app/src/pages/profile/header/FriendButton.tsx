@@ -1,6 +1,6 @@
 import React from "react";
 import { Button } from "@material-ui/core";
-import { useFriendButtonManagement } from "../../../hooks/useFriendButtonManagement";
+import { useFriendButton } from "../../../hooks/useFriendButton";
 import { FriendshipStatus } from "../../../types";
 
 interface Props {
@@ -14,7 +14,7 @@ function FriendButton({ userId }: Props) {
     isFriend,
     handleCancelRequest,
     handleAcceptRequest,
-  } = useFriendButtonManagement({
+  } = useFriendButton({
     userId,
   });
 

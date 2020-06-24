@@ -1,9 +1,9 @@
-import { CreateMessageInput } from "./../../../server/src/resolvers/message/CreateMessageInput";
-import { Message, ChatData } from "./../types";
+import { CreateMessageInput } from "../../../../server/src/resolvers/message/CreateMessageInput";
+import { Message, ChatData } from "../../types";
 import { useMutation } from "@apollo/client";
 import * as Yup from "yup";
-import { GET_CHAT } from "../graphql/queries";
-import { CREATE_MESSAGE } from "../graphql/mutations";
+import { GET_CHAT } from "../../graphql/queries";
+import { CREATE_MESSAGE } from "../../graphql/mutations";
 
 interface CreateMessageData {
   createMessage: Message;

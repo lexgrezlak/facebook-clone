@@ -1,10 +1,10 @@
-import { CreatePostInput } from "../../../server/src/resolvers/post/CreatePostInput";
-import { FeedData, PostAndUser } from "./../types";
+import { CreatePostInput } from "../../../../server/src/resolvers/post/CreatePostInput";
+import { FeedData, PostAndUser } from "../../types";
 import { useMutation } from "@apollo/client";
-import { GET_FEED } from "../graphql/queries";
+import { GET_FEED } from "../../graphql/queries";
 import * as Yup from "yup";
-import { UserPreview } from "../types";
-import { CREATE_POST } from "../graphql/mutations";
+import { UserPreview } from "../../types";
+import { CREATE_POST } from "../../graphql/mutations";
 
 interface Props {
   me: UserPreview;

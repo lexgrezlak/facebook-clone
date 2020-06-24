@@ -5,10 +5,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import OwnAvatar from "./OwnAvatar";
 import Background from "./header/Background";
 import { StyledProfileAvatar } from "../../styled/StyledProfileAvatar";
-import { UserPreviewAndPosts, MeData } from "../../types";
+import { UserPreviewAndPosts } from "../../types";
 import OwnMenu from "./OwnMenu";
-import { useApolloClient } from "@apollo/client";
-import { GET_ME } from "../../graphql/queries";
 import ChatButton from "./header/ChatButton";
 
 interface Props {

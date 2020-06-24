@@ -1,9 +1,9 @@
 import { SignUpInput } from "./../../../server/src/resolvers/SignUpInput";
 import { useApolloClient, useMutation } from "@apollo/client";
 import * as Yup from "yup";
-import { SIGN_UP } from "../graphql/mutations";
-import { GET_ME } from "../graphql/queries";
-import { UserPreview } from "../types";
+import { SIGN_UP } from "../../graphql/mutations";
+import { GET_ME } from "../../graphql/queries";
+import { UserPreview } from "../../types";
 
 interface SignUpFormFields {
   firstName: string;

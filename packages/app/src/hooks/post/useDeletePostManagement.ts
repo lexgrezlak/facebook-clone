@@ -1,7 +1,7 @@
-import { FeedData } from "./../types";
+import { FeedData } from "../../types";
 import { useMutation } from "@apollo/client";
-import { GET_FEED } from "../graphql/queries";
-import { DELETE_POST } from "../graphql/mutations";
+import { GET_FEED } from "../../graphql/queries";
+import { DELETE_POST } from "../../graphql/mutations";
 
 interface Props {
   id: string;

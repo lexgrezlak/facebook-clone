@@ -1,5 +1,5 @@
-import { MeData } from "./../../types";
-import { GET_ME } from "./../../graphql/queries";
+import { MeData } from "../../types";
+import { GET_ME } from "../../graphql/queries";
 import { useMutation } from "@apollo/client";
 import { GET_FRIEND_STATUS } from "../../graphql/queries";
 import { SEND_REQUEST } from "../../graphql/mutations";

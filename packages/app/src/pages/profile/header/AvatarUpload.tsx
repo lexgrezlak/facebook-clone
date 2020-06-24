@@ -7,7 +7,7 @@ import {
   IconButton,
   Theme,
 } from "@material-ui/core";
-import { useUpdateAvatarManagement } from "../../../hooks/useUpdateAvatarManagement";
+import { useUpdateAvatarManagement } from "../../../hooks/upload/useUpdateAvatarManagement";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({

@@ -1,9 +1,9 @@
 import { SignInInput } from "./../../../server/src/resolvers/SignInInput";
-import { UserPreview } from "./../types";
+import { UserPreview } from "../../types";
 import { useMutation } from "@apollo/client";
-import { GET_ME } from "../graphql/queries";
+import { GET_ME } from "../../graphql/queries";
 import * as Yup from "yup";
-import { SIGN_IN } from "../graphql/mutations";
+import { SIGN_IN } from "../../graphql/mutations";
 
 interface SignInData {
   signIn: UserPreview;

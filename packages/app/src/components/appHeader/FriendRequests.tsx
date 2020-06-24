@@ -1,11 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
 import { Badge, createStyles, IconButton, Popover } from "@material-ui/core";
 import GroupAddIcon from "@material-ui/icons/GroupAdd";
 import FriendRequestList from "./friendRequests/FriendRequestList";
 import { makeStyles } from "@material-ui/core/styles";
-import { useQuery } from "@apollo/client";
-import { FriendRequestsData } from "../../types";
-import { GET_FRIEND_REQUESTS } from "../../graphql/queries";
+import usePopover from "../../hooks/usePopover";
+import useFriendRequests from "../../hooks/useFriendRequests";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -17,24 +16,10 @@ const useStyles = makeStyles((theme) =>
 
 function FriendRequests() {
   const classes = useStyles();
-  const { data } = useQuery<FriendRequestsData>(GET_FRIEND_REQUESTS, {
-    onError: (error) => {
-      console.log(error.graphQLErrors[0].message);
-    },
+  const { friendRequests } = useFriendRequests();
+  const { handleClick, handleClose, open, anchorEl, id } = usePopover({
+    name: "friend-requests",
   });
-
-  const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
-
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-
-  const open = Boolean(anchorEl);
-  const id = open ? "friend-requests" : undefined;
 
   return (
     <div className={classes.root}>
@@ -43,7 +28,7 @@ function FriendRequests() {
         color="inherit"
         onClick={handleClick}
       >
-        <Badge badgeContent={data?.friendRequests.length} color="secondary">
+        <Badge badgeContent={friendRequests.length} color="secondary">
           <GroupAddIcon fontSize="large" />
         </Badge>
       </IconButton>
@@ -61,7 +46,7 @@ function FriendRequests() {
           horizontal: "center",
         }}
       >
-        <FriendRequestList friendRequests={data?.friendRequests} />
+        <FriendRequestList friendRequests={friendRequests} />
       </Popover>
     </div>
   );

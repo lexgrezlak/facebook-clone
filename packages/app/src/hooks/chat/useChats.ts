@@ -1,8 +1,8 @@
-import { MessageReceivedData } from "./../types";
+import { MessageReceivedData } from "../../types";
 import { useApolloClient, useSubscription, useQuery } from "@apollo/client";
-import { MESSAGE_RECEIVED } from "../graphql/subscriptions";
-import { GET_CHATS } from "../graphql/queries";
-import { ChatsData } from "../types";
+import { MESSAGE_RECEIVED } from "../../graphql/subscriptions";
+import { GET_CHATS } from "../../graphql/queries";
+import { ChatsData } from "../../types";
 
 export const useChats = () => {
   const client = useApolloClient();
@@ -13,6 +13,7 @@ export const useChats = () => {
   });
 
   const chats = data?.chats || [];
+  const amountOfUnreadChats = chats.filter((chat) => chat.unread).length;
 
   useSubscription<MessageReceivedData>(MESSAGE_RECEIVED, {
     onSubscriptionData: ({ subscriptionData }) => {
@@ -48,5 +49,5 @@ export const useChats = () => {
     },
   });
 
-  return { chats };
+  return { chats, amountOfUnreadChats };
 };

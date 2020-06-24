@@ -56,8 +56,6 @@ function Posts() {
     });
   }
 
-  console.log(posts[0]);
-
   return (
     <div className={classes.root}>
       <InfiniteScroll

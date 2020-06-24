@@ -1,14 +1,14 @@
-import { useSendRequest } from "./FriendButtonManagement/useSendRequest";
-import { useUnfriend } from "./FriendButtonManagement/useUnfriend";
-import { useCancelRequest } from "./FriendButtonManagement/useCancelRequest";
-import { useAcceptRequest } from "./FriendButtonManagement/useAcceptRequest";
-import { useIsFriend } from "./FriendButtonManagement/useIsFriend";
+import { useSendRequest } from "./friendButton/useSendRequest";
+import { useUnfriend } from "./friendButton/useUnfriend";
+import { useCancelRequest } from "./friendButton/useCancelRequest";
+import { useAcceptRequest } from "./friendButton/useAcceptRequest";
+import { useIsFriend } from "./friendButton/useIsFriend";
 
 interface Props {
   userId: string;
 }
 
-export const useFriendButtonManagement = ({ userId }: Props) => {
+export const useFriendButton = ({ userId }: Props) => {
   const { handleSendRequest } = useSendRequest({ userId });
   const { handleUnfriend } = useUnfriend({ userId });
   const { handleCancelRequest } = useCancelRequest({ userId });

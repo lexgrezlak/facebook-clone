@@ -7,7 +7,6 @@ export class MeResolver {
   @Query(() => User, { nullable: true, complexity: 5 })
   async me(@Ctx() ctx: Context): Promise<User | undefined> {
     const { userId } = ctx.req;
-    console.log(userId, "d");
 
     if (!userId) return undefined;
 

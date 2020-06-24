@@ -15,7 +15,7 @@ import {
 } from "@material-ui/core";
 import MyTextField from "../components/MyTextField";
 import { Formik, Form } from "formik";
-import { useCreateMessageFormManagement } from "../hooks/useCreateMessageFormManagement";
+import { useCreateMessageFormManagement } from "../hooks/chat/useCreateMessageFormManagement";
 import Moment from "react-moment";
 
 interface ChatVars {
@@ -56,7 +56,6 @@ export default function Chat() {
   if (!data?.chat) return <CircularProgress />;
 
   const dataInStore = client.readQuery({ query: GET_CHATS }) as ChatsData;
-  console.log("hi1");
 
   client.writeQuery({
     query: GET_CHATS,

@@ -1,7 +1,7 @@
 import { useMutation } from "@apollo/client";
-import { GET_ME } from "../graphql/queries";
-import { UPDATE_AVATAR } from "../graphql/mutations";
-import { MeData } from "../types";
+import { GET_ME } from "../../graphql/queries";
+import { UPDATE_AVATAR } from "../../graphql/mutations";
+import { MeData } from "../../types";
 
 interface UpdateAvatarData {
   updateAvatar: string;

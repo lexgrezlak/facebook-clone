@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { IconButton, Menu, MenuItem } from "@material-ui/core";
 import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
-import { useDeletePostManagement } from "../../hooks/useDeletePostManagement";
+import { useDeletePostManagement } from "../../hooks/post/useDeletePostManagement";
 
 interface Props {
   id: string;

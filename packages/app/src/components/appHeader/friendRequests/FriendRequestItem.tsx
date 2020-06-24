@@ -8,8 +8,8 @@ import {
 } from "@material-ui/core";
 import Moment from "react-moment";
 import { FriendRequest } from "../../../types";
-import { useAcceptRequest } from "../../../hooks/FriendButtonManagement/useAcceptRequest";
-import { useRejectRequest } from "../../../hooks/FriendButtonManagement/useRejectRequest";
+import { useAcceptRequest } from "../../../hooks/friendButton/useAcceptRequest";
+import { useRejectRequest } from "../../../hooks/friendButton/useRejectRequest";
 
 interface Props {
   friendRequest: FriendRequest;

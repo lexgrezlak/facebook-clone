@@ -12,17 +12,20 @@ interface Props {
   friendRequests: FriendRequest[] | undefined;
 }
 
-function FriendRequestList({ friendRequests }: Props) {
-  if (friendRequests === undefined) return <CircularProgress />;
+function EmptyList() {
+  return (
+    <List>
+      <ListItem>
+        <ListItemText primary="0 friend requests remaining" />
+      </ListItem>
+    </List>
+  );
+}
 
-  if (friendRequests.length === 0)
-    return (
-      <List>
-        <ListItem>
-          <ListItemText primary="0 friend requests remaining" />
-        </ListItem>
-      </List>
-    );
+function FriendRequestList({ friendRequests }: Props) {
+  if (!friendRequests) return <CircularProgress />;
+
+  if (friendRequests.length === 0) return <EmptyList />;
 
   return (
     <List>
