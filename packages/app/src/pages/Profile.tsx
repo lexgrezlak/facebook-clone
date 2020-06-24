@@ -10,7 +10,7 @@ import {
 } from "@material-ui/core";
 import FriendList from "../components/appHeader/friendRequests/FriendList";
 import ProfileHeader from "./profile/Header";
-import ProfileFeed from "./profile/header/ProfileFeed";
+import Posts from "./profile/header/Posts";
 import { makeStyles } from "@material-ui/core/styles";
 import { UserData, UserVars } from "../types";
 
@@ -54,7 +54,7 @@ function Profile({ meId }: Props) {
           <FriendList userId={id} />
         </Grid>
         <Grid item xs={12} sm={8}>
-          <ProfileFeed user={user} />
+          <Posts user={user} />
         </Grid>
       </Grid>
     </Container>

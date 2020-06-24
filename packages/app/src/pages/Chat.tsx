@@ -56,6 +56,8 @@ export default function Chat() {
   if (!data?.chat) return <CircularProgress />;
 
   const dataInStore = client.readQuery({ query: GET_CHATS }) as ChatsData;
+  console.log("hi1");
+
   client.writeQuery({
     query: GET_CHATS,
     data: {
@@ -64,6 +66,8 @@ export default function Chat() {
       ),
     },
   });
+
+  console.log("hi2");
 
   const { messages, users } = data.chat;
 

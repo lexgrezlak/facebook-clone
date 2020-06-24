@@ -1,5 +1,5 @@
 import React from "react";
-import { Avatar, Typography, IconButton, Badge } from "@material-ui/core";
+import { Avatar, Typography, IconButton } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import Moment from "react-moment";
 import { makeStyles } from "@material-ui/core/styles";

@@ -6,6 +6,10 @@ export interface UserVars {
   id: string;
 }
 
+export interface MessageReceivedData {
+  messageReceived: Message;
+}
+
 export enum FriendshipStatus {
   Stranger = "STRANGER",
   Friend = "FRIEND",
