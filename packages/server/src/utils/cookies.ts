@@ -8,7 +8,8 @@ export function generateToken(payload: any) {
 export function setCookie(res: any, token: any) {
   res.cookie("token", `Bearer ${token}`, {
     httpOnly: true,
-    maxAge: 1000 * 60 * 60 * 24,
+    // 30 days
+    maxAge: 1000 * 60 * 60 * 24 * 30,
   });
 }
 
