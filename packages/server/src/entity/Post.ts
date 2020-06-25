@@ -1,3 +1,4 @@
+import { CommentsInfo } from "./CommentsInfo";
 import { LikesInfo } from "./LikesInfo";
 import { PostLike } from "./PostLike";
 import {
@@ -46,10 +47,12 @@ export class Post extends BaseEntity {
   @OneToMany(() => PostLike, (postLike) => postLike.post)
   postLikes: PostLike[];
 
-  @Field(() => Number)
-  async likes(@Root() parent: Post): Promise<number> {
-    const postLikes = await PostLike.find({ where: { postId: parent.id } });
-    return postLikes.length;
+  @Field(() => CommentsInfo)
+  async commentsInfo(@Root() parent: Post): Promise<CommentsInfo> {
+    // amount of comments
+    const comments = await Comment.count({ where: { postId: parent.id } });
+
+    return { comments };
   }
 
   @Field(() => LikesInfo)
@@ -58,20 +61,13 @@ export class Post extends BaseEntity {
     @Ctx() ctx: Context
   ): Promise<LikesInfo> {
     const { userId } = ctx.req;
-    const postLikes = await PostLike.find({ where: { postId: parent.id } });
-    const likes = postLikes.length;
-    const isLiked = !!postLikes.find((postLike) => postLike.userId === userId);
+    const likes = await PostLike.count({ where: { postId: parent.id } });
 
-    return { likes, isLiked };
-  }
-
-  @Field(() => Boolean)
-  async isLiked(@Root() parent: Post, @Ctx() ctx: Context): Promise<boolean> {
-    const { userId } = ctx.req;
     const postLike = await PostLike.findOne({
       where: { postId: parent.id, userId },
     });
+    const isLiked = !!postLike;
 
-    return !!postLike;
+    return { likes, isLiked };
   }
 }

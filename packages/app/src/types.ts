@@ -84,11 +84,16 @@ export interface LikesInfo {
   isLiked: boolean;
 }
 
+export interface CommentsInfo {
+  comments: number;
+}
+
 export interface Post {
   id: string;
   content: string;
   createdAt: Date;
   likesInfo: LikesInfo;
+  commentsInfo: CommentsInfo;
 }
 
 export interface PostAndUser extends Post {

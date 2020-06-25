@@ -8,6 +8,7 @@ import AppHeader from "./components/AppHeader";
 import Profile from "./pages/Profile";
 import { MeData } from "./types";
 import Chat from "./pages/Chat";
+import FullPost from "./pages/FullPost";
 
 const App: React.FC = () => {
   const { data, loading } = useQuery<MeData>(GET_ME, {

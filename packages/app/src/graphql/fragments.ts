@@ -17,5 +17,8 @@ export const POST_PREVIEW = gql`
       isLiked
       likes
     }
+    commentsInfo {
+      comments
+    }
   }
 `;

@@ -1,5 +1,5 @@
-import React from "react";
-import { Avatar, Typography, IconButton } from "@material-ui/core";
+import React, { useState } from "react";
+import { Avatar, Typography } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import Moment from "react-moment";
 import { makeStyles } from "@material-ui/core/styles";
@@ -8,8 +8,9 @@ import { UserPreview, Post } from "../../types";
 import PostMenu from "./PostMenu";
 import { useApolloClient } from "@apollo/client";
 import { GET_ME } from "../../graphql/queries";
-import CommentIcon from "@material-ui/icons/Comment";
 import Like from "./Like";
+import Comment from "./Comment";
+import Comments from "./Comments";
 
 interface Props {
   post: Post;
@@ -50,15 +51,18 @@ function PostItem({ post, user }: Props) {
   const client = useApolloClient();
   const data = client.readQuery({ query: GET_ME });
   const classes = useStyles();
+  const [isCommentsVisible, setIsCommentsVisible] = useState(false);
 
-  const { fullName } = user;
+  const toggleComments = () => setIsCommentsVisible(!isCommentsVisible);
+
+  console.log(isCommentsVisible);
 
   return (
     <StyledPaper>
       <div className={classes.header}>
         <div className={classes.flex}>
           <Link to={`/users/${user.id}`}>
-            <Avatar src={user.avatar} alt={fullName} />
+            <Avatar src={user.avatar} alt={user.fullName} />
           </Link>
           <div className={classes.postInfo}>
             <Typography
@@ -67,7 +71,7 @@ function PostItem({ post, user }: Props) {
               component={Link}
               to={`/users/${user.id}`}
             >
-              {fullName}
+              {user.fullName}
             </Typography>
             <Typography variant="subtitle2">
               <Moment fromNow date={post.createdAt} />
@@ -82,13 +86,13 @@ function PostItem({ post, user }: Props) {
       </div>
       <div className={classes.actions}>
         <Like postId={post.id} likesInfo={post.likesInfo} />
-        <div>
-          <IconButton>
-            <CommentIcon />
-          </IconButton>
-          <Typography>65</Typography>
-        </div>
+        <Comment
+          postId={post.id}
+          commentsInfo={post.commentsInfo}
+          toggleComments={toggleComments}
+        />
       </div>
+      {isCommentsVisible && <Comments postId={post.id} />}
     </StyledPaper>
   );
 }
