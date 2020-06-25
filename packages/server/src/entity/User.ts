@@ -6,13 +6,13 @@ import {
   PrimaryGeneratedColumn,
   OneToMany,
   ManyToMany,
-  JoinTable,
 } from "typeorm";
 import { Field, ID, ObjectType, Root } from "type-graphql";
 import { FriendStatus } from "./FriendStatus";
 import { Chat } from "./Chat";
 import { PostLike } from "./PostLike";
 import { Notification } from "./Notification";
+import { Comment } from "./Comment";
 
 @ObjectType()
 @Entity()
@@ -70,10 +70,6 @@ export class User extends BaseEntity {
 
   @OneToMany(() => PostLike, (postLike) => postLike.user)
   postLikes: PostLike[];
-
-  // @Field(() => [Post])
-  // @ManyToMany(() => Post, (post) => post.usersWhoLike)
-  // likedPosts: Post[];
 
   @OneToMany(() => FriendStatus, (friendStatus) => friendStatus.fromUser)
   sentRequests: FriendStatus[];

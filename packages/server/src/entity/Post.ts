@@ -7,13 +7,13 @@ import {
   PrimaryGeneratedColumn,
   ManyToOne,
   JoinColumn,
-  ManyToMany,
-  JoinTable,
   OneToMany,
+  JoinTable,
 } from "typeorm";
 import { Field, ID, ObjectType, Root, Ctx } from "type-graphql";
 import { User } from "./User";
 import { Context } from "../context";
+import { Comment } from "./Comment";
 
 @ObjectType()
 @Entity()
@@ -29,6 +29,11 @@ export class Post extends BaseEntity {
   @ManyToOne(() => User, (user) => user.posts)
   @JoinColumn()
   user: User;
+
+  @Field(() => [Comment])
+  @OneToMany(() => Comment, (comment) => comment.post)
+  @JoinTable()
+  comments: Comment[];
 
   @Field()
   @Column("text")

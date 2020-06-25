@@ -29,14 +29,10 @@ export class CreateChatResolver {
     });
 
     users.forEach((user) => {
-      console.log(user.chats);
-
       user.chats ? user.chats.push(chat) : (user.chats = [chat]);
 
       user.save();
     });
-
-    await pubSub.publish(Topic.ChatCreated, chat);
 
     return chat;
   }

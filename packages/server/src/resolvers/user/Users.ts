@@ -2,7 +2,7 @@ import { Query, Resolver, Arg } from "type-graphql";
 import { User } from "../../entity/User";
 import { UsersInput } from "./UsersInput";
 import { Like } from "typeorm";
-import { trimAndCapitalizeSentence } from "../../utils/createConnection";
+import { trimAndCapitalizeSentence } from "../../utils/trimAndCapitalizeSentence";
 
 @Resolver()
 export class UsersResolver {

@@ -6,7 +6,6 @@ import { IsPostLikedResolver } from "./resolvers/post/IsPostLiked";
 import { LikesOfPostResolver } from "./resolvers/post/LikesOfPost";
 import { LikePostResolver } from "./resolvers/post/Like";
 import { CreateMessageResolver } from "./resolvers/message/CreateMessage";
-import { ChatCreatedResolver } from "./resolvers/ChatCreated";
 import { ChatsResolver } from "./resolvers/chat/Chats";
 import { ChatResolver } from "./resolvers/chat/Chat";
 import { CreateChatResolver } from "./resolvers/chat/CreateChat";
@@ -61,7 +60,6 @@ export const createServer = async () => {
       MessageReceivedResolver,
       CreateChatResolver,
       ChatsResolver,
-      ChatCreatedResolver,
       CreateMessageResolver,
       ChatResolver,
       CreatePostLikeResolver,

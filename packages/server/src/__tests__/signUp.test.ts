@@ -1,21 +1,27 @@
+import { testConnection } from "./../utils/testConnection";
+import { SIGN_UP } from "./../../../app/src/graphql/mutations";
 import { createTestClient } from "apollo-server-testing";
-import { SIGN_UP } from "../../../app/src/queries";
-import { createTypeORMConnection } from "../utils/createConnection";
 import { createServer } from "../createServer";
 import { User } from "../entity/User";
+import faker from "faker";
 
-let query: any, mutate: any, connection: any;
+faker.seed(Date.now() + 234234);
+
+let mutate: any;
 
 beforeAll(async () => {
-  connection = await createTypeORMConnection();
+  await testConnection.create();
   const server = await createServer();
   const client = createTestClient(server);
   mutate = client.mutate;
-  query = client.query;
 });
 
-afterAll(() => {
-  connection.close();
+afterAll(async () => {
+  await testConnection.close();
+});
+
+beforeEach(async () => {
+  await testConnection.clear();
 });
 
 it("should sign up the user", async function () {
@@ -24,7 +30,6 @@ it("should sign up the user", async function () {
     firstName: "John",
     lastName: "Smith",
     birthday: new Date(dateValue),
-    gender: "MALE",
     email: "john123@gmail.com",
     password: "DemoT19382",
   };
