@@ -38,5 +38,6 @@ export class Comment extends BaseEntity {
 
   @Field(() => Post)
   @ManyToOne(() => Post, (post) => post.comments)
+  @JoinColumn()
   post: Post;
 }

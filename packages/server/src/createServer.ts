@@ -1,9 +1,8 @@
+import { CreateCommentResolver } from "./resolvers/post/CreateComment";
 import { JWT_SECRET } from "./config";
 import { verify } from "jsonwebtoken";
 import { NotificationsResolver } from "./resolvers/Notifications";
 import { UnlikePostResolver } from "./resolvers/post/Unlike";
-import { IsPostLikedResolver } from "./resolvers/post/IsPostLiked";
-import { LikesOfPostResolver } from "./resolvers/post/LikesOfPost";
 import { LikePostResolver } from "./resolvers/post/Like";
 import { CreateMessageResolver } from "./resolvers/message/CreateMessage";
 import { ChatsResolver } from "./resolvers/chat/Chats";
@@ -63,11 +62,10 @@ export const createServer = async () => {
       CreateMessageResolver,
       ChatResolver,
       CreatePostLikeResolver,
-      LikesOfPostResolver,
-      IsPostLikedResolver,
       LikePostResolver,
       UnlikePostResolver,
       NotificationsResolver,
+      CreateCommentResolver,
     ],
   });
 
@@ -77,7 +75,6 @@ export const createServer = async () => {
     context,
     subscriptions: {
       onConnect: async (connectionParams, ws: any) => {
-        console.log(connectionParams);
         const { cookie } = ws.upgradeReq.headers;
         const token = cookie.replace("token=Bearer%20", "");
         const verifiedToken = verify(token, JWT_SECRET) as Token;

@@ -32,7 +32,6 @@ export class Post extends BaseEntity {
 
   @Field(() => [Comment])
   @OneToMany(() => Comment, (comment) => comment.post)
-  @JoinTable()
   comments: Comment[];
 
   @Field()
