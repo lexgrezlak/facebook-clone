@@ -1,4 +1,6 @@
-import { CreateCommentResolver } from "./resolvers/post/CreateComment";
+import { DeleteCommentResolver } from "./resolvers/post/comment/DeleteComment";
+import { CommentsResolver } from "./resolvers/post/comment/Comments";
+import { CreateCommentResolver } from "./resolvers/post/comment/CreateComment";
 import { JWT_SECRET } from "./config";
 import { verify } from "jsonwebtoken";
 import { NotificationsResolver } from "./resolvers/Notifications";
@@ -66,6 +68,8 @@ export const createServer = async () => {
       UnlikePostResolver,
       NotificationsResolver,
       CreateCommentResolver,
+      CommentsResolver,
+      DeleteCommentResolver,
     ],
   });
 

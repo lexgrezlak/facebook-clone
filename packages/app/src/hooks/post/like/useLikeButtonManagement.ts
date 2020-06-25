@@ -1,6 +1,4 @@
-import React from "react";
 import { useLike } from "./useLike";
-import useIsLiked from "./post/useIsLiked";
 import { useUnlike } from "./useUnlike";
 
 interface Props {

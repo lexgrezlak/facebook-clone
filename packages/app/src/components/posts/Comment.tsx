@@ -1,11 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import { IconButton, Typography } from "@material-ui/core";
 import CommentIcon from "@material-ui/icons/Comment";
-import { CommentsInfo, FeedData } from "../../types";
-import { useNavigate } from "react-router-dom";
-import Comments from "./Comments";
-import { useMutation, gql, useApolloClient } from "@apollo/client";
-import { GET_FEED } from "../../graphql/queries";
+import { CommentsInfo } from "../../types";
 
 interface Props {
   postId: string;
@@ -13,11 +9,7 @@ interface Props {
   toggleComments: () => void;
 }
 
-export default function Comment({
-  postId,
-  commentsInfo,
-  toggleComments,
-}: Props) {
+export default function Comment({ commentsInfo, toggleComments }: Props) {
   return (
     <div>
       <IconButton onClick={toggleComments}>

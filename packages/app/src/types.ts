@@ -88,6 +88,17 @@ export interface CommentsInfo {
   comments: number;
 }
 
+export interface CommentsData {
+  comments: Comment[];
+}
+
+export interface Comment {
+  id: string;
+  createdAt: Date;
+  content: string;
+  user: UserPreview;
+}
+
 export interface Post {
   id: string;
   content: string;

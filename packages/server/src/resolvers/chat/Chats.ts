@@ -23,8 +23,6 @@ export class ChatsResolver {
       return chat;
     });
 
-    console.log(typeof previewChats[0].messages[0].sentTime);
-
     // sort by sent time of the last message (latest message' chat first in the array)
     previewChats.sort((chatA, chatB) => {
       const lastMessageOfChatA = chatA.messages[chatA.messages.length - 1];

@@ -9,11 +9,27 @@ export const CREATE_CHAT = gql`
   }
 `;
 
+export const DELETE_COMMENT = gql`
+  mutation DeleteComment($id: String!) {
+    deleteComment(id: $id)
+  }
+`;
+
 export const CREATE_MESSAGE = gql`
   mutation CreateMessage($input: CreateMessageInput!, $chatId: String!) {
     createMessage(input: $input, chatId: $chatId) {
       id
       content
+    }
+  }
+`;
+
+export const CREATE_COMMENT = gql`
+  mutation CreateComment($input: CreateCommentInput!, $postId: String!) {
+    createComment(input: $input, postId: $postId) {
+      id
+      content
+      createdAt
     }
   }
 `;

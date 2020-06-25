@@ -1,11 +1,11 @@
-import { Comment } from "./../../entity/Comment";
-import { Context } from "../../context";
 import { Resolver, Mutation, Arg, Ctx } from "type-graphql";
 import { CreateCommentInput } from "./CreateCommentInput";
+import { Context } from "../../../context";
+import { Comment } from "../../../entity/Comment";
 
 @Resolver()
 export class CreateCommentResolver {
-  @Mutation(() => Boolean)
+  @Mutation(() => Comment)
   async createComment(
     @Arg("postId") postId: string,
     @Arg("input") { content }: CreateCommentInput,
@@ -13,12 +13,12 @@ export class CreateCommentResolver {
   ) {
     const { userId } = ctx.req;
 
-    await Comment.create({
+    const comment = await Comment.create({
       userId,
       postId,
       content,
     }).save();
 
-    return true;
+    return comment;
   }
 }

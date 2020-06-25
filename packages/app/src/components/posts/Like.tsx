@@ -1,7 +1,5 @@
 import React from "react";
-import { IconButton, Typography } from "@material-ui/core";
-import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
-import FavoriteIcon from "@material-ui/icons/Favorite";
+import { Typography } from "@material-ui/core";
 import useLikeButtonManagement from "../../hooks/post/like/useLikeButtonManagement";
 import { LikesInfo } from "../../types";
 import LikeButton from "./like/LikeButton";

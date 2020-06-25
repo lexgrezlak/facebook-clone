@@ -1,7 +1,4 @@
-import React, { useState } from "react";
-import { ChatsData } from "../../types";
-import { useQuery } from "@apollo/client";
-import { GET_CHATS } from "../../graphql/queries";
+import React from "react";
 import { IconButton, Popover, Badge } from "@material-ui/core";
 import ChatBubbleIcon from "@material-ui/icons/ChatBubble";
 import ChatList from "./chats/ChatList";

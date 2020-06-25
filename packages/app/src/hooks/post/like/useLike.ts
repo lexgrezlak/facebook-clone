@@ -1,12 +1,7 @@
 import { FeedData } from "../../../types";
-import {
-  GET_IS_POST_LIKED,
-  GET_LIKES_OF_POST,
-  GET_FEED,
-} from "../../../graphql/queries";
+import { GET_FEED } from "../../../graphql/queries";
 import { useMutation } from "@apollo/client";
 import { LIKE_POST } from "../../../graphql/mutations";
-import { LikesOfPostData } from "../../../types";
 
 interface Props {
   postId: string;

@@ -93,6 +93,20 @@ export const GET_PROFILE_FEED = gql`
   ${POST_PREVIEW}
 `;
 
+export const GET_COMMENTS = gql`
+  query Comments($postId: String!) {
+    comments(postId: $postId) {
+      id
+      content
+      createdAt
+      user {
+        ...UserPreview
+      }
+    }
+  }
+  ${USER_PREVIEW}
+`;
+
 export const GET_USERS = gql`
   query Users($input: UsersInput!) {
     users(input: $input) {
