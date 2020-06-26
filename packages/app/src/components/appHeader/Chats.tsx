@@ -6,7 +6,7 @@ import { useChats } from "../../hooks/chat/useChats";
 import usePopover from "../../hooks/usePopover";
 
 export default function Chats() {
-  const { chats, amountOfUnreadChats } = useChats();
+  const { chats, unreadChatsCount } = useChats();
   const { handleClick, handleClose, open, anchorEl, id } = usePopover({
     name: "chats",
   });
@@ -19,7 +19,7 @@ export default function Chats() {
         color="inherit"
         onClick={handleClick}
       >
-        <Badge color="secondary" badgeContent={amountOfUnreadChats}>
+        <Badge color="secondary" badgeContent={unreadChatsCount}>
           <ChatBubbleIcon fontSize="large" />
         </Badge>
       </IconButton>

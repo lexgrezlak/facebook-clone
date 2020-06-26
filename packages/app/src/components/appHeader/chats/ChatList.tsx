@@ -8,10 +8,12 @@ import {
   ListItemText,
   makeStyles,
   Typography,
+  CircularProgress,
 } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import Moment from "react-moment";
 import { getFormat } from "../../../utils";
+import EmptyList from "../../EmptyList";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -55,11 +57,14 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 interface Props {
-  chats: ChatPreview[];
+  chats: ChatPreview[] | undefined;
 }
 
 export default function ChatList({ chats }: Props) {
   const classes = useStyles();
+
+  if (!chats) return <CircularProgress />;
+  if (chats.length === 0) return <EmptyList text="0 chats" />;
 
   return (
     <List className={classes.root}>

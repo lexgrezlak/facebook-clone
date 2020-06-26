@@ -8,6 +8,7 @@ export class CommentsResolver {
     const comments = await Comment.find({
       where: { postId },
       relations: ["user"],
+      order: { createdAt: "ASC" },
     });
 
     return comments;

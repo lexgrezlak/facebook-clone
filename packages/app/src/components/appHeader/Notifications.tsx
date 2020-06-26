@@ -5,30 +5,18 @@ import { useQuery } from "@apollo/client";
 import { GET_NOTIFICATIONS } from "../../graphql/queries";
 import NotificationList from "./notifications/NotificationList";
 import { Notification } from "./../../../types";
+import usePopover from "../../hooks/usePopover";
 
 interface NotificationsData {
   notifications: Notification[];
 }
 
 export default function Notifications() {
-  const { data } = useQuery<NotificationsData>(GET_NOTIFICATIONS, {
-    onError: (error) => {
-      console.log(error.graphQLErrors[0].message);
-    },
+  const { data } = useQuery<NotificationsData>(GET_NOTIFICATIONS);
+
+  const { id, open, anchorEl, handleClose, handleClick } = usePopover({
+    name: "notifications",
   });
-
-  const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
-
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-
-  const open = Boolean(anchorEl);
-  const id = open ? "friend-requests" : undefined;
 
   return (
     <div>
@@ -54,7 +42,7 @@ export default function Notifications() {
           horizontal: "center",
         }}
       >
-        <NotificationList notifications={data?.notifications || []} />
+        <NotificationList notifications={data?.notifications} />
       </Popover>
     </div>
   );

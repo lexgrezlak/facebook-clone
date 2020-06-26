@@ -17,6 +17,7 @@ import MyTextField from "../components/MyTextField";
 import { Formik, Form } from "formik";
 import { useCreateMessageFormManagement } from "../hooks/chat/useCreateMessageFormManagement";
 import Moment from "react-moment";
+import { useChat } from "../hooks/chat/useChat";
 
 interface ChatVars {
   id: string;
@@ -38,14 +39,7 @@ const useStyles = makeStyles(() =>
 export default function Chat() {
   const classes = useStyles();
   const { id } = useParams();
-  const { data } = useQuery<ChatData, ChatVars>(GET_CHAT, {
-    onError: (error) => {
-      console.log(error.graphQLErrors[0].message);
-    },
-    variables: { id },
-  });
-
-  const client = useApolloClient();
+  const { chat } = useChat({ chatId: id });
 
   const {
     handleCreateMessage,
@@ -53,22 +47,9 @@ export default function Chat() {
     validationSchema,
   } = useCreateMessageFormManagement({ chatId: id });
 
-  if (!data?.chat) return <CircularProgress />;
+  if (!chat) return <CircularProgress />;
 
-  const dataInStore = client.readQuery({ query: GET_CHATS }) as ChatsData;
-
-  client.writeQuery({
-    query: GET_CHATS,
-    data: {
-      chats: dataInStore.chats.map((chat) =>
-        chat.id === id ? { ...chat, unread: false } : chat
-      ),
-    },
-  });
-
-  console.log("hi2");
-
-  const { messages, users } = data.chat;
+  const { messages, users } = chat;
 
   return (
     <div>
@@ -87,7 +68,9 @@ export default function Chat() {
       <div>
         {messages.map((message) => (
           <ListItem key={message.id}>
-            <Avatar src={message.user.avatar} />
+            <Link to={`/users/${message.user.id}`}>
+              <Avatar src={message.user.avatar} />
+            </Link>
             <ListItemText
               primary={message.content}
               secondary={<Moment fromNow date={message.sentTime} />}

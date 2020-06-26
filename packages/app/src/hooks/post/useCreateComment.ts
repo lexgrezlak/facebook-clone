@@ -24,12 +24,7 @@ export function useCreateComment({ postId }: Props) {
   };
 
   const [createComment] = useMutation<CreateCommentData, CreateCommentVars>(
-    CREATE_COMMENT,
-    {
-      onError: (error) => {
-        console.log(error.graphQLErrors[0].message);
-      },
-    }
+    CREATE_COMMENT
   );
 
   function handleCreateComment(input: CreateCommentInput, { resetForm }: any) {
@@ -46,7 +41,7 @@ export function useCreateComment({ postId }: Props) {
           query: GET_COMMENTS,
           variables: { postId },
           data: {
-            comments: [...comments, data?.createComment],
+            comments: [data?.createComment],
           },
         });
 

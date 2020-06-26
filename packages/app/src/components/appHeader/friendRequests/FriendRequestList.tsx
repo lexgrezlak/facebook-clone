@@ -7,25 +7,17 @@ import {
   ListItemText,
 } from "@material-ui/core";
 import { FriendRequest } from "../../../types";
+import EmptyList from "../../EmptyList";
 
 interface Props {
   friendRequests: FriendRequest[] | undefined;
 }
 
-function EmptyList() {
-  return (
-    <List>
-      <ListItem>
-        <ListItemText primary="0 friend requests remaining" />
-      </ListItem>
-    </List>
-  );
-}
-
 function FriendRequestList({ friendRequests }: Props) {
   if (!friendRequests) return <CircularProgress />;
 
-  if (friendRequests.length === 0) return <EmptyList />;
+  if (friendRequests.length === 0)
+    return <EmptyList text="0 friend requests" />;
 
   return (
     <List>
