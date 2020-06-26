@@ -8,15 +8,11 @@ import {
   createStyles,
   Grid,
 } from "@material-ui/core";
-import FriendList from "../components/appHeader/friendRequests/FriendList";
 import ProfileHeader from "./profile/Header";
 import Posts from "./profile/header/Posts";
 import { makeStyles } from "@material-ui/core/styles";
 import { UserData, UserVars } from "../types";
-
-interface Props {
-  meId: string;
-}
+import Friends from "./profile/Friends";
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -31,7 +27,7 @@ const useStyles = makeStyles(() =>
   })
 );
 
-function Profile({ meId }: Props) {
+function Profile() {
   const classes = useStyles();
   const { id } = useParams();
 
@@ -41,17 +37,15 @@ function Profile({ meId }: Props) {
 
   if (!data?.user) return <CircularProgress />;
 
-  const { user } = data;
-
   return (
     <Container maxWidth="md" component="main" className={classes.root}>
-      <ProfileHeader user={user} meId={meId} />
+      <ProfileHeader user={data.user} />
       <Grid container spacing={2}>
         <Grid item xs={12} sm={4} className={classes.grid}>
-          <FriendList />
+          <Friends />
         </Grid>
         <Grid item xs={12} sm={8}>
-          <Posts user={user} />
+          <Posts user={data.user} />
         </Grid>
       </Grid>
     </Container>

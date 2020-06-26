@@ -3,6 +3,8 @@ export interface UserData {
 }
 
 export interface UserProfile extends UserPreview {
+  background: string;
+  posts: Post[];
   otherFriends: UserPreview[];
   commonFriends: UserPreview[];
 }
@@ -25,10 +27,6 @@ export enum FriendshipStatus {
 export interface MessagePreview {
   id: string;
   content: string;
-}
-
-export interface LikesOfPostData {
-  likesOfPost: number;
 }
 
 export interface Notification {

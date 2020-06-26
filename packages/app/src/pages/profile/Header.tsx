@@ -8,11 +8,9 @@ import { StyledProfileAvatar } from "../../styled/StyledProfileAvatar";
 import { UserPreviewAndPosts } from "../../types";
 import OwnMenu from "./OwnMenu";
 import ChatButton from "./header/ChatButton";
-
-interface Props {
-  user: UserPreviewAndPosts;
-  meId: string;
-}
+import { useParams } from "react-router-dom";
+import { useProfileHeader } from "../../hooks/useProfileHeader";
+import MyAvatar from "./header/MyAvatar";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -50,36 +48,29 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-const ProfileHeader = ({ user, meId }: Props) => {
-  const { fullName, id, background, avatar } = user;
+function ProfileHeader() {
   const classes = useStyles();
+  const { id } = useParams();
+  const { user } = useProfileHeader({ id });
 
   return (
     <div className={classes.root}>
-      <Background background={background} />
-      <div className={classes.images}>
-        <div className={classes.imagesWrapper}>
-          {meId === id ? (
-            <OwnAvatar />
-          ) : (
-            <StyledProfileAvatar src={avatar} alt={"Avatar"} />
-          )}
-        </div>
-      </div>
+      <Background background={user.background} />
+      <MyAvatar avatar={user.avatar} />
       <div className={classes.name}>
         <Typography align="center" variant="h2">
-          {fullName}
+          {user.fullName}
         </Typography>
       </div>
       <OwnMenu />
-      {meId !== id && (
-        <div>
-          <FriendButton userId={id} />
-          <ChatButton userId={id} />
-        </div>
-      )}
+      {/* {meId !== id && ( */}
+      <div>
+        <FriendButton userId={id} />
+        <ChatButton userId={id} />
+      </div>
+      {/* )} */}
     </div>
   );
-};
+}
 
 export default ProfileHeader;
