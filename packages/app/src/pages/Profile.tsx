@@ -31,15 +31,16 @@ function Profile() {
   const classes = useStyles();
   const { id } = useParams();
 
-  const { data } = useQuery<UserData, UserVars>(GET_USER, {
+  const { data, loading } = useQuery<UserData, UserVars>(GET_USER, {
     variables: { id },
   });
 
-  if (!data?.user) return <CircularProgress />;
+  // loading so that it doesn't use the old data in the cache, that is previous user's id
+  if (!data || loading) return <CircularProgress />;
 
   return (
     <Container maxWidth="md" component="main" className={classes.root}>
-      <ProfileHeader user={data.user} />
+      <ProfileHeader />
       <Grid container spacing={2}>
         <Grid item xs={12} sm={4} className={classes.grid}>
           <Friends />

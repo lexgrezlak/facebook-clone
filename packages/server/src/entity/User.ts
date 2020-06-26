@@ -14,7 +14,6 @@ import { FriendStatus, Status } from "./FriendStatus";
 import { Chat } from "./Chat";
 import { PostLike } from "./PostLike";
 import { Notification } from "./Notification";
-import { Comment } from "./Comment";
 import { Context } from "../context";
 
 @ObjectType()
@@ -136,21 +135,18 @@ export class User extends BaseEntity {
       ],
     });
 
-    const otherFriendsIds = friendStatuses.map((fStatus) =>
-      fStatus.fromUserId === userId ? fStatus.toUserId : fStatus.fromUserId
-    );
-
-    console.log(parent.id);
-
-    console.log(otherFriendsIds);
+    const otherFriendsIds = friendStatuses
+      .map((fStatus) =>
+        fStatus.fromUserId === userId ? fStatus.toUserId : fStatus.fromUserId
+      )
+      // filter out parent's (user's) id
+      .filter((id) => id !== parent.id);
 
     if (otherFriendsIds.length === 0) return [];
 
     const otherFriends = await User.find({
       where: { id: In(otherFriendsIds) },
     });
-
-    console.log(otherFriends[0].firstName);
 
     return otherFriends;
   }
