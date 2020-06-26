@@ -17,7 +17,7 @@ interface Props {
   margin?: any;
 }
 
-const MyTextField: React.FC<Props> = ({ name, type, variant, ...rest }) => {
+function MyTextField({ name, type, variant, ...rest }: Props) {
   const [field, { error, touched }] = useField({
     name,
     type,
@@ -39,6 +39,6 @@ const MyTextField: React.FC<Props> = ({ name, type, variant, ...rest }) => {
       {...rest}
     />
   );
-};
+}
 
 export default MyTextField;

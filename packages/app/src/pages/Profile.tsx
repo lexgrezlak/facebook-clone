@@ -8,15 +8,11 @@ import {
   createStyles,
   Grid,
 } from "@material-ui/core";
-import FriendList from "../components/friend/FriendList";
-import ProfileHeader from "./profile/ProfileHeader";
-import ProfileFeed from "./profile/ProfileFeed";
+import ProfileHeader from "./profile/Header";
+import Posts from "./profile/header/Posts";
 import { makeStyles } from "@material-ui/core/styles";
 import { UserData, UserVars } from "../types";
-
-interface Props {
-  meId: number;
-}
+import Friends from "./profile/Friends";
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -31,31 +27,26 @@ const useStyles = makeStyles(() =>
   })
 );
 
-function Profile({ meId }: Props) {
+function Profile() {
   const classes = useStyles();
-  const { id: stringId } = useParams();
-  const id = Number(stringId);
+  const { id } = useParams();
 
-  const { data } = useQuery<UserData, UserVars>(GET_USER, {
-    onError: (error) => {
-      console.log(error.graphQLErrors[0].message);
-    },
+  const { data, loading } = useQuery<UserData, UserVars>(GET_USER, {
     variables: { id },
   });
 
-  if (!data?.user) return <CircularProgress />;
-
-  const { user } = data;
+  // loading so that it doesn't use the old data in the cache, that is previous user's id
+  if (!data || loading) return <CircularProgress />;
 
   return (
     <Container maxWidth="md" component="main" className={classes.root}>
-      <ProfileHeader user={user} meId={meId} />
+      <ProfileHeader />
       <Grid container spacing={2}>
-        <Grid item xs={12} md={4} className={classes.grid}>
-          <FriendList id={id} />
+        <Grid item xs={12} sm={4} className={classes.grid}>
+          <Friends />
         </Grid>
-        <Grid item xs={12} md={8}>
-          <ProfileFeed user={user} />
+        <Grid item xs={12} sm={8}>
+          <Posts user={data.user} />
         </Grid>
       </Grid>
     </Container>

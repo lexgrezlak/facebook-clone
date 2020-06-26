@@ -3,7 +3,7 @@ import { useApolloClient } from "@apollo/client";
 import { GET_ME } from "../../graphql/queries";
 import { Avatar, Button, createStyles, Theme } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import { useCreatePostFormManagement } from "../../hooks/useCreatePostFormManagement";
+import { useCreatePostFormManagement } from "../../hooks/post/useCreatePostFormManagement";
 import MyTextField from "../../components/MyTextField";
 import { Form, Formik } from "formik";
 import { StyledPaper } from "../../styled/StyledPaper";

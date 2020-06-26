@@ -1,38 +1,67 @@
 import { gql } from "@apollo/client";
-import { POST_PREVIEW } from "./fragments";
+import { POST_PREVIEW, USER_PREVIEW } from "./fragments";
 
-export const SIGN_UP = gql`
-  mutation SignUp(
-    $firstName: String!
-    $lastName: String!
-    $email: String!
-    $password: String!
-    $birthday: DateTime!
-    $gender: Gender!
-  ) {
-    signUp(
-      firstName: $firstName
-      lastName: $lastName
-      email: $email
-      password: $password
-      birthday: $birthday
-      gender: $gender
-    ) {
+export const CREATE_CHAT = gql`
+  mutation CreateChat($userId: String!) {
+    createChat(userId: $userId) {
       id
-      firstName
-      lastName
     }
   }
 `;
 
-export const SIGN_IN = gql`
-  mutation SignIn($email: String!, $password: String!) {
-    signIn(email: $email, password: $password) {
+export const DELETE_COMMENT = gql`
+  mutation DeleteComment($id: String!) {
+    deleteComment(id: $id)
+  }
+`;
+
+export const CREATE_MESSAGE = gql`
+  mutation CreateMessage($input: CreateMessageInput!, $chatId: String!) {
+    createMessage(input: $input, chatId: $chatId) {
       id
-      firstName
-      lastName
+      content
     }
   }
+`;
+
+export const CREATE_COMMENT = gql`
+  mutation CreateComment($input: CreateCommentInput!, $postId: String!) {
+    createComment(input: $input, postId: $postId) {
+      id
+      content
+      createdAt
+    }
+  }
+`;
+
+export const LIKE_POST = gql`
+  mutation LikePost($postId: String!) {
+    likePost(postId: $postId)
+  }
+`;
+
+export const UNLIKE_POST = gql`
+  mutation UnlikePost($postId: String!) {
+    unlikePost(postId: $postId)
+  }
+`;
+
+export const SIGN_UP = gql`
+  mutation SignUp($input: SignUpInput!) {
+    signUp(input: $input) {
+      ...UserPreview
+    }
+  }
+  ${USER_PREVIEW}
+`;
+
+export const SIGN_IN = gql`
+  mutation SignIn($input: SignInInput!) {
+    signIn(input: $input) {
+      ...UserPreview
+    }
+  }
+  ${USER_PREVIEW}
 `;
 
 export const SIGN_OUT = gql`
@@ -42,64 +71,62 @@ export const SIGN_OUT = gql`
 `;
 
 export const CREATE_POST = gql`
-  mutation CreatePost($content: String!) {
-    createPost(content: $content) {
+  mutation CreatePost($input: CreatePostInput!) {
+    createPost(input: $input) {
       ...PostPreview
-      author {
-        firstName
-        lastName
+      user {
+        ...UserPreview
       }
     }
   }
   ${POST_PREVIEW}
+  ${USER_PREVIEW}
 `;
 
 export const ACCEPT_REQUEST = gql`
-  mutation AcceptInvitation($id: Int!) {
-    acceptInvitation(id: $id) {
-      statusId
-    }
+  mutation AcceptRequest($userId: String!) {
+    acceptRequest(userId: $userId)
   }
 `;
 
-export const ADD_FRIEND = gql`
-  mutation SendInvitation($id: Int!) {
-    sendInvitation(id: $id) {
-      statusId
-    }
+export const SEND_REQUEST = gql`
+  mutation SendRequest($userId: String!) {
+    sendRequest(userId: $userId)
   }
 `;
 
-export const REMOVE_FRIEND = gql`
-  mutation RemoveFriendship($id: Int!) {
-    removeFriendship(id: $id)
+export const REJECT_REQUEST = gql`
+  mutation RejectRequest($userId: String!) {
+    rejectRequest(userId: $userId)
   }
 `;
 
-export const REMOVE_REQUEST = gql`
-  mutation RemoveRequest($id: Int!) {
-    removeRequest(id: $id)
+export const UNFRIEND = gql`
+  mutation Unfriend($userId: String!) {
+    unfriend(userId: $userId)
+  }
+`;
+
+export const CANCEL_REQUEST = gql`
+  mutation CancelRequest($userId: String!) {
+    cancelRequest(userId: $userId)
   }
 `;
 
 export const UPDATE_AVATAR = gql`
   mutation UpdateAvatar($file: Upload!) {
-    updateAvatar(file: $file) {
-      url
-    }
+    updateAvatar(file: $file)
   }
 `;
 
 export const UPDATE_BACKGROUND = gql`
   mutation UpdateBackground($file: Upload!) {
-    updateBackground(file: $file) {
-      url
-    }
+    updateBackground(file: $file)
   }
 `;
 
 export const DELETE_POST = gql`
-  mutation DeletePost($id: Int!) {
+  mutation DeletePost($id: String!) {
     deletePost(id: $id)
   }
 `;

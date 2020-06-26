@@ -1,32 +1,14 @@
 import React from "react";
-import { useApolloClient, useMutation } from "@apollo/client";
-import { GET_ME } from "../../graphql/queries";
-import { useNavigate } from "react-router-dom";
-import { SIGN_OUT } from "../../graphql/mutations";
+import { IconButton } from "@material-ui/core";
+import ExitToAppIcon from "@material-ui/icons/ExitToApp";
+import useSignOut from "../../hooks/sign/useSignOut";
 
-function SignOutButton() {
-  const client = useApolloClient();
-  const [signOut] = useMutation(SIGN_OUT, {
-    onError: (error) => {
-      console.log(error.graphQLErrors[0].message);
-    },
-  });
+export default function SignOutButton() {
+  const { handleSignOut } = useSignOut();
 
-  const navigate = useNavigate();
-
-  async function handleSignOut() {
-    await signOut();
-    await navigate("/");
-    await client.writeQuery({
-      query: GET_ME,
-      data: {
-        me: null,
-      },
-    });
-    await client.resetStore();
-  }
-
-  return <button onClick={handleSignOut}>Sign out</button>;
+  return (
+    <IconButton onClick={handleSignOut} color="inherit">
+      <ExitToAppIcon fontSize="large" />
+    </IconButton>
+  );
 }
-
-export default SignOutButton;

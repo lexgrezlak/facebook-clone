@@ -3,8 +3,7 @@ import { gql } from "@apollo/client";
 export const USER_PREVIEW = gql`
   fragment UserPreview on User {
     id
-    firstName
-    lastName
+    fullName
     avatar
   }
 `;
@@ -14,5 +13,12 @@ export const POST_PREVIEW = gql`
     id
     content
     createdAt
+    likesInfo {
+      isLiked
+      likes
+    }
+    commentsInfo {
+      comments
+    }
   }
 `;

@@ -10,12 +10,73 @@ export const GET_ME = gql`
   ${USER_PREVIEW}
 `;
 
-export const GET_FEED = gql`
-  query Feed {
-    feed {
-      ...PostPreview
-      author {
+export const GET_NOTIFICATIONS = gql`
+  query Notifications {
+    notifications {
+      id
+      message
+      receivedAt
+      link
+    }
+  }
+`;
+
+export const GET_CHAT = gql`
+  query Chat($id: String!) {
+    chat(id: $id) {
+      id
+      messages {
+        id
+        content
+        sentTime
+        user {
+          ...UserPreview
+        }
+      }
+      users {
         ...UserPreview
+      }
+    }
+  }
+  ${USER_PREVIEW}
+`;
+
+export const GET_CHATS = gql`
+  query Chats {
+    chats {
+      id
+      users {
+        ...UserPreview
+      }
+      lastMessage {
+        id
+        sentTime
+        content
+      }
+      unread
+    }
+  }
+  ${USER_PREVIEW}
+`;
+
+export const GET_IS_POST_LIKED = gql`
+  query IsPostLiked($postId: String!) {
+    isPostLiked(postId: $postId)
+  }
+`;
+
+export const GET_FEED = gql`
+  query Feed($cursor: Float) {
+    feed(cursor: $cursor) {
+      edges {
+        ...PostPreview
+        user {
+          ...UserPreview
+        }
+      }
+      pageInfo {
+        hasNextPage
+        endCursor
       }
     }
   }
@@ -24,7 +85,7 @@ export const GET_FEED = gql`
 `;
 
 export const GET_PROFILE_FEED = gql`
-  query ProfileFeed($id: Int!) {
+  query ProfileFeed($id: ID!) {
     profileFeed(id: $id) {
       ...PostPreview
     }
@@ -32,14 +93,27 @@ export const GET_PROFILE_FEED = gql`
   ${POST_PREVIEW}
 `;
 
-export const GET_USERS = gql`
-  query Users($filter: String!) {
-    users(filter: $filter) {
+export const GET_COMMENTS = gql`
+  query Comments($postId: String!) {
+    comments(postId: $postId) {
       id
-      firstName
-      lastName
+      content
+      createdAt
+      user {
+        ...UserPreview
+      }
     }
   }
+  ${USER_PREVIEW}
+`;
+
+export const GET_USERS = gql`
+  query Users($input: UsersInput!) {
+    users(input: $input) {
+      ...UserPreview
+    }
+  }
+  ${USER_PREVIEW}
 `;
 
 export const GET_FRIEND_REQUESTS = gql`
@@ -47,7 +121,7 @@ export const GET_FRIEND_REQUESTS = gql`
     friendRequests {
       id
       sentTime
-      sender {
+      fromUser {
         ...UserPreview
       }
     }
@@ -56,34 +130,42 @@ export const GET_FRIEND_REQUESTS = gql`
 `;
 
 export const GET_FRIENDS = gql`
-  query Friends($id: Int) {
-    friends(id: $id) {
+  query Friends($userId: String!) {
+    friends(userId: $userId) {
       ...UserPreview
-    }
-  }
-  ${USER_PREVIEW}
-`;
-
-export const GET_USER = gql`
-  query User($id: Int!) {
-    user(where: { id: $id }) {
-      background
-      ...UserPreview
-      posts {
-        id
-        content
-        createdAt
+      commonFriends {
+        ...UserPreview
       }
     }
   }
   ${USER_PREVIEW}
 `;
 
+export const GET_USER = gql`
+  query User($id: String!) {
+    user(id: $id) {
+      background
+      ...UserPreview
+      posts {
+        ...PostPreview
+      }
+      commonFriends {
+        ...UserPreview
+      }
+      otherFriends {
+        ...UserPreview
+      }
+    }
+  }
+  ${USER_PREVIEW}
+  ${POST_PREVIEW}
+`;
+
 export const GET_FRIEND_STATUS = gql`
-  query FriendStatus($id: Int!) {
-    friendStatus(id: $id) {
+  query FriendStatus($userId: String!) {
+    friendStatus(userId: $userId) {
       fromUserId
-      statusId
+      status
     }
   }
 `;

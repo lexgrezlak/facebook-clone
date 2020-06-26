@@ -1,33 +1,117 @@
 export interface UserData {
-  user: UserPreviewAndPosts;
+  user: UserProfile;
+}
+
+export interface UserProfile extends UserPreview {
+  background: string;
+  posts: Post[];
+  otherFriends: UserPreview[];
+  commonFriends: UserPreview[];
 }
 
 export interface UserVars {
-  id: number;
+  id: string;
 }
 
-export enum IsFriend {
-  IsNot,
-  Is,
-  MeSentRequest,
-  MeReceivedRequest,
+export interface MessageReceivedData {
+  messageReceived: Message;
+}
+
+export enum FriendshipStatus {
+  Stranger = "STRANGER",
+  Friend = "FRIEND",
+  MeSentRequest = "ME_SENT_REQUEST",
+  MeReceivedRequest = "ME_RECEIVED_REQUEST",
+}
+
+export interface MessagePreview {
+  id: string;
+  content: string;
+}
+
+export interface Notification {
+  id: string;
+  message: string;
+  receivedAt: Date;
+  link: string;
+}
+
+export interface ChatPreview {
+  id: string;
+  users: UserPreview[];
+  lastMessage: Message;
+  unread: Boolean;
+}
+
+export interface FeedData {
+  feed: {
+    __typename: "feed";
+    edges: PostAndUser[];
+    pageInfo: {
+      hasNextPage: boolean;
+      endCursor: number;
+    };
+  };
 }
 
 export interface UserPreview {
-  id: number;
-  firstName: string;
-  lastName: string;
+  id: string;
+  fullName: string;
   avatar: string;
 }
 
-export interface Post {
-  id: number;
-  content: string;
-  createdAt: Date;
+export interface ChatsData {
+  chats: ChatPreview[];
 }
 
-export interface PostAndAuthor extends Post {
-  author: UserPreview;
+export interface Message {
+  id: string;
+  content: string;
+  sentTime: Date;
+  user: UserPreview;
+  chatId: string;
+}
+
+export interface Chat {
+  id: string;
+  messages: Message[];
+  users: UserPreview[];
+}
+
+export interface ChatData {
+  chat: Chat;
+}
+
+export interface LikesInfo {
+  likes: number;
+  isLiked: boolean;
+}
+
+export interface CommentsInfo {
+  comments: number;
+}
+
+export interface CommentsData {
+  comments: Comment[];
+}
+
+export interface Comment {
+  id: string;
+  createdAt: Date;
+  content: string;
+  user: UserPreview;
+}
+
+export interface Post {
+  id: string;
+  content: string;
+  createdAt: Date;
+  likesInfo: LikesInfo;
+  commentsInfo: CommentsInfo;
+}
+
+export interface PostAndUser extends Post {
+  user: UserPreview;
 }
 
 export interface UserPreviewAndPosts extends UserPreview {
@@ -36,9 +120,9 @@ export interface UserPreviewAndPosts extends UserPreview {
 }
 
 export interface FriendRequest {
-  id: number;
-  sender: UserPreview;
+  id: string;
   sentTime: Date;
+  fromUser: UserPreview;
 }
 
 export interface FriendRequestsData {
