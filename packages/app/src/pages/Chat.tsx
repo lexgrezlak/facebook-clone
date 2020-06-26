@@ -19,10 +19,6 @@ import { useCreateMessageFormManagement } from "../hooks/chat/useCreateMessageFo
 import Moment from "react-moment";
 import { useChat } from "../hooks/chat/useChat";
 
-interface ChatVars {
-  id: string;
-}
-
 const useStyles = makeStyles(() =>
   createStyles({
     userInfo: {

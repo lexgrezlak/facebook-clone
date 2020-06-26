@@ -41,7 +41,7 @@ export function useCreateComment({ postId }: Props) {
           query: GET_COMMENTS,
           variables: { postId },
           data: {
-            comments: [data?.createComment],
+            comments: [...comments, data?.createComment],
           },
         });
 

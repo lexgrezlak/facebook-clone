@@ -5,8 +5,9 @@ import {
   PrimaryGeneratedColumn,
   ManyToOne,
 } from "typeorm";
-import { Field, ID, ObjectType } from "type-graphql";
+import { Field, ID, ObjectType, Ctx, Root } from "type-graphql";
 import { User } from "./User";
+import { Context } from "../context";
 
 // Status is here instead of in enums beacause otherwise
 // it throws an error

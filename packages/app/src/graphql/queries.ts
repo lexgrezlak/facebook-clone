@@ -133,6 +133,9 @@ export const GET_FRIENDS = gql`
   query Friends($userId: String!) {
     friends(userId: $userId) {
       ...UserPreview
+      commonFriends {
+        ...UserPreview
+      }
     }
   }
   ${USER_PREVIEW}
@@ -145,6 +148,12 @@ export const GET_USER = gql`
       ...UserPreview
       posts {
         ...PostPreview
+      }
+      commonFriends {
+        ...UserPreview
+      }
+      otherFriends {
+        ...UserPreview
       }
     }
   }

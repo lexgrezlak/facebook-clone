@@ -1,5 +1,10 @@
 export interface UserData {
-  user: UserPreviewAndPosts;
+  user: UserProfile;
+}
+
+export interface UserProfile extends UserPreview {
+  otherFriends: UserPreview[];
+  commonFriends: UserPreview[];
 }
 
 export interface UserVars {

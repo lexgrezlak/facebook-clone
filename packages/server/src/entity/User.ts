@@ -6,13 +6,16 @@ import {
   PrimaryGeneratedColumn,
   OneToMany,
   ManyToMany,
+  In,
+  Not,
 } from "typeorm";
-import { Field, ID, ObjectType, Root } from "type-graphql";
-import { FriendStatus } from "./FriendStatus";
+import { Field, ID, ObjectType, Root, Ctx } from "type-graphql";
+import { FriendStatus, Status } from "./FriendStatus";
 import { Chat } from "./Chat";
 import { PostLike } from "./PostLike";
 import { Notification } from "./Notification";
 import { Comment } from "./Comment";
+import { Context } from "../context";
 
 @ObjectType()
 @Entity()
@@ -76,4 +79,70 @@ export class User extends BaseEntity {
 
   @OneToMany(() => FriendStatus, (friendStatus) => friendStatus.fromUser)
   receivedRequests: FriendStatus[];
+
+  @Field(() => [User])
+  async commonFriends(
+    @Root() parent: User,
+    @Ctx() ctx: Context
+  ): Promise<User[]> {
+    const { userId } = ctx.req;
+    const bothUsersIds = [userId, parent.id];
+
+    const friendStatuses = await FriendStatus.find({
+      where: {
+        toUserId: In(bothUsersIds),
+        fromUserId: In(bothUsersIds),
+        status: Status.Friends,
+      },
+    });
+
+    // filter out 'me' user id
+    const friendsIds = friendStatuses.map((friendStatus) =>
+      friendStatus.fromUserId === userId
+        ? friendStatus.toUserId
+        : friendStatus.fromUserId
+    );
+
+    if (friendsIds.length === 0) return [];
+
+    const friends = await User.find({ where: { id: In(friendsIds) } });
+
+    return friends;
+  }
+
+  @Field(() => [User])
+  async otherFriends(
+    @Root() parent: User,
+    @Ctx() ctx: Context
+  ): Promise<User[]> {
+    const { userId } = ctx.req;
+
+    // take those that are not friends of 'me'
+    const friendStatuses = await FriendStatus.find({
+      where: [
+        {
+          status: Status.Friends,
+          fromUserId: userId,
+          toUserId: Not(parent.id),
+        },
+        {
+          status: Status.Friends,
+          fromUserId: Not(parent.id),
+          toUserId: userId,
+        },
+      ],
+    });
+
+    const otherFriendsIds = friendStatuses.map((fStatus) =>
+      fStatus.fromUserId === userId ? fStatus.toUserId : fStatus.fromUserId
+    );
+
+    if (otherFriendsIds.length === 0) return [];
+
+    const otherFriends = await User.find({
+      where: { id: In(otherFriendsIds) },
+    });
+
+    return otherFriends;
+  }
 }

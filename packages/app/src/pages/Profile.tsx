@@ -36,9 +36,6 @@ function Profile({ meId }: Props) {
   const { id } = useParams();
 
   const { data } = useQuery<UserData, UserVars>(GET_USER, {
-    onError: (error) => {
-      console.log(error.graphQLErrors[0].message);
-    },
     variables: { id },
   });
 
@@ -51,7 +48,7 @@ function Profile({ meId }: Props) {
       <ProfileHeader user={user} meId={meId} />
       <Grid container spacing={2}>
         <Grid item xs={12} sm={4} className={classes.grid}>
-          <FriendList userId={id} />
+          <FriendList />
         </Grid>
         <Grid item xs={12} sm={8}>
           <Posts user={user} />
