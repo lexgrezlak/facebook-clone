@@ -1,10 +1,9 @@
 import React from "react";
-import { GET_ME } from "../../graphql/queries";
-import { useApolloClient } from "@apollo/client";
 import { Badge, createStyles, Theme } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import AvatarUpload from "./header/AvatarUpload";
-import { StyledProfileAvatar } from "../../styled/StyledProfileAvatar";
+import AvatarUpload from "../AvatarUpload";
+import { useMe } from "../../../../hooks/useMe";
+import { useParams } from "react-router-dom";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -15,13 +14,18 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-function OwnAvatar() {
-  const classes = useStyles();
-  const client = useApolloClient();
-  const data = client.readQuery({ query: GET_ME });
-  const { avatar } = data.me;
+interface Props {
+  children: React.ReactElement;
+}
 
-  return (
+function EditWrapper({ children }: Props) {
+  const classes = useStyles();
+  const me = useMe();
+  const { id } = useParams();
+
+  const isMyProfile = me.id === id;
+
+  return isMyProfile ? (
     <Badge
       overlap="circle"
       anchorOrigin={{
@@ -31,9 +35,11 @@ function OwnAvatar() {
       badgeContent={<AvatarUpload />}
       className={classes.badge}
     >
-      <StyledProfileAvatar alt="Your avatar" src={avatar} />
+      {children}
     </Badge>
+  ) : (
+    children
   );
 }
 
-export default OwnAvatar;
+export default EditWrapper;

@@ -18,7 +18,7 @@ function FriendList({ friends }: Props) {
     <div>
       <List>
         {friends.map((friend: UserPreview) => (
-          <FriendItem friend={friend} />
+          <FriendItem friend={friend} key={friend.id} />
         ))}
       </List>
     </div>

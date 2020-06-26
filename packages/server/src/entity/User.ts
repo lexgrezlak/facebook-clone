@@ -96,12 +96,15 @@ export class User extends BaseEntity {
       },
     });
 
-    // filter out 'me' user id
-    const friendsIds = friendStatuses.map((friendStatus) =>
-      friendStatus.fromUserId === userId
-        ? friendStatus.toUserId
-        : friendStatus.fromUserId
-    );
+    // get the other user id (not 'me' id)
+    const friendsIds = friendStatuses
+      .map((friendStatus) =>
+        friendStatus.fromUserId === userId
+          ? friendStatus.toUserId
+          : friendStatus.fromUserId
+      )
+      // filter out parent id (the other user's) not to cause himself to be his common friend
+      .filter((friendId) => friendId !== parent.id);
 
     if (friendsIds.length === 0) return [];
 
@@ -122,13 +125,13 @@ export class User extends BaseEntity {
       where: [
         {
           status: Status.Friends,
-          fromUserId: userId,
-          toUserId: Not(parent.id),
+          fromUserId: Not(userId),
+          toUserId: parent.id,
         },
         {
           status: Status.Friends,
-          fromUserId: Not(parent.id),
-          toUserId: userId,
+          fromUserId: parent.id,
+          toUserId: Not(userId),
         },
       ],
     });
@@ -137,11 +140,17 @@ export class User extends BaseEntity {
       fStatus.fromUserId === userId ? fStatus.toUserId : fStatus.fromUserId
     );
 
+    console.log(parent.id);
+
+    console.log(otherFriendsIds);
+
     if (otherFriendsIds.length === 0) return [];
 
     const otherFriends = await User.find({
       where: { id: In(otherFriendsIds) },
     });
+
+    console.log(otherFriends[0].firstName);
 
     return otherFriends;
   }
