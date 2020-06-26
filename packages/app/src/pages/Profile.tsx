@@ -13,6 +13,7 @@ import Posts from "./profile/header/Posts";
 import { makeStyles } from "@material-ui/core/styles";
 import { UserData, UserVars } from "../types";
 import Friends from "./profile/Friends";
+import { useProfile } from "../hooks/useProfile";
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -30,13 +31,10 @@ const useStyles = makeStyles(() =>
 function Profile() {
   const classes = useStyles();
   const { id } = useParams();
-
-  const { data, loading } = useQuery<UserData, UserVars>(GET_USER, {
-    variables: { id },
-  });
+  const { user } = useProfile({ id });
 
   // loading so that it doesn't use the old data in the cache, that is previous user's id
-  if (!data || loading) return <CircularProgress />;
+  if (!user) return <CircularProgress />;
 
   return (
     <Container maxWidth="md" component="main" className={classes.root}>
@@ -46,7 +44,7 @@ function Profile() {
           <Friends />
         </Grid>
         <Grid item xs={12} sm={8}>
-          <Posts user={data.user} />
+          <Posts user={user} />
         </Grid>
       </Grid>
     </Container>
