@@ -1,9 +1,11 @@
+import { UserData, Post } from "./../../../types";
 import { CreateCommentInput } from "./../../../../../server/src/resolvers/post/comment/CreateCommentInput";
 import { CommentsData, FeedData } from "../../../types";
-import { GET_COMMENTS, GET_FEED } from "../../../graphql/queries";
+import { GET_COMMENTS, GET_POSTS, GET_USER } from "../../../graphql/queries";
 import { useMutation } from "@apollo/client";
 import * as Yup from "yup";
 import { CREATE_COMMENT } from "../../../graphql/mutations";
+import { useParams } from "react-router-dom";
 
 interface CreateCommentData {
   createComment: Comment;
@@ -19,6 +21,9 @@ interface Props {
 }
 
 export function useCreateCommentForm({ postId }: Props) {
+  // id won't be undefined if its user's profile
+  const { id: userId } = useParams();
+
   const initialValues: CreateCommentInput = {
     content: "",
   };
@@ -46,13 +51,17 @@ export function useCreateCommentForm({ postId }: Props) {
         });
 
         // 2. update comments count
-        const { feed } = store.readQuery({ query: GET_FEED }) as FeedData;
 
-        // the post being updated
-        const post = feed.edges.find((post) => post.id === postId);
+        // if the route is user's profile
+        if (userId) {
+          const { user } = store.readQuery({
+            query: GET_USER,
+            variables: { id: userId },
+          }) as UserData;
 
-        if (post) {
+          const post = user.posts.find((post) => post.id === postId) as Post;
           const { commentsInfo } = post;
+
           const updatedPost = {
             ...post,
             commentsInfo: {
@@ -60,19 +69,49 @@ export function useCreateCommentForm({ postId }: Props) {
               comments: commentsInfo.comments + 1,
             },
           };
-          const updatedEdges = feed.edges.map((post) =>
-            post.id === postId ? updatedPost : post
-          );
 
           store.writeQuery({
-            query: GET_FEED,
+            query: GET_USER,
+            variables: { id: userId },
             data: {
-              feed: {
-                ...feed,
-                edges: updatedEdges,
+              user: {
+                ...user,
+                posts: user.posts.map((post) =>
+                  post.id === postId ? updatedPost : post
+                ),
               },
             },
           });
+          // else if it's home page
+        } else {
+          const { feed } = store.readQuery({ query: GET_POSTS }) as FeedData;
+
+          // the post being updated
+          const post = feed.edges.find((post) => post.id === postId);
+
+          if (post) {
+            const { commentsInfo } = post;
+            const updatedPost = {
+              ...post,
+              commentsInfo: {
+                ...commentsInfo,
+                comments: commentsInfo.comments + 1,
+              },
+            };
+            const updatedEdges = feed.edges.map((post) =>
+              post.id === postId ? updatedPost : post
+            );
+
+            store.writeQuery({
+              query: GET_POSTS,
+              data: {
+                feed: {
+                  ...feed,
+                  edges: updatedEdges,
+                },
+              },
+            });
+          }
         }
 
         resetForm();

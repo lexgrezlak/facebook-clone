@@ -7,7 +7,6 @@ import {
   ListItemText,
   Typography,
   makeStyles,
-  IconButton,
 } from "@material-ui/core";
 import Moment from "react-moment";
 import { getFormat } from "../../../utils";
@@ -15,7 +14,7 @@ import { Link } from "react-router-dom";
 import { useMe } from "../../../hooks/useMe";
 import DeleteButton from "./DeleteButton";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   link: {
     fontWeight: "bold",
     textDecoration: "none",

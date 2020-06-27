@@ -4,7 +4,11 @@ import MyTextField from "../../components/MyTextField";
 import { Button } from "@material-ui/core";
 import { useCreateMessageFormManagement } from "../../hooks/chat/useCreateMessageFormManagement";
 
-export default function CreateMessageForm({ chatId }) {
+interface Props {
+  chatId: string;
+}
+
+export default function CreateMessageForm({ chatId }: Props) {
   const {
     handleCreateMessage,
     initialValues,

@@ -1,3 +1,4 @@
+import { PostsResolver } from "./resolvers/post/Posts";
 import { DeleteCommentResolver } from "./resolvers/post/comment/DeleteComment";
 import { CommentsResolver } from "./resolvers/post/comment/Comments";
 import { CreateCommentResolver } from "./resolvers/post/comment/CreateComment";
@@ -22,7 +23,7 @@ import { FriendStatusResolver } from "./resolvers/friend/FriendStatus";
 import { FriendRequestsResolver } from "./resolvers/friend/FriendRequests";
 import { UsersResolver } from "./resolvers/user/Users";
 import { DeletePostResolver } from "./resolvers/post/DeletePost";
-import { FeedResolver } from "./resolvers/post/Feed";
+
 import { SignOutResolver } from "./resolvers/sign/SignOut";
 import { CreatePostResolver } from "./resolvers/post/CreatePost";
 import { SignInResolver } from "./resolvers/sign/SignIn";
@@ -44,7 +45,7 @@ export const createServer = async () => {
       SignInResolver,
       CreatePostResolver,
       SignOutResolver,
-      FeedResolver,
+      PostsResolver,
       DeletePostResolver,
       UsersResolver,
       FriendRequestsResolver,

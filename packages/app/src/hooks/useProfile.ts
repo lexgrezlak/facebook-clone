@@ -1,12 +1,10 @@
+import { useParams } from "react-router-dom";
 import { useQuery } from "@apollo/client";
 import { UserData, UserVars } from "../types";
 import { GET_USER } from "../graphql/queries";
 
-interface Props {
-  id: string;
-}
-
-export function useProfile({ id }: Props) {
+export function useProfile() {
+  const { id } = useParams();
   const { data, loading } = useQuery<UserData, UserVars>(GET_USER, {
     variables: { id },
   });

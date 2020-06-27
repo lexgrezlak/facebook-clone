@@ -1,8 +1,7 @@
 import { useMutation } from "@apollo/client";
-import { GET_FRIEND_REQUESTS, GET_FRIEND_STATUS } from "../../graphql/queries";
+import { GET_USER } from "../../graphql/queries";
 import { ACCEPT_REQUEST } from "../../graphql/mutations";
-import { FriendRequest, FriendRequestsData } from "../../types";
-import { Status } from "../../enums";
+import { UserData, FriendshipStatus } from "../../types";
 
 interface Props {
   userId: string;
@@ -18,27 +17,23 @@ export function useAcceptRequest({ userId }: Props) {
   async function handleAcceptRequest() {
     return acceptRequest({
       variables: { userId },
+      optimisticResponse: {
+        acceptRequest: true,
+      },
       update: (store) => {
-        store.writeQuery({
-          query: GET_FRIEND_STATUS,
-          variables: { userId },
-          data: {
-            friendStatus: {
-              status: Status.FRIENDS,
-            },
-          },
-        });
+        const { user } = store.readQuery({
+          query: GET_USER,
+          variables: { id: userId },
+        }) as UserData;
 
-        const data = store.readQuery({
-          query: GET_FRIEND_REQUESTS,
-        }) as FriendRequestsData;
         store.writeQuery({
-          query: GET_FRIEND_REQUESTS,
+          query: GET_USER,
+          variables: { id: userId },
           data: {
-            friendRequests: data.friendRequests.filter(
-              (friendRequest: FriendRequest) =>
-                friendRequest.fromUser.id !== userId
-            ),
+            user: {
+              ...user,
+              friendshipStatus: FriendshipStatus.Friend,
+            },
           },
         });
       },

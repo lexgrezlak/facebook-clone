@@ -25,7 +25,7 @@ const App: React.FC = () => {
       <AppHeader />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="users/:id" element={<Profile meId={data.me.id} />} />
+        <Route path="users/:id" element={<Profile />} />
         <Route path="chats/:id" element={<Chat />} />
       </Routes>
     </div>

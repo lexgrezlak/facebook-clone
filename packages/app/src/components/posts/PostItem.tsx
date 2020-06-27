@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import Moment from "react-moment";
 import { makeStyles } from "@material-ui/core/styles";
 import { StyledPaper } from "../../styled/StyledPaper";
-import { UserPreview, Post } from "../../types";
+import { Post } from "../../types";
 import PostMenu from "./PostMenu";
 import Like from "./Like";
 import Comment from "./Comment";
@@ -14,7 +14,6 @@ import { useToggleComments } from "../../hooks/useToggleComments";
 
 interface Props {
   post: Post;
-  user: UserPreview;
 }
 
 const useStyles = makeStyles((theme) => ({
@@ -47,10 +46,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function PostItem({ post, user }: Props) {
+function PostItem({ post }: Props) {
   const classes = useStyles();
   const me = useMe();
   const { isCommentsVisible, toggleComments } = useToggleComments();
+  const { user } = post;
 
   return (
     <StyledPaper>

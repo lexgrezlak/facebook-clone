@@ -1,9 +1,7 @@
-import { MeData } from "../../types";
-import { GET_ME } from "../../graphql/queries";
+import { UserData, FriendshipStatus } from "../../types";
+import { GET_USER } from "../../graphql/queries";
 import { useMutation } from "@apollo/client";
-import { GET_FRIEND_STATUS } from "../../graphql/queries";
 import { SEND_REQUEST } from "../../graphql/mutations";
-import { Status } from "../../enums";
 
 interface Props {
   userId: string;
@@ -30,18 +28,22 @@ export function useSendRequest({ userId }: Props) {
   async function handleSendRequest() {
     await sendRequest({
       variables: { userId },
+      optimisticResponse: {
+        sendRequest: true,
+      },
       update: (store) => {
-        const { me } = store.readQuery({ query: GET_ME }) as MeData;
-        const fromUserId = me.id;
+        const { user } = store.readQuery({
+          query: GET_USER,
+          variables: { id: userId },
+        }) as UserData;
 
         store.writeQuery({
-          query: GET_FRIEND_STATUS,
-          variables: { userId },
+          query: GET_USER,
+          variables: { id: userId },
           data: {
-            friendStatus: {
-              __typename: "FriendStatus",
-              fromUserId,
-              status: Status.PENDING,
+            user: {
+              ...user,
+              friendshipStatus: FriendshipStatus.MeSentRequest,
             },
           },
         });

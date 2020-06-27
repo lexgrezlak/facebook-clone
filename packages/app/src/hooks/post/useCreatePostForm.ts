@@ -1,14 +1,13 @@
-import { Post, PostAndUser } from "../../types";
+import { PostsData, Post } from "./../../types";
 import { CreatePostInput } from "../../../../server/src/resolvers/post/CreatePostInput";
-import { FeedData } from "../../types";
 import { useMutation } from "@apollo/client";
-import { GET_FEED } from "../../graphql/queries";
+import { GET_POSTS } from "../../graphql/queries";
 import * as Yup from "yup";
-import { UserPreview } from "../../types";
 import { CREATE_POST } from "../../graphql/mutations";
 import { useMe } from "../useMe";
+
 interface CreatePostData {
-  createPost: PostAndUser;
+  createPost: Post;
 }
 
 interface CreatePostVars {
@@ -47,18 +46,40 @@ export function useCreatePostForm() {
         },
       },
       update: (store, { data }) => {
-        const { feed } = store.readQuery({ query: GET_FEED }) as FeedData;
-        data?.createPost &&
+        const { posts } = store.readQuery({ query: GET_POSTS }) as PostsData;
+
+        if (data?.createPost) {
           store.writeQuery({
-            query: GET_FEED,
+            query: GET_POSTS,
             data: {
-              feed: {
-                ...feed,
-                edges: [createPost, ...feed.edges],
+              posts: {
+                ...posts,
+                edges: [createPost, ...posts.edges],
               },
             },
           });
 
+          // update own profile in cache if it's cached
+          try {
+            const { posts: profilePosts } = store.readQuery({
+              query: GET_POSTS,
+              variables: { userId: id },
+            }) as PostsData;
+
+            store.writeQuery({
+              query: GET_POSTS,
+              variables: { userId: id },
+              data: {
+                posts: {
+                  ...profilePosts,
+                  edges: [createPost, ...profilePosts.edges],
+                },
+              },
+            });
+
+            // if posts data not found do nothing
+          } catch {}
+        }
         resetForm();
       },
     });

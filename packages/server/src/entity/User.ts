@@ -59,7 +59,7 @@ export class User extends BaseEntity {
   })
   background: string;
 
-  @Field(() => [Post])
+  // @Field(() => [Post])
   @OneToMany(() => Post, (post) => post.user)
   posts: Post[];
 

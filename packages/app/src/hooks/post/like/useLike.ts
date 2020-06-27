@@ -1,5 +1,6 @@
-import { FeedData } from "../../../types";
-import { GET_FEED } from "../../../graphql/queries";
+import { PostsData } from "./../../../types";
+import { useParams } from "react-router-dom";
+import { GET_POSTS } from "../../../graphql/queries";
 import { useMutation } from "@apollo/client";
 import { LIKE_POST } from "../../../graphql/mutations";
 
@@ -8,6 +9,9 @@ interface Props {
 }
 
 export function useLike({ postId }: Props) {
+  // gonna be undefined if it's home page
+  const { id: userId } = useParams();
+
   const [like] = useMutation(LIKE_POST, {
     onError: (error) => {
       console.log(error.graphQLErrors[0].message);
@@ -17,37 +21,42 @@ export function useLike({ postId }: Props) {
   async function handleLike() {
     return like({
       variables: { postId },
+      optimisticResponse: {
+        like: true,
+      },
       update: (store) => {
-        const dataInStore = store.readQuery({
-          query: GET_FEED,
-        }) as FeedData;
+        const variables = userId && { variables: { id: userId } };
 
-        const updatedEdges = dataInStore.feed.edges.map((post) => {
-          if (post.id === postId) {
-            const { likesInfo } = post;
-            const { likes } = likesInfo;
+        const { posts } = store.readQuery({
+          query: GET_POSTS,
+          ...variables,
+        }) as PostsData;
 
-            const updatedLikesInfo = {
+        const post = posts.edges.find((post) => post.id === postId);
+        if (post) {
+          const { likesInfo } = post;
+          const updatedPost = {
+            ...post,
+            likesInfo: {
               ...likesInfo,
-              likes: likes + 1,
+              likes: likesInfo.likes + 1,
               isLiked: true,
-            };
-            return { ...post, likesInfo: updatedLikesInfo };
-          }
-
-          return post;
-        });
-
-        store.writeQuery({
-          query: GET_FEED,
-          variables: { postId },
-          data: {
-            feed: {
-              ...dataInStore.feed,
-              edges: updatedEdges,
             },
-          },
-        });
+          };
+
+          store.writeQuery({
+            query: GET_POSTS,
+            ...variables,
+            data: {
+              posts: {
+                ...posts,
+                edges: posts.edges.map((post) =>
+                  post.id === postId ? updatedPost : post
+                ),
+              },
+            },
+          });
+        }
       },
     });
   }

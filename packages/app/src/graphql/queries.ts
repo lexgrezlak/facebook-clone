@@ -65,9 +65,9 @@ export const GET_IS_POST_LIKED = gql`
   }
 `;
 
-export const GET_FEED = gql`
-  query Feed($cursor: Float) {
-    feed(cursor: $cursor) {
+export const GET_POSTS = gql`
+  query Posts($cursor: Float, $userId: String) {
+    posts(cursor: $cursor, userId: $userId) {
       edges {
         ...PostPreview
         user {
@@ -146,9 +146,6 @@ export const GET_USER = gql`
     user(id: $id) {
       background
       ...UserPreview
-      posts {
-        ...PostPreview
-      }
       friends {
         ...UserPreview
       }
@@ -156,7 +153,6 @@ export const GET_USER = gql`
     }
   }
   ${USER_PREVIEW}
-  ${POST_PREVIEW}
 `;
 
 export const GET_FRIEND_STATUS = gql`

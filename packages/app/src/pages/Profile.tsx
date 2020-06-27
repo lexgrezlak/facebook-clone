@@ -7,7 +7,7 @@ import {
   Grid,
 } from "@material-ui/core";
 import ProfileHeader from "./profile/Header";
-import Posts from "./profile/header/Posts";
+import Posts from "./profile/Posts";
 import { makeStyles } from "@material-ui/core/styles";
 import Friends from "./profile/Friends";
 import { useProfile } from "../hooks/useProfile";
@@ -27,10 +27,9 @@ const useStyles = makeStyles(() =>
 
 function Profile() {
   const classes = useStyles();
-  const { id } = useParams();
-  const { user } = useProfile({ id });
+  const { user } = useProfile();
 
-  // loading so that it doesn't use the old data in the cache, that is previous user's id
+  // load the profile before displaying anything
   if (!user) return <CircularProgress />;
 
   return (
@@ -41,7 +40,7 @@ function Profile() {
           <Friends />
         </Grid>
         <Grid item xs={12} sm={8}>
-          <Posts user={user} />
+          <Posts />
         </Grid>
       </Grid>
     </Container>

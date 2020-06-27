@@ -1,5 +1,5 @@
 import { CommentsData, FeedData } from "../../../types";
-import { GET_COMMENTS, GET_FEED } from "../../../graphql/queries";
+import { GET_COMMENTS, GET_POSTS } from "../../../graphql/queries";
 import { useMutation } from "@apollo/client";
 import { DELETE_COMMENT } from "../../../graphql/mutations";
 
@@ -35,7 +35,7 @@ export default function useDeleteComment({ commentId, postId }: Props) {
 
         // 2. update comments count
         const { feed } = store.readQuery({
-          query: GET_FEED,
+          query: GET_POSTS,
         }) as FeedData;
 
         // the post being updated
@@ -55,7 +55,7 @@ export default function useDeleteComment({ commentId, postId }: Props) {
           );
 
           store.writeQuery({
-            query: GET_FEED,
+            query: GET_POSTS,
             data: {
               feed: {
                 ...feed,
