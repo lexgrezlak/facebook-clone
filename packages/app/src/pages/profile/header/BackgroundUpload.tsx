@@ -3,6 +3,7 @@ import {
   createStyles,
   IconButton,
   Theme,
+  Button,
 } from "@material-ui/core";
 import AddAPhotoIcon from "@material-ui/icons/AddAPhoto";
 import { makeStyles } from "@material-ui/core/styles";
@@ -18,15 +19,6 @@ const useStyles = makeStyles((theme: Theme) =>
       cursor: "pointer",
       color: "black",
     },
-    button: {
-      width: theme.spacing(5),
-      height: theme.spacing(5),
-      backgroundColor: "#f0f0f0",
-      borderRadius: "50%",
-      "&:hover": {
-        backgroundColor: "#d0d0d0",
-      },
-    },
   })
 );
 
@@ -34,7 +26,7 @@ function BackgroundUpload() {
   const classes = useStyles();
   const { handleUpdateBackground, loading } = useUpdateBackground();
 
-  if (loading) return <CircularProgress className={classes.button} />;
+  // if (loading) return <CircularProgress />;
 
   return (
     <div>
@@ -46,9 +38,9 @@ function BackgroundUpload() {
         className={classes.input}
       />
       <label htmlFor="background-upload">
-        <IconButton component="span" className={classes.button}>
-          <AddAPhotoIcon className={classes.icon} />
-        </IconButton>
+        <Button variant="contained" component="span" disabled={loading}>
+          Edit background
+        </Button>
       </label>
     </div>
   );

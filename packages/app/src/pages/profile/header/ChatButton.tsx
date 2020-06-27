@@ -1,16 +1,23 @@
 import React from "react";
-import { Button } from "@material-ui/core";
+import { Button, makeStyles, Theme, createStyles } from "@material-ui/core";
 import { useCreateChat } from "../../../hooks/chat/useCreateChat";
+import { useParams } from "react-router-dom";
 
-interface Props {
-  userId: string;
-}
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    root: {
+      display: "flex",
+    },
+  })
+);
 
-export default function ChatButton({ userId }: Props) {
+export default function ChatButton() {
+  const classes = useStyles();
+  const { id: userId } = useParams();
   const { handleCreateChat } = useCreateChat({ userId });
 
   return (
-    <div>
+    <div className={classes.root}>
       <Button variant="contained" onClick={handleCreateChat}>
         Message
       </Button>

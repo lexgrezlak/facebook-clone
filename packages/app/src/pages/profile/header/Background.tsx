@@ -1,6 +1,8 @@
 import React from "react";
-import { createStyles } from "@material-ui/core";
+import { createStyles, Badge } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
+import AvatarUpload from "./AvatarUpload";
+import BackgroundUpload from "./BackgroundUpload";
 
 const useStyles = makeStyles(() =>
   createStyles({
