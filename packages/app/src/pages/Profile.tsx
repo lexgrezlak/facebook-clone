@@ -1,7 +1,5 @@
 import React from "react";
 import { useParams } from "react-router-dom";
-import { useQuery } from "@apollo/client";
-import { GET_USER } from "../graphql/queries";
 import {
   CircularProgress,
   Container,
@@ -11,7 +9,6 @@ import {
 import ProfileHeader from "./profile/Header";
 import Posts from "./profile/header/Posts";
 import { makeStyles } from "@material-ui/core/styles";
-import { UserData, UserVars } from "../types";
 import Friends from "./profile/Friends";
 import { useProfile } from "../hooks/useProfile";
 

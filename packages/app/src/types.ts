@@ -1,3 +1,4 @@
+import { Status } from "./enums";
 export interface UserData {
   user: UserProfile;
 }
@@ -5,8 +6,13 @@ export interface UserData {
 export interface UserProfile extends UserPreview {
   background: string;
   posts: Post[];
-  otherFriends: UserPreview[];
-  commonFriends: UserPreview[];
+  friends: UserPreview[];
+  friendshipStatus: FriendshipStatus;
+}
+
+export interface FriendStatus {
+  fromUserId: string;
+  status: Status;
 }
 
 export interface UserVars {

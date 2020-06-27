@@ -1,27 +1,28 @@
 import React from "react";
 import { Button } from "@material-ui/core";
-import { useFriendButton } from "../../../hooks/useFriendButton";
 import { FriendshipStatus } from "../../../types";
+import { useFriendButton } from "../../../hooks/friend/useFriendButton";
+import { useParams } from "react-router";
+import { useFriendshipStatus } from "../../../hooks/friend/useFriendshipStatus";
 
-interface Props {
-  userId: string;
-}
+function FriendButton() {
+  const { id: userId } = useParams();
 
-function FriendButton({ userId }: Props) {
   const {
     handleSendRequest,
     handleUnfriend,
-    isFriend,
     handleCancelRequest,
     handleAcceptRequest,
   } = useFriendButton({
     userId,
   });
 
+  const friendshipStatus = useFriendshipStatus({ userId });
+
   let handleClick;
   let text;
 
-  switch (isFriend) {
+  switch (friendshipStatus) {
     case FriendshipStatus.Stranger:
       handleClick = handleSendRequest;
       text = "Add friend";

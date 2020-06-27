@@ -149,12 +149,10 @@ export const GET_USER = gql`
       posts {
         ...PostPreview
       }
-      commonFriends {
+      friends {
         ...UserPreview
       }
-      otherFriends {
-        ...UserPreview
-      }
+      friendshipStatus
     }
   }
   ${USER_PREVIEW}

@@ -11,11 +11,7 @@ export function useFriends({ id }: Props) {
     query: GET_USER,
     variables: { id },
   }) as UserData;
-  const { commonFriends, otherFriends } = user;
+  const { friends } = user;
 
-  const friends = [...commonFriends, ...otherFriends];
-  const friendsCount = friends.length;
-  const commonFriendsCount = commonFriends.length;
-
-  return { friends, friendsCount, commonFriendsCount };
+  return friends;
 }

@@ -1,8 +1,7 @@
-import { useSendRequest } from "./friendButton/useSendRequest";
-import { useUnfriend } from "./friendButton/useUnfriend";
-import { useCancelRequest } from "./friendButton/useCancelRequest";
-import { useAcceptRequest } from "./friendButton/useAcceptRequest";
-import { useIsFriend } from "./friendButton/useIsFriend";
+import { useSendRequest } from "./useSendRequest";
+import { useUnfriend } from "./useUnfriend";
+import { useCancelRequest } from "./useCancelRequest";
+import { useAcceptRequest } from "./useAcceptRequest";
 
 interface Props {
   userId: string;
@@ -14,10 +13,7 @@ export const useFriendButton = ({ userId }: Props) => {
   const { handleCancelRequest } = useCancelRequest({ userId });
   const { handleAcceptRequest } = useAcceptRequest({ userId });
 
-  const { isFriend } = useIsFriend({ userId });
-
   return {
-    isFriend,
     handleSendRequest,
     handleUnfriend,
     handleCancelRequest,
