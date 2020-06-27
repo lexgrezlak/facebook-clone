@@ -24,7 +24,7 @@ export function useUnlike({ postId }: Props) {
         unlike: true,
       },
       update: (store) => {
-        const variables = userId && { variables: { id: userId } };
+        const variables = userId && { variables: { userId } };
 
         const { posts } = store.readQuery({
           query: GET_POSTS,

@@ -1,6 +1,6 @@
-import { UserData, Post } from "./../../../types";
+import { UserData, Post, PostsData } from "./../../../types";
 import { CreateCommentInput } from "./../../../../../server/src/resolvers/post/comment/CreateCommentInput";
-import { CommentsData, FeedData } from "../../../types";
+import { CommentsData } from "../../../types";
 import { GET_COMMENTS, GET_POSTS, GET_USER } from "../../../graphql/queries";
 import { useMutation } from "@apollo/client";
 import * as Yup from "yup";
@@ -41,54 +41,25 @@ export function useCreateCommentForm({ postId }: Props) {
           variables: { postId },
         }) as CommentsData;
 
-        // 1. update comments list
-        store.writeQuery({
-          query: GET_COMMENTS,
-          variables: { postId },
-          data: {
-            comments: [...comments, data?.createComment],
-          },
-        });
-
-        // 2. update comments count
-
-        // if the route is user's profile
-        if (userId) {
-          const { user } = store.readQuery({
-            query: GET_USER,
-            variables: { id: userId },
-          }) as UserData;
-
-          const post = user.posts.find((post) => post.id === postId) as Post;
-          const { commentsInfo } = post;
-
-          const updatedPost = {
-            ...post,
-            commentsInfo: {
-              ...commentsInfo,
-              comments: commentsInfo.comments + 1,
-            },
-          };
-
+        if (data) {
+          // update comments list
           store.writeQuery({
-            query: GET_USER,
-            variables: { id: userId },
+            query: GET_COMMENTS,
+            variables: { postId },
             data: {
-              user: {
-                ...user,
-                posts: user.posts.map((post) =>
-                  post.id === postId ? updatedPost : post
-                ),
-              },
+              comments: [...comments, data.createComment],
             },
           });
-          // else if it's home page
-        } else {
-          const { feed } = store.readQuery({ query: GET_POSTS }) as FeedData;
 
-          // the post being updated
-          const post = feed.edges.find((post) => post.id === postId);
+          // update comments count
+          const variables = userId && { variables: { userId } };
 
+          const { posts } = store.readQuery({
+            query: GET_POSTS,
+            ...variables,
+          }) as PostsData;
+
+          const post = posts.edges.find((post) => post.id === postId);
           if (post) {
             const { commentsInfo } = post;
             const updatedPost = {
@@ -98,16 +69,16 @@ export function useCreateCommentForm({ postId }: Props) {
                 comments: commentsInfo.comments + 1,
               },
             };
-            const updatedEdges = feed.edges.map((post) =>
-              post.id === postId ? updatedPost : post
-            );
 
             store.writeQuery({
               query: GET_POSTS,
+              ...variables,
               data: {
-                feed: {
-                  ...feed,
-                  edges: updatedEdges,
+                posts: {
+                  ...posts,
+                  edges: posts.edges.map((post) =>
+                    post.id === postId ? updatedPost : post
+                  ),
                 },
               },
             });

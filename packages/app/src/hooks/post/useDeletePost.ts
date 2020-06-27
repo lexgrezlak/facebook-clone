@@ -1,8 +1,8 @@
 import { useParams } from "react-router-dom";
-import { FeedData, UserData } from "../../types";
 import { useMutation } from "@apollo/client";
-import { GET_POSTS, GET_USER } from "../../graphql/queries";
+import { GET_POSTS } from "../../graphql/queries";
 import { DELETE_POST } from "../../graphql/mutations";
+import { PostsData } from "../../types";
 
 interface Props {
   id: string;
@@ -15,6 +15,7 @@ export function useDeletePost({ id }: Props) {
     },
   });
 
+  // undefined if it's home page
   const { id: userId } = useParams();
 
   function handleDeletePost() {
@@ -24,37 +25,25 @@ export function useDeletePost({ id }: Props) {
         deletePost: true,
       },
       update: (store) => {
-        // if its user's profile
-        if (userId) {
-          const { user } = store.readQuery({
-            query: GET_USER,
-            variables: { id: userId },
-          }) as UserData;
+        const variables = userId && {
+          variables: { userId },
+        };
 
-          store.writeQuery({
-            query: GET_USER,
-            variables: { id: userId },
-            data: {
-              user: {
-                ...user,
-                posts: user.posts.filter((post) => post.id !== id),
-              },
-            },
-          });
+        const { posts } = store.readQuery({
+          query: GET_POSTS,
+          ...variables,
+        }) as PostsData;
 
-          // else it's home page
-        } else {
-          const { feed } = store.readQuery({ query: GET_POSTS }) as FeedData;
-          store.writeQuery({
-            query: GET_POSTS,
-            data: {
-              feed: {
-                ...feed,
-                edges: feed.edges.filter((post) => post.id !== id),
-              },
+        store.writeQuery({
+          query: GET_POSTS,
+          ...variables,
+          data: {
+            posts: {
+              ...posts,
+              edges: posts.edges.filter((post) => post.id !== id),
             },
-          });
-        }
+          },
+        });
       },
     });
   }

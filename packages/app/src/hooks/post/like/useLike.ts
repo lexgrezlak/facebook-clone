@@ -25,7 +25,7 @@ export function useLike({ postId }: Props) {
         like: true,
       },
       update: (store) => {
-        const variables = userId && { variables: { id: userId } };
+        const variables = userId && { variables: { userId } };
 
         const { posts } = store.readQuery({
           query: GET_POSTS,
