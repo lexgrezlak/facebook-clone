@@ -1,5 +1,5 @@
 import { PostsData } from "./../../../types";
-import { CommentsData, FeedData } from "../../../types";
+import { CommentsData } from "../../../types";
 import { GET_COMMENTS, GET_POSTS } from "../../../graphql/queries";
 import { useMutation } from "@apollo/client";
 import { DELETE_COMMENT } from "../../../graphql/mutations";

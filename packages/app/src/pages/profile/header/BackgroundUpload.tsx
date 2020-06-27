@@ -1,16 +1,9 @@
-import {
-  CircularProgress,
-  createStyles,
-  IconButton,
-  Theme,
-  Button,
-} from "@material-ui/core";
-import AddAPhotoIcon from "@material-ui/icons/AddAPhoto";
+import { createStyles, Button } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import React from "react";
 import { useUpdateBackground } from "../../../hooks/upload/useUpdateBackground";
 
-const useStyles = makeStyles((theme: Theme) =>
+const useStyles = makeStyles(() =>
   createStyles({
     input: {
       display: "none",
@@ -25,8 +18,6 @@ const useStyles = makeStyles((theme: Theme) =>
 function BackgroundUpload() {
   const classes = useStyles();
   const { handleUpdateBackground, loading } = useUpdateBackground();
-
-  // if (loading) return <CircularProgress />;
 
   return (
     <div>

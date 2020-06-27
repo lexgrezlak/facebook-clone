@@ -1,14 +1,18 @@
+import { FriendRequestsData } from "./../../types";
+import { GET_FRIEND_REQUESTS } from "./../../graphql/queries";
 import { useMutation } from "@apollo/client";
-import { GET_USER } from "../../graphql/queries";
 import { ACCEPT_REQUEST } from "../../graphql/mutations";
-import { UserData, FriendshipStatus } from "../../types";
 
 interface Props {
   userId: string;
 }
 
+interface AcceptRequestData {
+  acceptRequest: boolean;
+}
+
 export function useAcceptRequest({ userId }: Props) {
-  const [acceptRequest] = useMutation(ACCEPT_REQUEST, {
+  const [acceptRequest] = useMutation<AcceptRequestData>(ACCEPT_REQUEST, {
     onError: (error) => {
       console.log(error.graphQLErrors[0].message);
     },
@@ -21,19 +25,16 @@ export function useAcceptRequest({ userId }: Props) {
         acceptRequest: true,
       },
       update: (store) => {
-        const { user } = store.readQuery({
-          query: GET_USER,
-          variables: { id: userId },
-        }) as UserData;
+        const { friendRequests } = store.readQuery({
+          query: GET_FRIEND_REQUESTS,
+        }) as FriendRequestsData;
 
         store.writeQuery({
-          query: GET_USER,
-          variables: { id: userId },
+          query: GET_FRIEND_REQUESTS,
           data: {
-            user: {
-              ...user,
-              friendshipStatus: FriendshipStatus.Friend,
-            },
+            friendRequests: friendRequests.filter(
+              (request) => request.fromUser.id !== userId
+            ),
           },
         });
       },

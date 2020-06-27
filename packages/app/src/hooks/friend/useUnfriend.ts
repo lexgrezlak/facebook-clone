@@ -1,6 +1,8 @@
+import { UserData } from "./../../types";
+import { GET_USER } from "./../../graphql/queries";
 import { useMutation } from "@apollo/client";
-import { GET_FRIEND_STATUS } from "../../graphql/queries";
 import { UNFRIEND } from "../../graphql/mutations";
+import { FriendshipStatus } from "../../types";
 
 interface Props {
   userId: string;
@@ -17,11 +19,19 @@ export function useUnfriend({ userId }: Props) {
     return unfriend({
       variables: { userId },
       update: (store) => {
+        const { user } = store.readQuery({
+          query: GET_USER,
+          variables: { id: userId },
+        }) as UserData;
+
         store.writeQuery({
-          query: GET_FRIEND_STATUS,
+          query: GET_USER,
           variables: { userId },
           data: {
-            friendStatus: null,
+            user: {
+              ...user,
+              friendshipStatus: FriendshipStatus.Stranger,
+            },
           },
         });
       },

@@ -1,5 +1,4 @@
 import React from "react";
-import { useParams } from "react-router-dom";
 import {
   CircularProgress,
   Container,
@@ -16,11 +15,6 @@ const useStyles = makeStyles(() =>
   createStyles({
     root: {
       flexGrow: 1,
-    },
-    grid: {
-      borderColor: "red",
-      borderStyle: "solid",
-      borderWidth: "10px",
     },
   })
 );

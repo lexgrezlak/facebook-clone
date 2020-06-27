@@ -1,6 +1,6 @@
 import { useMutation } from "@apollo/client";
-import { GET_USER } from "../../graphql/queries";
-import { UserData, FriendshipStatus } from "../../types";
+import { GET_FRIEND_REQUESTS } from "../../graphql/queries";
+import { FriendRequestsData } from "../../types";
 import { REJECT_REQUEST } from "../../graphql/mutations";
 
 interface Props {
@@ -32,19 +32,16 @@ export function useRejectRequest({ userId }: Props) {
         rejectRequest: true,
       },
       update: (store) => {
-        const { user } = store.readQuery({
-          query: GET_USER,
-          variables: { id: userId },
-        }) as UserData;
+        const { friendRequests } = store.readQuery({
+          query: GET_FRIEND_REQUESTS,
+        }) as FriendRequestsData;
 
         store.writeQuery({
-          query: GET_USER,
-          variables: { id: userId },
+          query: GET_FRIEND_REQUESTS,
           data: {
-            user: {
-              ...user,
-              friendshipStatus: FriendshipStatus.Stranger,
-            },
+            friendRequests: friendRequests.filter(
+              (request) => request.fromUser.id !== userId
+            ),
           },
         });
       },

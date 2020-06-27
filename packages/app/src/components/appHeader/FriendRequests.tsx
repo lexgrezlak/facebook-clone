@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) =>
 
 function FriendRequests() {
   const classes = useStyles();
-  const { friendRequests } = useFriendRequests();
+  const friendRequests = useFriendRequests();
   const { handleClick, handleClose, open, anchorEl, id } = usePopover({
     name: "friend-requests",
   });
@@ -28,7 +28,10 @@ function FriendRequests() {
         color="inherit"
         onClick={handleClick}
       >
-        <Badge badgeContent={friendRequests.length} color="secondary">
+        <Badge
+          badgeContent={friendRequests ? friendRequests.length : 0}
+          color="secondary"
+        >
           <GroupAddIcon fontSize="large" />
         </Badge>
       </IconButton>

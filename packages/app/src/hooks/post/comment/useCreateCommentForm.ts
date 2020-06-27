@@ -1,7 +1,7 @@
-import { UserData, Post, PostsData } from "./../../../types";
+import { PostsData } from "./../../../types";
 import { CreateCommentInput } from "./../../../../../server/src/resolvers/post/comment/CreateCommentInput";
 import { CommentsData } from "../../../types";
-import { GET_COMMENTS, GET_POSTS, GET_USER } from "../../../graphql/queries";
+import { GET_COMMENTS, GET_POSTS } from "../../../graphql/queries";
 import { useMutation } from "@apollo/client";
 import * as Yup from "yup";
 import { CREATE_COMMENT } from "../../../graphql/mutations";
