@@ -4,7 +4,7 @@ import { CircularProgress } from "@material-ui/core";
 import EmptyList from "../../EmptyList";
 
 interface Props {
-  notifications: Notification[];
+  notifications: Notification[] | undefined;
 }
 
 export default function NotificationList({ notifications }: Props) {

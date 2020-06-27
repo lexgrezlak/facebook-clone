@@ -1,7 +1,6 @@
 import { UserData } from "./../../types";
 import { GET_USER } from "../../graphql/queries";
 import { useApolloClient } from "@apollo/client";
-import { FriendshipStatus } from "../../types";
 
 interface Props {
   userId: string;

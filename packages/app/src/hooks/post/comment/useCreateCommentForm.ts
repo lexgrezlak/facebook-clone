@@ -1,9 +1,9 @@
-import { CommentsData, FeedData } from "./../../types";
-import { GET_COMMENTS, GET_FEED } from "./../../graphql/queries";
-import { CreateCommentInput } from "./../../../../server/src/resolvers/post/CreateCommentInput";
+import { CreateCommentInput } from "./../../../../../server/src/resolvers/post/comment/CreateCommentInput";
+import { CommentsData, FeedData } from "../../../types";
+import { GET_COMMENTS, GET_FEED } from "../../../graphql/queries";
 import { useMutation } from "@apollo/client";
 import * as Yup from "yup";
-import { CREATE_COMMENT } from "../../graphql/mutations";
+import { CREATE_COMMENT } from "../../../graphql/mutations";
 
 interface CreateCommentData {
   createComment: Comment;
@@ -18,7 +18,7 @@ interface Props {
   postId: string;
 }
 
-export function useCreateComment({ postId }: Props) {
+export function useCreateCommentForm({ postId }: Props) {
   const initialValues: CreateCommentInput = {
     content: "",
   };

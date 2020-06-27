@@ -1,7 +1,6 @@
 import { GET_CHAT, GET_CHATS } from "./../../graphql/queries";
 import { ChatData, MessageReceivedData, ChatsData } from "./../../types";
 import { useQuery, useSubscription } from "@apollo/client";
-import { useApolloClient } from "@apollo/client";
 import { MESSAGE_RECEIVED } from "../../graphql/subscriptions";
 
 interface Props {

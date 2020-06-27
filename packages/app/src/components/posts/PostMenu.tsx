@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { IconButton, Menu, MenuItem } from "@material-ui/core";
 import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
-import { useDeletePostManagement } from "../../hooks/post/useDeletePostManagement";
+import { useDeletePost } from "../../hooks/post/useDeletePost";
 
 interface Props {
   id: string;
@@ -10,7 +10,7 @@ interface Props {
 function PostMenu({ id }: Props) {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
-  const { handleDeletePost } = useDeletePostManagement({ id });
+  const { handleDeletePost } = useDeletePost({ id });
 
   const handleMenuOpen = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);

@@ -1,11 +1,6 @@
 import React from "react";
 import FriendRequestItem from "./FriendRequestItem";
-import {
-  CircularProgress,
-  List,
-  ListItem,
-  ListItemText,
-} from "@material-ui/core";
+import { CircularProgress, List } from "@material-ui/core";
 import { FriendRequest } from "../../../types";
 import EmptyList from "../../EmptyList";
 

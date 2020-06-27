@@ -1,7 +1,7 @@
 import React from "react";
 import DeleteIcon from "@material-ui/icons/Delete";
 import { IconButton } from "@material-ui/core";
-import useDeleteComment from "../../../hooks/post/useDeleteComment";
+import useDeleteComment from "../../../hooks/post/comment/useDeleteComment";
 
 interface Props {
   commentId: string;

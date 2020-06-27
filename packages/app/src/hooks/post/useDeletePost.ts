@@ -7,7 +7,7 @@ interface Props {
   id: string;
 }
 
-export function useDeletePostManagement({ id }: Props) {
+export function useDeletePost({ id }: Props) {
   const [deletePost] = useMutation(DELETE_POST, {
     onError: (error) => {
       console.log(error.graphQLErrors[0].message);
@@ -18,11 +18,14 @@ export function useDeletePostManagement({ id }: Props) {
     return deletePost({
       variables: { id },
       update: (store) => {
-        const dataInStore = store.readQuery({ query: GET_FEED }) as FeedData;
+        const { feed } = store.readQuery({ query: GET_FEED }) as FeedData;
         store.writeQuery({
           query: GET_FEED,
           data: {
-            feed: dataInStore.feed.edges.filter((post) => post.id !== id),
+            feed: {
+              ...feed,
+              edges: feed.edges.filter((post) => post.id !== id),
+            },
           },
         });
       },

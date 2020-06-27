@@ -1,7 +1,7 @@
-import { CommentsData, FeedData } from "./../../types";
-import { GET_COMMENTS, GET_FEED } from "./../../graphql/queries";
+import { CommentsData, FeedData } from "../../../types";
+import { GET_COMMENTS, GET_FEED } from "../../../graphql/queries";
 import { useMutation } from "@apollo/client";
-import { DELETE_COMMENT } from "../../graphql/mutations";
+import { DELETE_COMMENT } from "../../../graphql/mutations";
 
 interface Props {
   commentId: string;
