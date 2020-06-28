@@ -13,11 +13,13 @@ export const GET_ME = gql`
 export const GET_NOTIFICATIONS = gql`
   query Notifications {
     notifications {
+      id
       user {
         ...UserPreview
       }
       postId
       type
+      receivedAt
     }
   }
   ${USER_PREVIEW}

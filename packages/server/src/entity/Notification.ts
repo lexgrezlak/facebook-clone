@@ -43,4 +43,8 @@ export class Notification extends BaseEntity {
   @Field()
   @Column("timestamp", { default: () => "CURRENT_TIMESTAMP(6)" })
   receivedAt: Date;
+
+  @Field({ nullable: true })
+  @Column("timestamp", { default: null })
+  readTime: Date;
 }

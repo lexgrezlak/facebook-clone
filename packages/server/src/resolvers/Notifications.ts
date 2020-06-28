@@ -13,9 +13,12 @@ export class NotificationsResolver {
     const posts = await Post.find({ where: { userId }, select: ["id"] });
     const postIds = posts.map((post) => post.id);
 
-    return Notification.find({
+    const notifications = await Notification.find({
       where: { postId: In(postIds) },
       relations: ["user"],
+      order: { receivedAt: "DESC" },
     });
+
+    return notifications;
   }
 }

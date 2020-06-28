@@ -1,24 +1,24 @@
-import React, { useState } from "react";
+import React from "react";
 import { IconButton, Menu, MenuItem } from "@material-ui/core";
 import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
 import { useDeletePost } from "../../hooks/post/useDeletePost";
+import usePopover from "../../hooks/usePopover";
 
 interface Props {
   id: string;
 }
 
 function PostMenu({ id }: Props) {
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-
   const { handleDeletePost } = useDeletePost({ id });
-
-  const handleMenuOpen = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleMenuClose = () => {
-    setAnchorEl(null);
-  };
+  const {
+    id: popoverId,
+    handleClick,
+    handleClose,
+    open,
+    anchorEl,
+  } = usePopover({
+    name: "menu",
+  });
 
   return (
     <div>
@@ -26,16 +26,16 @@ function PostMenu({ id }: Props) {
         aria-label="settings"
         aria-controls="menu"
         aria-haspopup="true"
-        onClick={handleMenuOpen}
+        onClick={handleClick}
       >
         <MoreHorizIcon />
       </IconButton>
       <Menu
-        id="menu"
+        id={popoverId}
         anchorEl={anchorEl}
         keepMounted
-        open={Boolean(anchorEl)}
-        onClose={handleMenuClose}
+        open={open}
+        onClose={handleClose}
         anchorOrigin={{
           vertical: "top",
           horizontal: "right",
@@ -45,7 +45,6 @@ function PostMenu({ id }: Props) {
           horizontal: "right",
         }}
       >
-        <MenuItem onClick={handleMenuClose}>Edit</MenuItem>
         <MenuItem onClick={handleDeletePost}>Delete</MenuItem>
       </Menu>
     </div>

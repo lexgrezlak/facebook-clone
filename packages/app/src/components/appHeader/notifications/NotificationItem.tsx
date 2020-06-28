@@ -10,7 +10,7 @@ import {
   createStyles,
 } from "@material-ui/core";
 import { NotificationType } from "../../../enums";
-import { Link } from "react-router-dom";
+import Moment from "react-moment";
 
 interface Props {
   notification: Notification;
@@ -19,16 +19,8 @@ interface Props {
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
+      width: 360,
       backgroundColor: theme.palette.background.paper,
-    },
-    link: {
-      textDecoration: "none",
-      color: "inherit",
-      "& > *": {
-        "&:hover": {
-          backgroundColor: "#f0f0f0",
-        },
-      },
     },
   })
 );
@@ -37,20 +29,18 @@ export default function NotificationItem({ notification }: Props) {
   const classes = useStyles();
 
   return (
-    <Link to={`/posts/${notification.postId}`} className={classes.link}>
-      <ListItem className={classes.root}>
-        <ListItemAvatar>
-          <Avatar src={notification.user.avatar} />
-        </ListItemAvatar>
-        <ListItemText
-          primary={notification.user.fullName}
-          secondary={`${
-            notification.type === NotificationType.PostLiked
-              ? "liked"
-              : "commented"
-          } your post!`}
-        />
-      </ListItem>
-    </Link>
+    <ListItem className={classes.root}>
+      <ListItemAvatar>
+        <Avatar src={notification.user.avatar} />
+      </ListItemAvatar>
+      <ListItemText
+        primary={`${notification.user.fullName} ${
+          notification.type === NotificationType.PostLiked
+            ? "liked"
+            : "commented"
+        } your post!`}
+        secondary={<Moment fromNow date={notification.receivedAt} />}
+      />
+    </ListItem>
   );
 }

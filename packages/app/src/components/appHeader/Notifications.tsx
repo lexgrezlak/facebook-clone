@@ -1,8 +1,6 @@
 import React from "react";
 import NotificationsIcon from "@material-ui/icons/Notifications";
 import { IconButton, Popover } from "@material-ui/core";
-import { useQuery } from "@apollo/client";
-import { GET_NOTIFICATIONS } from "../../graphql/queries";
 import NotificationList from "./notifications/NotificationList";
 import usePopover from "../../hooks/usePopover";
 import { useNotifications } from "../../hooks/useNotifications";
