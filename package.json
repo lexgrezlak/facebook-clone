@@ -18,6 +18,7 @@
     ]
   },
   "scripts": {
+    "start": "cd packages/server && npm run start",
     "app": "yarn workspace app start",
     "server-dev": "yarn workspace server dev",
     "dev": "concurrently --kill-others-on-fail \"yarn app\" \"yarn server-dev\""
