@@ -13,12 +13,14 @@ export const GET_ME = gql`
 export const GET_NOTIFICATIONS = gql`
   query Notifications {
     notifications {
-      id
-      message
-      receivedAt
-      link
+      user {
+        ...UserPreview
+      }
+      postId
+      type
     }
   }
+  ${USER_PREVIEW}
 `;
 
 export const GET_CHAT = gql`
@@ -153,13 +155,4 @@ export const GET_USER = gql`
     }
   }
   ${USER_PREVIEW}
-`;
-
-export const GET_FRIEND_STATUS = gql`
-  query FriendStatus($userId: String!) {
-    friendStatus(userId: $userId) {
-      fromUserId
-      status
-    }
-  }
 `;

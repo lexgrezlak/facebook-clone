@@ -1,27 +1,22 @@
 import { PostLike } from "./../../entity/PostLike";
-import { CreatePostInput } from "./CreatePostInput";
 import { Context } from "../../context";
-import {
-  Resolver,
-  Mutation,
-  Arg,
-  Ctx,
-  PubSub,
-  PubSubEngine,
-} from "type-graphql";
-import { Post } from "../../entity/Post";
+import { Resolver, Mutation, Arg, Ctx } from "type-graphql";
+import { NotificationType } from "../../enums";
+import { Notification } from "./../../entity/Notification";
 
 @Resolver()
 export class LikePostResolver {
   @Mutation(() => Boolean)
-  async likePost(
-    @Arg("postId") postId: string,
-    @Ctx() ctx: Context,
-    @PubSub() pubSub: PubSubEngine
-  ) {
+  async likePost(@Arg("postId") postId: string, @Ctx() ctx: Context) {
     const { userId } = ctx.req;
 
     await PostLike.create({ postId, userId }).save();
+
+    Notification.create({
+      userId,
+      postId,
+      type: NotificationType.PostLiked,
+    }).save();
 
     return true;
   }

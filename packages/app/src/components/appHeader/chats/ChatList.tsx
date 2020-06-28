@@ -23,15 +23,12 @@ const useStyles = makeStyles((theme) => ({
 
   link: {
     textDecoration: "none",
+    color: "inherit",
 
     "& > *": {
       "&:hover": {
         backgroundColor: "#f0f0f0",
       },
-    },
-
-    "&:visited": {
-      color: "inherit",
     },
   },
 

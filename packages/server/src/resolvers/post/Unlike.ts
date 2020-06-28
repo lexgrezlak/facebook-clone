@@ -1,15 +1,8 @@
 import { PostLike } from "./../../entity/PostLike";
-import { CreatePostInput } from "./CreatePostInput";
 import { Context } from "../../context";
-import {
-  Resolver,
-  Mutation,
-  Arg,
-  Ctx,
-  PubSub,
-  PubSubEngine,
-} from "type-graphql";
-import { Post } from "../../entity/Post";
+import { Resolver, Mutation, Arg, Ctx } from "type-graphql";
+import { NotificationType } from "../../enums";
+import { Notification } from "../../entity/Notification";
 
 @Resolver()
 export class UnlikePostResolver {
@@ -18,6 +11,7 @@ export class UnlikePostResolver {
     const { userId } = ctx.req;
 
     await PostLike.delete({ postId, userId });
+    Notification.delete({ postId, userId, type: NotificationType.PostLiked });
 
     return true;
   }

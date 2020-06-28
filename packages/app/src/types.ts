@@ -1,4 +1,4 @@
-import { Status } from "./enums";
+import { Status, NotificationType } from "./enums";
 export interface UserData {
   user: UserProfile;
 }
@@ -37,9 +37,10 @@ export interface MessagePreview {
 
 export interface Notification {
   id: string;
-  message: string;
   receivedAt: Date;
-  link: string;
+  postId: string;
+  user: UserPreview;
+  type: NotificationType;
 }
 
 export interface ChatPreview {

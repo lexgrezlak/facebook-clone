@@ -1,7 +1,8 @@
 import React from "react";
 import { Notification } from "../../../types";
-import { CircularProgress } from "@material-ui/core";
+import { CircularProgress, List } from "@material-ui/core";
 import EmptyList from "../../EmptyList";
+import NotificationItem from "./NotificationItem";
 
 interface Props {
   notifications: Notification[] | undefined;
@@ -12,10 +13,10 @@ export default function NotificationList({ notifications }: Props) {
   if (notifications.length === 0) return <EmptyList text="0 notifications" />;
 
   return (
-    <div>
+    <List>
       {notifications.map((notification) => (
-        <div>{notification.message}</div>
+        <NotificationItem notification={notification} key={notification.id} />
       ))}
-    </div>
+    </List>
   );
 }

@@ -1,4 +1,3 @@
-import { PostLike } from "./PostLike";
 import {
   BaseEntity,
   Column,
@@ -6,12 +5,11 @@ import {
   PrimaryGeneratedColumn,
   ManyToOne,
   JoinColumn,
-  ManyToMany,
-  JoinTable,
-  OneToMany,
 } from "typeorm";
-import { Field, ID, ObjectType, Root } from "type-graphql";
+import { Field, ID, ObjectType } from "type-graphql";
 import { User } from "./User";
+import { Post } from "./Post";
+import { NotificationType } from "../enums";
 
 @ObjectType()
 @Entity()
@@ -20,6 +18,7 @@ export class Notification extends BaseEntity {
   @PrimaryGeneratedColumn("uuid")
   id: string;
 
+  @Field()
   @Column()
   userId: string;
 
@@ -29,12 +28,17 @@ export class Notification extends BaseEntity {
   user: User;
 
   @Field()
-  @Column("text")
-  message: string;
+  @Column()
+  postId: string;
 
-  @Field()
-  @Column("text")
-  link: string;
+  @Field(() => Post)
+  @ManyToOne(() => Post)
+  @JoinColumn()
+  post: Post;
+
+  @Field(() => String)
+  @Column("enum", { enum: NotificationType })
+  type: NotificationType;
 
   @Field()
   @Column("timestamp", { default: () => "CURRENT_TIMESTAMP(6)" })
