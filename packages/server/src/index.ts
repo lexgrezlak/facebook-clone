@@ -13,7 +13,8 @@ import http from "http";
   await createTypeORMConnection();
 
   const app = express();
-  app.use(cors({ origin: "localhost:3000", credentials: true }));
+  app.use(express.static("build"));
+  app.use(cors());
   app.use(cookieParser());
   app.use(authorization());
   server.applyMiddleware({ app, cors: false });
