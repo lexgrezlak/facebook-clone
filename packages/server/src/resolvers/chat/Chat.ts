@@ -26,6 +26,9 @@ export class ChatResolver {
       return message;
     });
 
+    // sort messages so that the latest are last (on the bottom)
+    chat.messages.sort((a, b) => a.sentTime.getTime() - b.sentTime.getTime());
+
     // get rid of me (user) from the users array
     // to not have to filter out me on the client side
     chat.users = chat.users.filter((user) => user.id !== userId);

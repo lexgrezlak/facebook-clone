@@ -2,7 +2,7 @@ import React from "react";
 import { Formik, Form } from "formik";
 import MyTextField from "../../components/MyTextField";
 import { Button } from "@material-ui/core";
-import { useCreateMessageFormManagement } from "../../hooks/chat/useCreateMessageFormManagement";
+import { useCreateMessageForm } from "../../hooks/chat/useCreateMessageForm";
 
 interface Props {
   chatId: string;
@@ -13,7 +13,7 @@ export default function CreateMessageForm({ chatId }: Props) {
     handleCreateMessage,
     initialValues,
     validationSchema,
-  } = useCreateMessageFormManagement({ chatId });
+  } = useCreateMessageForm({ chatId });
 
   return (
     <Formik

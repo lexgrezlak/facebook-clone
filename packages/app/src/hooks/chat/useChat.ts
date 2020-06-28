@@ -18,25 +18,29 @@ export const useChat = ({ chatId }: Props) => {
   if (chat) {
     const { chats } = client.readQuery({ query: GET_CHATS }) as ChatsData;
     const theChat = chats.find((chat) => chat.id === chatId);
-    const readChat = { ...theChat, unread: false };
-    client.writeQuery({
-      query: GET_CHATS,
-      data: {
-        chats: chats.map((chat) => (chat.id === chatId ? readChat : chat)),
-      },
-    });
+    if (theChat) {
+      const readChat = { ...theChat, unread: false };
+      client.writeQuery({
+        query: GET_CHATS,
+        data: {
+          chats: chats.map((chat) => (chat.id === chatId ? readChat : chat)),
+        },
+      });
+    }
   }
 
   useSubscription<MessageReceivedData>(MESSAGE_RECEIVED, {
     onSubscriptionData: ({ subscriptionData }) => {
       const messageReceived = subscriptionData.data?.messageReceived;
 
+      console.log(messageReceived);
+
       if (messageReceived && chat) {
         client.writeQuery({
           query: GET_CHAT,
           variables: { id: chatId },
           data: {
-            chat: { ...chat, messages: [...chat.messages, messageReceived] },
+            chat: { ...chat, messages: chat.messages.concat(messageReceived) },
           },
         });
       }

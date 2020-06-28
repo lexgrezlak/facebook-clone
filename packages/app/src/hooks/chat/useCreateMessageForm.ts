@@ -18,7 +18,7 @@ interface Props {
   chatId: string;
 }
 
-export function useCreateMessageFormManagement({ chatId }: Props) {
+export function useCreateMessageForm({ chatId }: Props) {
   const initialValues: CreateMessageInput = {
     content: "",
   };
@@ -36,21 +36,23 @@ export function useCreateMessageFormManagement({ chatId }: Props) {
     return createMessage({
       variables: { input, chatId },
       update: (store, { data }) => {
-        const dataInStore = store.readQuery({
+        const { chat } = store.readQuery({
           query: GET_CHAT,
           variables: { id: chatId },
         }) as ChatData;
-        data?.createMessage &&
+
+        if (data) {
           store.writeQuery({
             query: GET_CHAT,
             variables: { id: chatId },
             data: {
               chat: {
-                ...dataInStore.chat,
-                messages: [...dataInStore.chat.messages, data.createMessage],
+                ...chat,
+                messages: chat.messages.concat(data.createMessage),
               },
             },
           });
+        }
 
         resetForm();
       },
