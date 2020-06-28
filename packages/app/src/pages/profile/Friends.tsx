@@ -6,13 +6,12 @@ import { Typography } from "@material-ui/core";
 
 export default function Friends() {
   const { id } = useParams();
-  const { friends, friendsCount, commonFriendsCount } = useFriends({ id });
+  const friends = useFriends({ id });
 
   return (
     <div>
       <Typography variant="h5" align="center">
-        {friendsCount} {friendsCount === 1 ? "friend" : "friends"} (
-        {commonFriendsCount} common)
+        {friends.length} {friends.length === 1 ? "friend" : "friends"}
       </Typography>
       <FriendList friends={friends} />
     </div>

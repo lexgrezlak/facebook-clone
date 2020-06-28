@@ -6,7 +6,6 @@ import {
   PubSub,
   PubSubEngine,
 } from "type-graphql";
-
 import { Topic } from "../../enums";
 import { Context } from "../../context";
 import { CreateMessageInput } from "./CreateMessageInput";

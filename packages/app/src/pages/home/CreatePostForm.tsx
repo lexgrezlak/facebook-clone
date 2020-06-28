@@ -1,13 +1,12 @@
 import React from "react";
-import { useApolloClient } from "@apollo/client";
-import { GET_ME } from "../../graphql/queries";
 import { Avatar, Button, createStyles, Theme } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import { useCreatePostFormManagement } from "../../hooks/post/useCreatePostFormManagement";
+import { useCreatePostForm } from "../../hooks/post/useCreatePostForm";
 import MyTextField from "../../components/MyTextField";
 import { Form, Formik } from "formik";
 import { StyledPaper } from "../../styled/StyledPaper";
 import { Link } from "react-router-dom";
+import { useMe } from "../../hooks/useMe";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -34,16 +33,13 @@ const useStyles = makeStyles((theme: Theme) =>
 
 function CreatePostForm() {
   const classes = useStyles();
-
-  const client = useApolloClient();
-  const data = client.readQuery({ query: GET_ME });
-  const { me } = data;
+  const me = useMe();
 
   const {
     handleCreatePost,
     initialValues,
     validationSchema,
-  } = useCreatePostFormManagement({ me });
+  } = useCreatePostForm();
 
   return (
     <StyledPaper>
@@ -59,7 +55,7 @@ function CreatePostForm() {
                 <Link to={`/users/${me.id}`}>
                   <Avatar
                     src={me.avatar}
-                    alt={`${me.firstName} ${me.lastName}`}
+                    alt={me.fullName}
                     className={classes.avatar}
                   />
                 </Link>
@@ -68,7 +64,7 @@ function CreatePostForm() {
                   name="content"
                   rows={2}
                   multiline
-                  placeholder={`What's on your mind, ${me.firstName}?`}
+                  placeholder={`What's on your mind, ${me.fullName}?`}
                   autoComplete="off"
                   margin="none"
                 />

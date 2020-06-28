@@ -14,11 +14,15 @@ export const GET_NOTIFICATIONS = gql`
   query Notifications {
     notifications {
       id
-      message
+      user {
+        ...UserPreview
+      }
+      postId
+      type
       receivedAt
-      link
     }
   }
+  ${USER_PREVIEW}
 `;
 
 export const GET_CHAT = gql`
@@ -65,9 +69,9 @@ export const GET_IS_POST_LIKED = gql`
   }
 `;
 
-export const GET_FEED = gql`
-  query Feed($cursor: Float) {
-    feed(cursor: $cursor) {
+export const GET_POSTS = gql`
+  query Posts($cursor: Float, $userId: String) {
+    posts(cursor: $cursor, userId: $userId) {
       edges {
         ...PostPreview
         user {
@@ -146,26 +150,11 @@ export const GET_USER = gql`
     user(id: $id) {
       background
       ...UserPreview
-      posts {
-        ...PostPreview
-      }
-      commonFriends {
+      friends {
         ...UserPreview
       }
-      otherFriends {
-        ...UserPreview
-      }
+      friendshipStatus
     }
   }
   ${USER_PREVIEW}
-  ${POST_PREVIEW}
-`;
-
-export const GET_FRIEND_STATUS = gql`
-  query FriendStatus($userId: String!) {
-    friendStatus(userId: $userId) {
-      fromUserId
-      status
-    }
-  }
 `;

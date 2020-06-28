@@ -19,7 +19,6 @@ export class MessageReceivedResolver {
     @Ctx() ctx: Context
   ) {
     const { userId } = ctx.connection.context;
-
     const chat = await Chat.findOneOrFail({
       where: { id: messageReceived.chatId },
       relations: ["users"],
@@ -28,8 +27,14 @@ export class MessageReceivedResolver {
     const usersIds = chat.users.map((user) => user.id);
 
     const isChatMember = usersIds.includes(userId);
+    const isSender = messageReceived.userId === userId;
 
-    return isChatMember
+    // gonna need the user for the last message cache update
+    messageReceived.user = chat.users.find(
+      (user) => user.id === messageReceived.userId
+    );
+
+    return isChatMember && !isSender
       ? messageReceived
       : new ForbiddenError("Not authorized");
   }

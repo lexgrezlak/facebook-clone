@@ -2,11 +2,12 @@ import React from "react";
 import { IconButton, Popover, Badge } from "@material-ui/core";
 import ChatBubbleIcon from "@material-ui/icons/ChatBubble";
 import ChatList from "./chats/ChatList";
-import { useChats } from "../../hooks/chat/useChats";
 import usePopover from "../../hooks/usePopover";
+import { useChats } from "../../hooks/chat/useChats";
 
 export default function Chats() {
   const { chats, unreadChatsCount } = useChats();
+
   const { handleClick, handleClose, open, anchorEl, id } = usePopover({
     name: "chats",
   });

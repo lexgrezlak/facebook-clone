@@ -1,13 +1,16 @@
 import { MessageReceivedData } from "../../types";
-import { useApolloClient, useSubscription, useQuery } from "@apollo/client";
-import { MESSAGE_RECEIVED } from "../../graphql/subscriptions";
+import { useSubscription, useQuery } from "@apollo/client";
 import { GET_CHATS } from "../../graphql/queries";
 import { ChatsData } from "../../types";
+import { MESSAGE_RECEIVED } from "../../graphql/subscriptions";
 
-export const useChats = () => {
-  const client = useApolloClient();
-  const { data } = useQuery<ChatsData>(GET_CHATS);
-  const chats = data?.chats;
+export function useChats() {
+  const { data, client } = useQuery<ChatsData>(GET_CHATS, {
+    onError: (error) => {
+      console.log(error.graphQLErrors[0].message);
+    },
+  });
+  const chats = data?.chats || [];
   const unreadChatsCount = chats
     ? chats.filter((chat) => chat.unread === true).length
     : 0;
@@ -15,6 +18,7 @@ export const useChats = () => {
   useSubscription<MessageReceivedData>(MESSAGE_RECEIVED, {
     onSubscriptionData: ({ subscriptionData }) => {
       const messageReceived = subscriptionData.data?.messageReceived;
+      console.log("ddd");
 
       if (messageReceived) {
         const { chats } = client.readQuery({
@@ -48,4 +52,4 @@ export const useChats = () => {
   });
 
   return { chats, unreadChatsCount };
-};
+}

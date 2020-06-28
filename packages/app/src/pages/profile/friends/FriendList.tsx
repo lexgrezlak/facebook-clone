@@ -1,11 +1,5 @@
 import React from "react";
-import {
-  Avatar,
-  List,
-  ListItem,
-  ListItemAvatar,
-  ListItemText,
-} from "@material-ui/core";
+import { List } from "@material-ui/core";
 import { UserPreview } from "../../../types";
 import FriendItem from "./FriendItem";
 

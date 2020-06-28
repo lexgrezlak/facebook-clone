@@ -5,6 +5,8 @@ import {
   ListItemAvatar,
   Avatar,
   ListItemText,
+  makeStyles,
+  createStyles,
 } from "@material-ui/core";
 import { Link } from "react-router-dom";
 
@@ -12,7 +14,18 @@ interface Props {
   friend: UserPreview;
 }
 
+const useStyles = makeStyles(() =>
+  createStyles({
+    link: {
+      textDecoration: "none",
+      color: "inherit",
+    },
+  })
+);
+
 export default function FriendItem({ friend }: Props) {
+  const classes = useStyles();
+
   return (
     <ListItem key={friend.id}>
       <ListItemAvatar>
@@ -20,7 +33,7 @@ export default function FriendItem({ friend }: Props) {
           <Avatar src={friend.avatar} alt="Friend's avatar" />
         </Link>
       </ListItemAvatar>
-      <Link to={`/users/${friend.id}`}>
+      <Link to={`/users/${friend.id}`} className={classes.link}>
         <ListItemText primary={friend.fullName} />
       </Link>
     </ListItem>

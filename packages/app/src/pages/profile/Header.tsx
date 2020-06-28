@@ -1,11 +1,8 @@
 import React from "react";
 import { createStyles, Theme, Typography } from "@material-ui/core";
-import FriendButton from "./header/FriendButton";
 import { makeStyles } from "@material-ui/core/styles";
 import Background from "./header/Background";
-import OwnMenu from "./OwnMenu";
-import ChatButton from "./header/ChatButton";
-import { useParams } from "react-router-dom";
+import Menu from "./header/Menu";
 import { useProfileHeader } from "../../hooks/useProfileHeader";
 import MyAvatar from "./header/MyAvatar";
 
@@ -47,8 +44,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 function ProfileHeader() {
   const classes = useStyles();
-  const { id } = useParams();
-  const { user } = useProfileHeader({ id });
+  const { user } = useProfileHeader();
 
   return (
     <div className={classes.root}>
@@ -59,13 +55,7 @@ function ProfileHeader() {
           {user.fullName}
         </Typography>
       </div>
-      <OwnMenu />
-      {/* {meId !== id && ( */}
-      <div>
-        <FriendButton userId={id} />
-        <ChatButton userId={id} />
-      </div>
-      {/* )} */}
+      <Menu />
     </div>
   );
 }

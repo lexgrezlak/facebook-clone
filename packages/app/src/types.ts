@@ -1,3 +1,4 @@
+import { Status, NotificationType } from "./enums";
 export interface UserData {
   user: UserProfile;
 }
@@ -5,8 +6,13 @@ export interface UserData {
 export interface UserProfile extends UserPreview {
   background: string;
   posts: Post[];
-  otherFriends: UserPreview[];
-  commonFriends: UserPreview[];
+  friends: UserPreview[];
+  friendshipStatus: FriendshipStatus;
+}
+
+export interface FriendStatus {
+  fromUserId: string;
+  status: Status;
 }
 
 export interface UserVars {
@@ -31,9 +37,10 @@ export interface MessagePreview {
 
 export interface Notification {
   id: string;
-  message: string;
   receivedAt: Date;
-  link: string;
+  postId: string;
+  user: UserPreview;
+  type: NotificationType;
 }
 
 export interface ChatPreview {
@@ -43,10 +50,10 @@ export interface ChatPreview {
   unread: Boolean;
 }
 
-export interface FeedData {
-  feed: {
-    __typename: "feed";
-    edges: PostAndUser[];
+export interface PostsData {
+  posts: {
+    __typename: "posts";
+    edges: Post[];
     pageInfo: {
       hasNextPage: boolean;
       endCursor: number;
@@ -108,15 +115,7 @@ export interface Post {
   createdAt: Date;
   likesInfo: LikesInfo;
   commentsInfo: CommentsInfo;
-}
-
-export interface PostAndUser extends Post {
   user: UserPreview;
-}
-
-export interface UserPreviewAndPosts extends UserPreview {
-  background: string;
-  posts: Post[];
 }
 
 export interface FriendRequest {

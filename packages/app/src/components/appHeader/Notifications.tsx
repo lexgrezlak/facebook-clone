@@ -1,18 +1,12 @@
-import React, { useState } from "react";
+import React from "react";
 import NotificationsIcon from "@material-ui/icons/Notifications";
 import { IconButton, Popover } from "@material-ui/core";
-import { useQuery } from "@apollo/client";
-import { GET_NOTIFICATIONS } from "../../graphql/queries";
 import NotificationList from "./notifications/NotificationList";
-import { Notification } from "./../../../types";
 import usePopover from "../../hooks/usePopover";
-
-interface NotificationsData {
-  notifications: Notification[];
-}
+import { useNotifications } from "../../hooks/useNotifications";
 
 export default function Notifications() {
-  const { data } = useQuery<NotificationsData>(GET_NOTIFICATIONS);
+  const notifications = useNotifications();
 
   const { id, open, anchorEl, handleClose, handleClick } = usePopover({
     name: "notifications",
@@ -35,14 +29,14 @@ export default function Notifications() {
         onClose={handleClose}
         anchorOrigin={{
           vertical: "bottom",
-          horizontal: "left",
+          horizontal: "center",
         }}
         transformOrigin={{
           vertical: "top",
           horizontal: "center",
         }}
       >
-        <NotificationList notifications={data?.notifications} />
+        <NotificationList notifications={notifications} />
       </Popover>
     </div>
   );

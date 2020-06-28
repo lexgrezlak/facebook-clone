@@ -9,7 +9,7 @@ export default function useFriendRequests() {
     },
   });
 
-  const friendRequests = data?.friendRequests || [];
+  const friendRequests = data?.friendRequests;
 
-  return { friendRequests };
+  return friendRequests;
 }
