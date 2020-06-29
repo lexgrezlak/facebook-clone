@@ -21,6 +21,7 @@
     "apollo-upload-client": "^13.0.0",
     "formik": "^2.1.4",
     "graphql": "^15.0.0",
+    "history": "^5.0.0",
     "moment": "^2.26.0",
     "react": "^16.13.1",
     "react-date-picker": "^8.0.1",

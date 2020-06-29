@@ -7,16 +7,20 @@ import { authorization } from "./utils/authorization";
 import { createServer } from "./createServer";
 import { createTypeORMConnection } from "./utils/createConnection";
 import http from "http";
+import path from "path";
 
 (async () => {
   const server = await createServer();
   await createTypeORMConnection();
 
   const app = express();
-  app.use(express.static("build"));
   app.use(cors());
   app.use(cookieParser());
   app.use(authorization());
+  // app.use(express.static("build"));
+  // app.get("*", (req, res) => {
+  //   res.sendFile(path.resolve(__dirname, "build", "index.html"));
+  // });
   server.applyMiddleware({ app, cors: false });
   const httpServer = http.createServer(app);
   server.installSubscriptionHandlers(httpServer);

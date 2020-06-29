@@ -66,12 +66,12 @@ function SignInForm({ setVisible }: Props) {
                   href="#"
                   onClick={() =>
                     handleSubmit({
-                      email: "demo@demo.demo",
-                      password: "Demo1234",
+                      email: "demo999@demo.demo",
+                      password: "demo999",
                     })
                   }
                 >
-                  Too busy? Demo sign in
+                  Demo sign in
                 </Link>
               </Grid>
               <Grid item>

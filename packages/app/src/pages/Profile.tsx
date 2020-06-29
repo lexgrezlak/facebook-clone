@@ -6,7 +6,7 @@ import {
   Grid,
 } from "@material-ui/core";
 import ProfileHeader from "./profile/Header";
-import Posts from "./profile/Posts";
+import Posts from "../components/Posts";
 import { makeStyles } from "@material-ui/core/styles";
 import Friends from "./profile/Friends";
 import { useProfile } from "../hooks/useProfile";
@@ -30,7 +30,7 @@ function Profile() {
     <Container maxWidth="md" component="main" className={classes.root}>
       <ProfileHeader />
       <Grid container spacing={2}>
-        <Grid item xs={12} sm={4} className={classes.grid}>
+        <Grid item xs={12} sm={4}>
           <Friends />
         </Grid>
         <Grid item xs={12} sm={8}>

@@ -1,4 +1,3 @@
-import { FriendshipStatus } from "./../../../app/src/types";
 import { Post } from "./Post";
 import {
   BaseEntity,
@@ -16,6 +15,7 @@ import { Chat } from "./Chat";
 import { PostLike } from "./PostLike";
 import { Notification } from "./Notification";
 import { Context } from "../context";
+import { FriendshipStatus } from "../enums";
 
 @ObjectType()
 @Entity()

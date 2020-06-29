@@ -13,9 +13,9 @@
     ]
   },
   "scripts": {
-    "start": "node index.js",
-    "build": "tsc",
-    "postinstall": "npm run build",
+    "start": "node src/index.js",
+    "ccbuild": "tsc",
+    "ccpostinstall": "npm run build",
     "test": "NODE_ENV=test jest --verbose --runInBand",
     "dev": "NODE_ENV=development ts-node-dev src/index.ts",
     "lint": "../node_modules/.bin/eslint .",
@@ -37,7 +37,6 @@
     "@types/node-fetch": "^2.5.7",
     "@types/supertest": "^2.0.9",
     "apollo-server-testing": "^2.13.1",
-    "dotenv": "^8.2.0",
     "eslint": "^6.8.0",
     "eslint-config-airbnb": "^18.1.0",
     "eslint-plugin-import": "^2.20.2",
@@ -54,6 +53,7 @@
     "typescript": "^3.9.2"
   },
   "dependencies": {
+    "dotenv": "^8.2.0",
     "apollo-server-express": "^2.13.1",
     "bcryptjs": "^2.4.3",
     "class-validator": "^0.12.2",

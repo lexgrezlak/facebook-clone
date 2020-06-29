@@ -64,7 +64,9 @@ function CreatePostForm() {
                   name="content"
                   rows={2}
                   multiline
-                  placeholder={`What's on your mind, ${me.fullName}?`}
+                  placeholder={`What's on your mind, ${
+                    me.fullName.split(" ")[0]
+                  }?`}
                   autoComplete="off"
                   margin="none"
                 />

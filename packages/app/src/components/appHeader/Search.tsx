@@ -48,7 +48,7 @@ function Search() {
       options={data?.users || []}
       loading={loading}
       // && user because otherwise it navigates to /users/undefined
-      onChange={(_event, user) => user && navigate(`/users/${user?.id}`)}
+      onChange={(_event, user) => user && navigate(`/users/${user.id}`)}
       noOptionsText={"User not found"}
       renderInput={(params) => (
         <TextField

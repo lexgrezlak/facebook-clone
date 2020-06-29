@@ -25,6 +25,7 @@ const useStyles = makeStyles((theme) => ({
   link: {
     textDecoration: "none",
     fontWeight: "bold",
+    color: "inherit",
     "&:visited": {
       color: "inherit",
     },

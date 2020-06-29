@@ -18,8 +18,14 @@ const uploadLink = createUploadLink({
   credentials: "same-origin",
 }) as any;
 
+console.log(`ws://${window.location.host}/graphql`);
+
 const wsLink = new WebSocketLink({
-  uri: `ws://localhost:4000/graphql`,
+  uri:
+    // for dev purposes
+    window.location.port === "3000"
+      ? "ws://localhost:4000/graphql"
+      : `ws://${window.location.host}/graphql`,
   options: {
     reconnect: true,
   },

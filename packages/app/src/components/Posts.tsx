@@ -1,11 +1,9 @@
 import React from "react";
-import { useQuery } from "@apollo/client";
-import { GET_POSTS } from "../graphql/queries";
 import { CircularProgress } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import PostItem from "./posts/PostItem";
 import InfiniteScroll from "react-infinite-scroller";
-import { PostsData } from "../types";
+import { usePosts } from "../hooks/post/usePosts";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -17,44 +15,9 @@ const useStyles = makeStyles((theme) => ({
 
 function Posts() {
   const classes = useStyles();
-  const { data, fetchMore } = useQuery<PostsData>(GET_POSTS, {
-    onError: (error) => {
-      console.log(error.graphQLErrors[0].message);
-    },
-  });
+  const { posts, hasNextPage, endCursor, loadMore } = usePosts();
 
-  if (!data?.posts) return <CircularProgress />;
-
-  const {
-    edges: posts,
-    pageInfo: { hasNextPage, endCursor },
-  } = data.posts;
-
-  async function loadMore() {
-    await fetchMore({
-      query: GET_POSTS,
-      variables: { cursor: endCursor },
-      updateQuery: (previousResult: PostsData, { fetchMoreResult }: any) => {
-        if (!fetchMoreResult) return previousResult;
-
-        const {
-          edges: newEdges,
-          pageInfo: newPageInfo,
-          __typename,
-        } = fetchMoreResult.posts;
-
-        const { edges: previousEdges } = previousResult.posts;
-
-        return {
-          posts: {
-            __typename,
-            edges: [...previousEdges, ...newEdges],
-            pageInfo: newPageInfo,
-          },
-        };
-      },
-    });
-  }
+  if (!posts) return <CircularProgress />;
 
   return (
     <div className={classes.root}>
@@ -65,7 +28,7 @@ function Posts() {
         loader={<div key={endCursor}>Loading...</div>}
       >
         {posts.map((post) => (
-          <PostItem post={post} key={post.id} user={post.user} />
+          <PostItem post={post} key={post.id} />
         ))}
       </InfiniteScroll>
     </div>

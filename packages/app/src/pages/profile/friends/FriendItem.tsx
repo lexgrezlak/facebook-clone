@@ -16,6 +16,10 @@ interface Props {
 
 const useStyles = makeStyles(() =>
   createStyles({
+    root: {
+      display: "flex",
+      justifyContent: "center",
+    },
     link: {
       textDecoration: "none",
       color: "inherit",
@@ -27,7 +31,7 @@ export default function FriendItem({ friend }: Props) {
   const classes = useStyles();
 
   return (
-    <ListItem key={friend.id}>
+    <ListItem className={classes.root}>
       <ListItemAvatar>
         <Link to={`/users/${friend.id}`}>
           <Avatar src={friend.avatar} alt="Friend's avatar" />

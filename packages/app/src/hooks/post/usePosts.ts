@@ -12,7 +12,7 @@ export function usePosts() {
   const { id: userId } = useParams();
   const variables = userId && { variables: { userId } };
 
-  const { data } = useQuery<PostsData, PostsVars>(GET_POSTS, {
+  const { data, fetchMore } = useQuery<PostsData, PostsVars>(GET_POSTS, {
     onError: (error) => {
       console.log(error.graphQLErrors[0].message);
     },
@@ -20,6 +20,34 @@ export function usePosts() {
   });
 
   const posts = data?.posts.edges;
+  const hasNextPage = data?.posts.pageInfo.hasNextPage;
+  const endCursor = data?.posts.pageInfo.endCursor;
 
-  return posts;
+  async function loadMore() {
+    await fetchMore({
+      query: GET_POSTS,
+      variables: { cursor: endCursor },
+      updateQuery: (previousResult: PostsData, { fetchMoreResult }: any) => {
+        if (!fetchMoreResult) return previousResult;
+
+        const {
+          edges: newEdges,
+          pageInfo: newPageInfo,
+          __typename,
+        } = fetchMoreResult.posts;
+
+        const { edges: previousEdges } = previousResult.posts;
+
+        return {
+          posts: {
+            __typename,
+            edges: [...previousEdges, ...newEdges],
+            pageInfo: newPageInfo,
+          },
+        };
+      },
+    });
+  }
+
+  return { posts, hasNextPage, endCursor, loadMore };
 }
