@@ -9,7 +9,6 @@ interface Props {
 
 function DateField({ ...props }: Props) {
   const [field, { error, touched }] = useField(props);
-  console.log(field);
 
   const isError = (error && touched) as boolean;
 

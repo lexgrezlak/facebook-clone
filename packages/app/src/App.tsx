@@ -1,7 +1,7 @@
 import React from "react";
 import { useQuery } from "@apollo/client";
 import { GET_ME } from "./graphql/queries";
-import SignInOrUp from "./pages/Sign";
+import Sign from "./pages/Sign";
 import Home from "./pages/Home";
 import { Route, Routes } from "react-router-dom";
 import AppHeader from "./components/AppHeader";
@@ -18,7 +18,7 @@ const App: React.FC = () => {
 
   if (loading) return null;
 
-  if (!data?.me) return <SignInOrUp />;
+  if (!data?.me) return <Sign />;
 
   return (
     <div>

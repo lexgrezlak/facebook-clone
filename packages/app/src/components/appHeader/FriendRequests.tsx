@@ -9,7 +9,7 @@ import useFriendRequests from "../../hooks/useFriendRequests";
 const useStyles = makeStyles((theme) =>
   createStyles({
     root: {
-      marginLeft: theme.spacing(1),
+      // marginLeft: theme.spacing(1),
     },
   })
 );

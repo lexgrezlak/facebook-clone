@@ -2,7 +2,6 @@ import { SignUpInput } from "./../../../server/src/resolvers/SignUpInput";
 import { useApolloClient, useMutation } from "@apollo/client";
 import * as Yup from "yup";
 import { SIGN_UP } from "../../graphql/mutations";
-import { GET_ME } from "../../graphql/queries";
 import { UserPreview } from "../../types";
 
 interface SignUpFormFields {
@@ -42,16 +41,16 @@ export const useSignUpFormManagement = () => {
           birthday: new Date(birthday),
         },
       },
-      update: (store, { data }) => {
-        if (data) {
-          store.writeQuery({
-            query: GET_ME,
-            data: {
-              me: data.signUp,
-            },
-          });
-        }
-      },
+      // update: (store, { data }) => {
+      //   if (data) {
+      //     store.writeQuery({
+      //       query: GET_ME,
+      //       data: {
+      //         me: data.signUp,
+      //       },
+      //     });
+      //   }
+      // },
     });
     client.resetStore();
   }
@@ -67,7 +66,22 @@ export const useSignUpFormManagement = () => {
     birthday: "2000-01-01",
   };
 
-  const validationSchema = Yup.object().shape({});
+  const validationSchema = Yup.object().shape({
+    firstName: Yup.string()
+      .min(2)
+      .max(20)
+      .required("first name is a required field"),
+    lastName: Yup.string()
+      .min(2)
+      .max(20)
+      .required("last name is a required field"),
+    email: Yup.string().email().required(),
+    password: Yup.string().min(4).max(20).required(),
+    passwordConfirm: Yup.string()
+      .oneOf([Yup.ref("password")], "Passwords don't match")
+      .required("you must confirm your password"),
+    birthday: Yup.date().required(),
+  });
 
   return { handleSubmit, initialValues, validationSchema };
 };

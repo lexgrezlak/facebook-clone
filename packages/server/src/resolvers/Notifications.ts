@@ -11,7 +11,10 @@ export class NotificationsResolver {
     const { userId } = ctx.req;
 
     const posts = await Post.find({ where: { userId }, select: ["id"] });
+
     const postIds = posts.map((post) => post.id);
+
+    if (postIds.length === 0) return [];
 
     const notifications = await Notification.find({
       where: { postId: In(postIds) },

@@ -2,11 +2,7 @@ import { Chat } from "./entity/Chat";
 import { Post } from "./entity/Post";
 import { Context } from "./context";
 import { allow, and, rule, shield } from "graphql-shield";
-import {
-  UserInputError,
-  ForbiddenError,
-  AuthenticationError,
-} from "apollo-server-express";
+import { ForbiddenError, AuthenticationError } from "apollo-server-express";
 
 const rules = {
   isChatMember: rule()(async (parent, { chatId }, ctx: Context) => {

@@ -40,7 +40,10 @@ export const useSignInFormManagement = () => {
     password: "",
   };
 
-  const validationSchema = Yup.object().shape({});
+  const validationSchema = Yup.object().shape({
+    email: Yup.string().email().required(),
+    password: Yup.string().required(),
+  });
 
   return { handleSubmit, initialValues, validationSchema };
 };

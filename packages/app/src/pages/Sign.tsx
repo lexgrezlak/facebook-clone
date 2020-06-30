@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function SignInOrUp() {
+function Sign() {
   const [visible, setVisible] = useState(false);
   const classes = useStyles();
   return (
@@ -37,4 +37,4 @@ function SignInOrUp() {
   );
 }
 
-export default SignInOrUp;
+export default Sign;
