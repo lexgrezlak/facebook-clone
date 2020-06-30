@@ -2,6 +2,7 @@
 
 ## Major features:
 
+- Cookie based authentication
 - You can create and delete posts
 - You can send friend requests to people and accept/reject them
 - Real-time messaging using subscriptions (websocket)
