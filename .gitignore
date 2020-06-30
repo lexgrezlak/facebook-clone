@@ -8,6 +8,7 @@ packages/*/docker.env
 packages/*/node_modules
 packages/*/build
 packages/*/package-lock.json
+packages/*/*/build
 
 node_modules
 .DS_STORE

@@ -28,15 +28,6 @@ export const useSignUpFormManagement = () => {
     onError: (error) => {
       console.log(error.graphQLErrors[0].message);
     },
-    update: (store, { data }) => {
-      data?.signUp &&
-        store.writeQuery({
-          query: GET_ME,
-          data: {
-            me: data.signUp,
-          },
-        });
-    },
   });
 
   async function handleSubmit(input: SignUpFormFields) {
@@ -45,9 +36,24 @@ export const useSignUpFormManagement = () => {
     const { passwordConfirm, birthday, ...restInput } = input;
 
     await signUp({
-      variables: { input: { ...restInput, birthday: new Date(birthday) } },
+      variables: {
+        input: {
+          ...restInput,
+          birthday: new Date(birthday),
+        },
+      },
+      update: (store, { data }) => {
+        if (data) {
+          store.writeQuery({
+            query: GET_ME,
+            data: {
+              me: data.signUp,
+            },
+          });
+        }
+      },
     });
-    await client.resetStore();
+    client.resetStore();
   }
 
   const initialValues: SignUpFormFields = {

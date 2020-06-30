@@ -1,3 +1,6 @@
+import { Chat } from "./entity/Chat";
+import { Post } from "./entity/Post";
+import { Context } from "./context";
 import { allow, and, rule, shield } from "graphql-shield";
 import {
   UserInputError,
@@ -6,29 +9,30 @@ import {
 } from "apollo-server-express";
 
 const rules = {
-  isAuthenticated: rule()((_parent, _args, context) => {
+  isChatMember: rule()(async (parent, { chatId }, ctx: Context) => {
+    const { userId } = ctx.req;
+    const chat = await Chat.findOne(chatId, { relations: ["users"] });
+
+    const memberIds = chat.users.map((user) => user.id);
+    const isMember = memberIds.includes(userId);
+
+    return isMember || new ForbiddenError("You are not the chat member");
+  }),
+  isAuthenticated: rule()((parent, args, context) => {
     return (
-      Boolean(context.req.userId) ||
+      !!context.req.userId ||
       new AuthenticationError("You are not authenticated")
     );
   }),
-  isPostOwner: rule()(async (_parent, { id }, context) => {
+  isPostOwner: rule()(async (parent, { id }, context) => {
     const userId = context.req.userId || "";
-    const post = await context.prisma.post.findOne({
-      where: {
-        id: Number(id),
-      },
+    const post = await Post.findOne({
+      where: { id },
     });
 
-    const { author } = post;
-
     return (
-      userId === author.id || new ForbiddenError("You are not the post owner")
+      userId !== post.userId || new ForbiddenError("You are not the post owner")
     );
-  }),
-  isNotTheTarget: rule()(async (_parent, { id }, context) => {
-    const userId = context.req.userId || "";
-    return userId !== id || new UserInputError("You can't do that to yourself");
   }),
 };
 
@@ -43,6 +47,6 @@ export const permissions = shield({
     signOut: allow,
     signUp: allow,
     deletePost: and(rules.isPostOwner, rules.isAuthenticated),
-    sendInvitation: and(rules.isAuthenticated, rules.isNotTheTarget),
+    createMessage: and(rules.isAuthenticated, rules.isChatMember),
   },
 });

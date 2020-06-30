@@ -1,7 +1,7 @@
 import "reflect-metadata";
 import express from "express";
 import cors from "cors";
-import { PORT } from "./config";
+import { PORT, NODE_ENV } from "./config";
 import cookieParser from "cookie-parser";
 import { authorization } from "./utils/authorization";
 import { createServer } from "./createServer";
@@ -17,11 +17,13 @@ import path from "path";
   app.use(cors());
   app.use(cookieParser());
   app.use(authorization());
-  // app.use(express.static("build"));
-  // app.get("*", (req, res) => {
-  //   res.sendFile(path.resolve(__dirname, "build", "index.html"));
-  // });
-  server.applyMiddleware({ app, cors: false });
+  if (NODE_ENV === "production") {
+    app.use(express.static("build"));
+    app.get("*", (req, res) => {
+      res.sendFile(path.resolve(__dirname, "build", "index.html"));
+    });
+  }
+  server.applyMiddleware({ app, cors: true });
   const httpServer = http.createServer(app);
   server.installSubscriptionHandlers(httpServer);
 

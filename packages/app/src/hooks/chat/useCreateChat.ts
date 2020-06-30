@@ -27,14 +27,14 @@ export function useCreateChat({ userId }: Props) {
   );
 
   async function handleCreateChat() {
-    const res = await createChat({
+    await createChat({
       variables: { userId },
       update: (store, { data }) => {
-        console.log(data);
+        if (data) {
+          navigate(`/chats/${data.createChat.id}`);
+        }
       },
     });
-
-    navigate(`/chats/${res.data?.createChat.id}`);
   }
 
   return { handleCreateChat };

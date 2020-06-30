@@ -1,3 +1,4 @@
+import { GET_ME } from "./../../graphql/queries";
 import { useApolloClient, useMutation } from "@apollo/client";
 import { SIGN_OUT } from "../../graphql/mutations";
 import { useNavigate } from "react-router-dom";
@@ -13,9 +14,9 @@ export default function useSignOut() {
   const navigate = useNavigate();
 
   async function handleSignOut() {
-    navigate("/");
     await signOut();
-    await client.resetStore();
+    navigate("/");
+    client.writeQuery({ query: GET_ME, data: { me: null } });
   }
 
   return { handleSignOut };

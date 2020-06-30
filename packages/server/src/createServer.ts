@@ -36,6 +36,8 @@ import { FriendsResolver } from "./resolvers/friend/Friends";
 import { MeResolver } from "./resolvers/user/Me";
 import { CreatePostLikeResolver } from "./resolvers/post/CreatePostLike";
 import { Token } from "./types";
+import { applyMiddleware } from "graphql-middleware";
+import { permissions } from "./permissions";
 
 export const createServer = async () => {
   const schema = await buildSchema({
@@ -75,8 +77,8 @@ export const createServer = async () => {
   });
 
   const server = new ApolloServer({
-    // schema: applyMiddleware(schema, permissions),
-    schema,
+    schema: applyMiddleware(schema, permissions),
+    // schema,
     context,
     subscriptions: {
       onConnect: async (connectionParams, ws: any) => {

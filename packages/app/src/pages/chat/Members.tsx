@@ -18,6 +18,7 @@ const useStyles = makeStyles(() =>
       display: "flex",
       alignItems: "center",
       textDecoration: "none",
+      color: "inherit",
       "&:visited": {
         color: "inherit",
       },
