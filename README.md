@@ -17,7 +17,7 @@
 
 ## Technology used
 
-React, Express, TypeScript, PostgreSQL, TypeORM, Apollo Client, Apollo Server, GraphQL, Formik, React Router, Yup, GraphQL shield, Material UI, Yarn, Git
+React, Express, TypeScript, PostgreSQL, TypeORM, Apollo Client, Apollo Server, GraphQL, Formik, React Router, Yup, GraphQL Shield, Material UI, Yarn, Git
 
 ## Screenshots
 
