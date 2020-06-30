@@ -33,7 +33,6 @@
     "react-router": "^6.0.0-alpha.5",
     "react-router-dom": "^6.0.0-alpha.5",
     "react-scripts": "3.4.1",
-    "styled-components": "^5.1.0",
     "subscriptions-transport-ws": "^0.9.16",
     "typescript": "~3.7.2",
     "yup": "^0.28.5"
