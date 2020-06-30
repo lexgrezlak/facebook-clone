@@ -6,6 +6,7 @@
 - You can create and delete posts
 - You can send friend requests to people and accept/reject them
 - Real-time messaging using subscriptions (websocket)
+- Marking messages as read
 - You can see others' profile, posts, and friends
 - You can upload and change your avatar and background pictures
 - You can (un)like and (un)comment posts
